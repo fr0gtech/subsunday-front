@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.rankingChiptl {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 0px;
+}
+.rankingChiptr {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 10px;
+}
+.boldChip * {
+  font-weight: 600 !important;
+}
