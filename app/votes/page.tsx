@@ -29,21 +29,11 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-export const options = {
-  plugins: {
-    // legend: {
-    //   display: false
-    // },
-  },
-};
-
-
 const dayNames: string[] = [];
 
 for (let i = 6; i >= 0; i--) {
   const date = subDays(new Date(), i);
-  const dayName = format(date, 'EEEE'); // Full weekday name like 'Monday'
+  const dayName = format(date, 'EEEE');
   dayNames.push(dayName);
 }
 
@@ -55,7 +45,7 @@ export default function Home() {
   const dataChart = useMemo(() => {
     if (!data) return null
     return {
-      labels: dayNames, // create labels for past 7 days
+      labels: dayNames,
       datasets: [
         {
           label: 'Votes This Week',
@@ -112,7 +102,7 @@ export default function Home() {
   return (
     <section className="h-full max-w-4xl mx-auto  w-full gap-4 ">
       <Card className='p-5 mb-2'>
-        {dataChart && <Line className='' options={options} data={dataChart} />}
+        {dataChart && <Line className='' data={dataChart} />}
       </Card>
 
       <div className="flex-col flex flex-wrap justify-center gap-2  text-center">
