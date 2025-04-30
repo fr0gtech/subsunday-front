@@ -112,7 +112,12 @@ export const MainItem = () => {
                             <Card
                                 key={e.id}
                                 isPressable
-                                onPress={() => {
+                                onPress={(a) => {
+                                    // we try to fix that if we click on any links while the card is a link we do both actions
+                                    // from a. we dont get target of button if pressed there only thing we get is x.y wich could be used but its bad
+
+                                    console.log(a);
+
                                     router.push(`game/${e.id}`);
                                 }}
                                 isHoverable
@@ -216,12 +221,12 @@ export const MainItem = () => {
                                     {e.link !== 'notOnSteam' && (
                                         <Tooltip content="Open Steam Page">
                                             <Link
-                                                className="px-5"
+                                                onClick={(e) => e.stopPropagation()}
+                                                className="px-5 z-10 relative"
                                                 href={`https://store.steampowered.com/app/${e.steamId}`}
                                                 target="_blank"
                                             >
                                                 <Steamicon size={20} className="opacity-70" />
-                                                {/* <ExternalLinkIcon color="gray" /> */}
                                             </Link>
                                         </Tooltip>
                                     )}
