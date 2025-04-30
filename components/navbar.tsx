@@ -80,11 +80,9 @@ export const Navbar = () => {
       </NavbarMenu>
       <CurrentVotes className={'hidden gap-5 lg:flex text-tiny lowercase'} />
       <NavbarContent className=" basis-1 pl-4" justify="end">
-
-        <Link href='/info'>
+        <Link href='info'>
           <GithubIcon className="text-default-500" />
         </Link>
-
         <ThemeSwitch />
         <NavbarMenuToggle onClick={() => setMenuOpen(!menuOpen)} className="flex lg:hidden" />
       </NavbarContent>
