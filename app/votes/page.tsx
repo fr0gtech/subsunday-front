@@ -37,7 +37,6 @@ for (let i = 6; i >= 0; i--) {
   dayNames.push(dayName);
 }
 
-
 export default function Home() {
   const { data } = useSWR(`/api/votes`, fetcher);
   const [msgEvents, setMsgEvents] = useState<any>([]);
