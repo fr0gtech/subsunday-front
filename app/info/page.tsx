@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <section className=" overflow-hidden px-10 mx-auto w-full gap-2 flex flex-col max-w-6xl">
-      <div className='flex gap-2 w-full'>
+      <div className='flex gap-2 w-full flex-col lg:flex-row'>
         <div className='gap-2 flex flex-col '>
           <Card className='h-fit' shadow='md'>
             <CardHeader>
@@ -57,13 +57,13 @@ export default function Home() {
                 Sources:
               </p>
               <ul className='opacity-80'>
-                <li>Steam: images, Prices, Descriptions</li>
-                <li>Info about Sub Sunday: lirikker.com/lirik/subday</li>
+                <li><Link href='https://steam.com'>Steam</Link>: images, Prices, Descriptions</li>
+                <li><Link href='https://lirikker.com/lirik/subday'>lirikker.com</Link>: Info about Sub Sunday</li>
               </ul>
             </CardBody>
           </Card>
         </div>
-        <div className='flex gap-2 flex-col w-5/6'>
+        <div className='flex gap-2 flex-col lg:w-5/6'>
           <Card>
             <CardHeader>
               <Link href='https://github.com/fr0gtech/subsunday-front' color='foreground'>

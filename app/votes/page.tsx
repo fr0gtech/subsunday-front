@@ -51,12 +51,18 @@ export default function Home() {
           data: data.graph || [],
           borderColor: 'rgb(23, 201, 100)',
           backgroundColor: 'rgba(23, 201, 100, 0.5)',
+          borderWidth: 3,
+          pointStyle: 'dot',
+          pointRadius: 2,
         },
         {
           label: "Votes Last Week",
           data: data.graphPastWeek || [],
           borderColor: 'rgb(147, 83, 211)',
           backgroundColor: 'rgba(147, 83, 211, 0.5)',
+          borderWidth: 3,
+          pointStyle: 'dot',
+          pointRadius: 2,
         }
 
       ],
@@ -100,8 +106,9 @@ export default function Home() {
 
   return (
     <section className=" overflow-hidden p-5 mx-auto w-full gap-2 flex flex-col">
-      <div className='flex gap-2 w-full'>
-        <div className='gap-2 flex flex-col w-1/2 '>
+      <div className='flex gap-2 w-full lg:flex-row flex-col justify-center'>
+
+        <div className='gap-2 flex flex-col lg:w-full '>
           <Card className='h-fit' shadow='md'>
             <CardHeader>
               <h4 className=' text-2xl font-bold'>Voting</h4>
@@ -113,9 +120,9 @@ export default function Home() {
                 Every week, 6 games are selected for the main list and 4 as backups from the list of votes.
               </p>
             </CardBody>
-            <Alert>
+            <Alert variant='flat' className='m-5' color='danger'>
               <p>
-                All this information is unconfirmed and taken from <Link color='foreground' href="https://lirikker.com/lirik/subday/">here </Link>
+                The info below is unconfirmed and taken from <Link color='foreground' href="https://lirikker.com/lirik/subday/">here </Link>
               </p>
             </Alert>
           </Card>
@@ -165,31 +172,72 @@ export default function Home() {
             </CardBody>
           </Card>
         </div>
-        <Card className='p-5  grow' shadow='md'>
-          {dataChart && <Line options={{
-            elements: {
-              line: {
-                tension: 0.33
-              },
-            },
-          }} className='' data={dataChart} />}
-        </Card>
+        <div className='flex flex-col gap-2 lg:w-6/12'>
+          <Card className='p-5 ' shadow='md'>
+            <div className=" mx-auto flex gap-5 opacity-70">
+              <div className='flex  items-center'>
+                <div className='w-2 h-2 bg-[#17C964] mx-1 rounded-full'></div>
+                <div className='text-tiny lowercase'>Votes this week</div>
+              </div>
+              <div className='flex  items-center'>
+                <div className='w-2 h-2 bg-[#9353D3] mx-1 rounded-full'></div>
+                <div className='text-tiny lowercase'>Votes last week</div>
+              </div>
+            </div>
+            {dataChart && <Line
+              options={{
+                plugins: {
+                  legend: {
+                    display: false,
+                    labels: {
+                      usePointStyle: true,
+                    },
+                  }
+                },
+                elements: {
+                  line: {
+                    tension: 0.33
+                  },
+                },
+                responsive: true,
+                scales: {
+                  x: {
+                    border: {
+                      display: false
+                    },
+                    grid: {
+                      display: false,
+                    }
+                  },
+                  y: {
+                    border: {
+                      display: false
+                    },
+                    grid: {
+                      display: false,
+                    },
+                  }
+                }
+              }} data={dataChart} />}
+          </Card>
+          <div className="space-y-2 ">
+            {liveVotes &&
+              liveVotes.map(
+                (
+                  e: Vote & { from: { name: string; id: number } } & {
+                    for: { id: number; name: string };
+                  },
+                  i: number,
+                ) => {
+                  return <Voted key={e.id} vote={e} />;
+                },
+              )}
+          </div>
+        </div>
       </div>
 
 
-      <div className=" overflow-scroll space-y-2 ">
-        {liveVotes &&
-          liveVotes.map(
-            (
-              e: Vote & { from: { name: string; id: number } } & {
-                for: { id: number; name: string };
-              },
-              i: number,
-            ) => {
-              return <Voted key={e.id} vote={e} />;
-            },
-          )}
-      </div>
+
     </section >
   );
 }

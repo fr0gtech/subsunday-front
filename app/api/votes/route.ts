@@ -4,7 +4,7 @@ import { addDays, startOfDay, subDays, subWeeks } from 'date-fns';
 
 export async function GET() {
   const votes = await prisma.vote.findMany({
-    take: 10,
+    take: 5,
     include: {
       for: {
         select: {
@@ -24,9 +24,9 @@ export async function GET() {
     },
   });
 
-  const today = Date.now()
-  const votesLast7Days = await getVotesBetween(subDays(today, 7), 7)
-  const voteLastWeek = await getVotesBetween(subDays(today, 14), 7)
+  const today = Date.now();
+  const votesLast7Days = await getVotesBetween(subDays(today, 7), 7);
+  const voteLastWeek = await getVotesBetween(subDays(today, 14), 7);
 
   return NextResponse.json({
     votes: votes,
@@ -35,15 +35,12 @@ export async function GET() {
   });
 }
 
-
-const getVotesBetween = async(from: Date, daysBack: number) =>
-{
-
+const getVotesBetween = async (from: Date, daysBack: number) => {
   const recentVotes = await prisma.vote.findMany({
     where: {
       createdAt: {
         gte: from,
-        lte: addDays(from, daysBack)
+        lte: addDays(from, daysBack),
       },
     },
     select: {
@@ -60,5 +57,5 @@ const getVotesBetween = async(from: Date, daysBack: number) =>
       votes[dayDiff]++;
     }
   }
-  return votes
-}
+  return votes;
+};

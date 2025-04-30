@@ -4,7 +4,7 @@ import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Logo } from "./icons";
+import { Logo, Steamicon } from "./icons";
 import { socket, fetcher } from "@/app/lib";
 import { useState, useEffect, useMemo } from "react";
 import useSWR from "swr";
@@ -194,7 +194,7 @@ export const MainItem = () => {
                                     </div>
                                 </div>
                                 {/* footer */}
-                                <div className="flex p-1">
+                                <div className="flex p-1 items-center">
                                     <div className="flex flex-grow gap-2">
                                         <div className="flex gap-2 p-2 max-w-[300px]">
                                             <Tooltip isDisabled={e.name.length < 27} content={e.name}>
@@ -212,7 +212,8 @@ export const MainItem = () => {
                                                 href={`https://store.steampowered.com/app/${e.steamId}`}
                                                 target="_blank"
                                             >
-                                                <ExternalLinkIcon color="gray" />
+                                                <Steamicon size={20} className="opacity-70" />
+                                                {/* <ExternalLinkIcon color="gray" /> */}
                                             </Link>
                                         </Tooltip>
                                     )}
