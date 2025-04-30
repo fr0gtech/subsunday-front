@@ -166,7 +166,7 @@ export const MainItem = () => {
                                     </Tooltip>
                                     {/* price chip */}
                                     {typeof e.price.final === 'string' && (
-                                        <div className=" absolute top-0 -right-[3px] opacity-70">
+                                        <div className="absolute -right-[3px] -top-[1px]">
                                             <Chip
                                                 size="sm"
                                                 variant="shadow"
