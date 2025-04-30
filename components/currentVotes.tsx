@@ -39,9 +39,9 @@ export const CurrentVotes = ({ className }: { className: string }) => {
               key={data.now + msgEvents.length}
               initial={{ opacity: 0.6, scale: 1 }}
               animate={{ opacity: 1, scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 300, damping: 15 }}
+              transition={{ type: "spring", stiffness: 100, damping: 15 }}
             >
-              <Chip size="sm" color="primary" variant="shadow">
+              <Chip size="sm" color="primary" variant="dot">
                 {data.now + msgEvents.length}
               </Chip>
             </motion.div>
