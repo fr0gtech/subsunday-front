@@ -9,7 +9,7 @@ export const Voted = ({
   vote: Vote & { from: { name: string; id: number } } & { for: { id: number; name: string } };
 }) => {
   return (
-    <Card>
+    <Card shadow='md'>
       <CardBody className="">
         <span className="text-tiny !text-left leading-8">
           {formatDistance(new Date(vote.createdAt), new Date(), { addSuffix: true })}{' '}

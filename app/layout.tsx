@@ -21,9 +21,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={clsx('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
         <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
-          <div className="relative flex h-screen flex-col">
+          <div className="relative flex flex-col">
             <Navbar />
-            <main className="mx-auto w-full flex-grow">{children}</main>
+            <main className="mx-auto w-full grow flex">{children}</main>
           </div>
         </Providers>
       </body>
