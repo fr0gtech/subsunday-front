@@ -102,7 +102,13 @@ export default function Home() {
   return (
     <section className="h-full max-w-4xl mx-auto  w-full gap-4 ">
       <Card className='p-5 mb-2'>
-        {dataChart && <Line className='' data={dataChart} />}
+        {dataChart && <Line options={{
+            elements: {
+                line: {
+                    tension : 0.33
+                },
+            },
+        }} className='' data={dataChart} />}
       </Card>
 
       <div className="flex-col flex flex-wrap justify-center gap-2  text-center">
