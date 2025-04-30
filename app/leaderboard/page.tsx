@@ -18,7 +18,7 @@ export default function Home() {
   const { data } = useSWR(`/api/top`, fetcher);
 
   return (
-    <section className=" flex-wrap flex h-full lg:justify-center justify-start items-start w-full gap-4 p-5">
+    <section className=" flex-wrap flex h-full lg:justify-center justify-start items-start w-full max-w-screen-xl mx-auto gap-4 ">
       <div className="grow p-3">
         <h5 className='text-xl p-3'>Top Users by streak</h5>
         <Table aria-label="top user by streak">

@@ -105,10 +105,10 @@ export default function Home() {
   }, [msgEvents, data]);
 
   return (
-    <section className=" overflow-hidden p-5 mx-auto w-full gap-2 flex flex-col">
-      <div className='flex gap-2 w-full lg:flex-row flex-col justify-center'>
+    <section className=" overflow-hidden p-5 mx-auto gap-2 flex flex-col">
+      <div className='flex gap-2 lg:flex-row max-w-screen-xl flex-col justify-center'>
 
-        <div className='gap-2 flex flex-col lg:w-full '>
+        <div className='gap-2 flex flex-col  w-1/2'>
           <Card className='h-fit' shadow='md'>
             <CardHeader>
               <h4 className=' text-2xl font-bold'>Voting</h4>
@@ -172,7 +172,7 @@ export default function Home() {
             </CardBody>
           </Card>
         </div>
-        <div className='flex flex-col gap-2 lg:w-6/12'>
+        <div className='flex flex-col gap-2 w-1/2'>
           <Card className='p-5 ' shadow='md'>
             <div className=" mx-auto flex gap-5 opacity-70">
               <div className='flex  items-center'>

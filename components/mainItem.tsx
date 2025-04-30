@@ -1,21 +1,22 @@
 import { Game } from "@/generated/prisma";
-import { Card, Chip, Image, Skeleton, Tooltip } from "@heroui/react";
-import { ExternalLinkIcon } from "@radix-ui/react-icons";
+import { addToast, Card, Chip, Image, Skeleton, Tooltip } from "@heroui/react";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Logo, Steamicon } from "./icons";
 import { socket, fetcher } from "@/app/lib";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import useSWR from "swr";
+import { wsMsg } from "@/types";
 
 export const MainItem = () => {
-    const [msgEvents, setMsgEvents] = useState<any>([]);
+    const [msgEvents, setMsgEvents] = useState<wsMsg[]>([]);
     const router = useRouter();
 
     useEffect(() => {
-        const onMsgEvent = (value: any) => {
-            setMsgEvents((previous: any) => [...previous, value]);
+        const onMsgEvent = (value: wsMsg) => {
+            setMsgEvents((previous: wsMsg[]) => [...previous, value]);
+            toast(value)
         };
 
         socket.emit('join', 'main');
@@ -26,6 +27,13 @@ export const MainItem = () => {
             socket.off('vote', onMsgEvent);
         };
     }, []);
+
+    const toast = useCallback((value: { for: { name: any; }; from: { name: any; }; }) => {
+        addToast({
+            color: "primary",
+            title: `New Vote for ${value.for.name} from ${value.from.name}`,
+        });
+    }, [msgEvents])
 
     const { data, isLoading } = useSWR(`/api/games`, fetcher);
 

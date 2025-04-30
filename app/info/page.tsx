@@ -1,20 +1,13 @@
 'use client';
 import useSWR from 'swr';
-import { Vote } from '@/generated/prisma';
 import { fetcher } from '../lib';
-import { Voted } from '@/components/voted';
-import { useState } from 'react';
-import { Line } from 'react-chartjs-2';
 
-import { Alert, Card, CardBody, CardHeader, Code, Link } from '@heroui/react';
+import { Card, CardBody, CardHeader, Link } from '@heroui/react';
 import { GithubIcon } from '@/components/icons';
 
 export default function Home() {
-  const { data } = useSWR(`/api/votes`, fetcher);
-  const [msgEvents, setMsgEvents] = useState<any>([]);
-
   return (
-    <section className=" overflow-hidden px-10 mx-auto w-full gap-2 flex flex-col max-w-6xl">
+    <section className=" overflow-hidden p-5  mx-auto w-full gap-2 flex flex-col max-w-screen-xl">
       <div className='flex gap-2 w-full flex-col lg:flex-row'>
         <div className='gap-2 flex flex-col '>
           <Card className='h-fit' shadow='md'>

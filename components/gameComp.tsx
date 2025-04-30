@@ -1,20 +1,22 @@
 'use client';
 import { fetcher, socket } from '@/app/lib';
 import { Game, User, Vote } from '@/generated/prisma';
-import { Card, CardBody, CardHeader, Chip, Divider, Image, Link, Spinner } from '@heroui/react';
+import { addToast, Card, CardBody, CardHeader, Chip, Divider, Image, Link, Spinner } from '@heroui/react';
 import { ExternalLinkIcon } from '@radix-ui/react-icons';
 import useSWR from 'swr';
 import { Voted } from './voted';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { wsMsg } from '@/types';
 
 export const GameComp = ({ id }: { id: string }) => {
   const { data, isLoading } = useSWR(`/api/game?id=${id}`, fetcher);
-  const [msgEvents, setMsgEvents] = useState<any>([]);
+  const [msgEvents, setMsgEvents] = useState<wsMsg[]>([]);
 
   useEffect(() => {
-    function onMsgEvent(value: any) {
-      setMsgEvents((previous: any) => [...previous, value] as any);
+    function onMsgEvent(value: wsMsg) {
+      setMsgEvents((previous: wsMsg[]) => [...previous, value]);
+      toast(value)
     }
     socket.emit('join', 'game-' + id);
     socket.on('vote', onMsgEvent);
@@ -25,6 +27,12 @@ export const GameComp = ({ id }: { id: string }) => {
     };
   }, []);
 
+  const toast = useCallback((value: { for: { name: any; }; from: { name: any; }; }) => {
+    addToast({
+      color: "primary",
+      title: `New Vote for ${value.for.name} from ${value.from.name}`,
+    });
+  }, [msgEvents])
   const liveVotes = useMemo(() => {
     if (!data) return;
     const wsVotes2Votes = msgEvents.map(
