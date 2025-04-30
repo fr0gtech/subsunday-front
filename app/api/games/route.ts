@@ -18,7 +18,7 @@ export async function GET() {
         select: { votes: true },
       },
     },
-    take: 33,
+    take: 20,
   });
 
   return NextResponse.json({

@@ -10,7 +10,7 @@ export const metadata = {
   openGraph: {
     title: 'Sub Sunday',
     description: "A website to track lirik's sub sunday votes.",
-    images: { images: ['http://sub-sunday.com/og.png'] },
+    images: { images: ['https://sub-sunday.com/og.png'] },
   },
 };
 export default function RootLayout({ children }: { children: React.ReactNode }) {
