@@ -80,7 +80,7 @@ export default function Home() {
                     router.push(`game/${e.id}`);
                   }}
                   isHoverable
-                  className="overflow-visible max-w-[400px] grow min-w-fit cursor-pointer"
+                  className="overflow-visible max-w-[400px] min-w-[310px] grow min-h-[170px] cursor-pointer"
                 >
                   <div className="relative flex h-full">
                     {/* create "default image" if no pic for game that is just logo and bg */}
