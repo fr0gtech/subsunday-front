@@ -18,7 +18,7 @@ import {
   Legend,
 } from 'chart.js';
 import { format, subDays } from 'date-fns';
-import { Card, CardBody, CardHeader, Code } from '@heroui/react';
+import { Alert, Card, CardBody, CardHeader, Code, Link } from '@heroui/react';
 
 ChartJS.register(
   CategoryScale,
@@ -49,14 +49,14 @@ export default function Home() {
         {
           label: 'Votes This Week',
           data: data.graph || [],
-          borderColor: 'rgb(255, 99, 132)',
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          borderColor: 'rgb(23, 201, 100)',
+          backgroundColor: 'rgba(23, 201, 100, 0.5)',
         },
         {
           label: "Votes Last Week",
           data: data.graphPastWeek || [],
-          borderColor: 'rgb(55, 99, 132)',
-          backgroundColor: 'rgba(55, 99, 132, 0.5)',
+          borderColor: 'rgb(147, 83, 211)',
+          backgroundColor: 'rgba(147, 83, 211, 0.5)',
         }
 
       ],
@@ -99,50 +99,73 @@ export default function Home() {
   }, [msgEvents, data]);
 
   return (
-    <section className=" overflow-hidden px-10 mx-auto w-full gap-4 flex flex-col">
-      <div className='flex gap-5'>
-        <Card className=' w-1/2 h-fit' shadow='md'>
-          <CardHeader>
-            <h4 className=' text-2xl'>Voting</h4>
-          </CardHeader>
-          <CardBody>
-            <p>
-              Sub Sunday is a weekly event where subscribers to the channel can vote for games they'd like to see Lirik play. Every week, 6 games are selected for the main list and 4 as backups from the list of votes.
-            </p>
-            <h5 className='text-xl mt-10'>How to Vote</h5>
-            <p>
-              Voting can currently only be conducted through Twitch Chat! Any votes through the existing website will NOT be included.
-              To vote, simply type <Code>!vote</Code> followed by the name of the game you wish to vote for.
-              Example:  <Code>
-                !vote Minecraft
-              </Code>
-
-            </p>
-            <h5 className='text-xl mt-10'>About Voting</h5>
-            <br />
-            <ul>
-              <li>
-                - Every vote is a ticket, and each ticket has the same chance of being picked.
-              </li>
-              <li>
-                - More tickets with the same game written on them increase the chance of that game being played.
-              </li>
-              <li>
-                - Every vote counts, so there's still a chance a less popular game could be picked.
-              </li>
-            </ul>
-            <h5 className='text-xl mt-10'>About Voting</h5>
-            Voting Schedule
-            <ul>
-              <li>
-
-                - When can I vote?
-              </li>
-            </ul>
-            Monday through Saturday.
-          </CardBody>
-        </Card>
-        <Card className='p-5 grow' shadow='md'>
+    <section className=" overflow-hidden p-5 mx-auto w-full gap-2 flex flex-col">
+      <div className='flex gap-2 w-full'>
+        <div className='gap-2 flex flex-col w-1/2 '>
+          <Card className='h-fit' shadow='md'>
+            <CardHeader>
+              <h4 className=' text-2xl font-bold'>Voting</h4>
+              <span className='text-tiny'></span>
+            </CardHeader>
+            <CardBody>
+              <p>
+                Sub Sunday is a weekly event where subscribers to the channel can vote for games they'd like to see Lirik play.
+                Every week, 6 games are selected for the main list and 4 as backups from the list of votes.
+              </p>
+            </CardBody>
+            <Alert>
+              <p>
+                All this information is unconfirmed and taken from <Link color='foreground' href="https://lirikker.com/lirik/subday/">here </Link>
+              </p>
+            </Alert>
+          </Card>
+          <Card>
+            <CardHeader>
+              <h5 className='text-xl'>About Voting</h5>
+            </CardHeader>
+            <CardBody>
+              <ul className='opacity-80'>
+                <li>
+                  - Every vote is a ticket, and each ticket has the same chance of being picked.
+                </li>
+                <li>
+                  - More tickets with the same game written on them increase the chance of that game being played.
+                </li>
+                <li>
+                  - Every vote counts, so there's still a chance a less popular game could be picked.
+                </li>
+              </ul>
+            </CardBody>
+          </Card>
+          <Card>
+            <CardHeader>
+              <h5 className='text-xl'>How to Vote</h5>
+            </CardHeader>
+            <CardBody>
+              <p className='opacity-80'>
+                Voting can currently only be conducted through Twitch Chat! Any votes through the existing website will NOT be included.
+                To vote, simply type <Code>!vote</Code> followed by the name of the game you wish to vote for.
+                Example:  <Code>
+                  !vote Minecraft
+                </Code>
+              </p>
+            </CardBody>
+          </Card>
+          <Card>
+            <CardHeader>
+              <h5 className='text-xl'>Voting Schedule</h5>
+            </CardHeader>
+            <CardBody>
+              <ul className='opacity-80'>
+                <li>
+                  - When can I vote?
+                </li>
+                Monday through Saturday.
+              </ul>
+            </CardBody>
+          </Card>
+        </div>
+        <Card className='p-5  grow' shadow='md'>
           {dataChart && <Line options={{
             elements: {
               line: {
@@ -154,19 +177,19 @@ export default function Home() {
       </div>
 
 
-        <div className=" overflow-scroll space-y-2">
-          {liveVotes &&
-            liveVotes.map(
-              (
-                e: Vote & { from: { name: string; id: number } } & {
-                  for: { id: number; name: string };
-                },
-                i: number,
-              ) => {
-                return <Voted key={e.id} vote={e} />;
+      <div className=" overflow-scroll space-y-2 ">
+        {liveVotes &&
+          liveVotes.map(
+            (
+              e: Vote & { from: { name: string; id: number } } & {
+                for: { id: number; name: string };
               },
-            )}
-        </div>
-    </section>
+              i: number,
+            ) => {
+              return <Voted key={e.id} vote={e} />;
+            },
+          )}
+      </div>
+    </section >
   );
 }

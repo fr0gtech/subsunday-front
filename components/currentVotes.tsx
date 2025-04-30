@@ -1,6 +1,6 @@
 'use client';
 
-import { Chip, Spinner, Tooltip } from '@heroui/react';
+import { Chip, Skeleton, Spinner, Tooltip } from '@heroui/react';
 import useSWR from 'swr';
 import { fetcher, socket } from '@/app/lib';
 import { useState, useEffect } from 'react';
@@ -28,10 +28,21 @@ export const CurrentVotes = ({ className }: { className: string }) => {
     setMsgEvents([])
   }, [data])
 
+  if (isLoading) {
+    return (
+      <div className={className}>
+        <Skeleton className='w-[100px] h-[20px] rounded-lg' />
+        <Skeleton className='w-[30px] h-[20px] rounded-lg' />
+        <Skeleton className='w-[100px] h-[20px] rounded-lg' />
+        <Skeleton className='w-[30px] h-[20px] rounded-lg' />
+      </div>
+    )
+  }
+
   return (
     <div className={className}>
       {data &&
-        <div className='flex items-center gap-4'>
+        <div className='flex items-center gap-4 select-none'>
           <span className="opacity-60 font-bold lowercase">Votes this week: </span>
           <Tooltip content={`total votes: ${data && data.total + msgEvents.length}`}>
             <motion.div
@@ -41,7 +52,7 @@ export const CurrentVotes = ({ className }: { className: string }) => {
               animate={{ opacity: 1, scale: 1.1 }}
               transition={{ type: "spring", stiffness: 100, damping: 15 }}
             >
-              <Chip size="sm" color="primary" variant="dot">
+              <Chip size="sm" color="secondary" variant="shadow" className='cursor-default'>
                 {data.now + msgEvents.length}
               </Chip>
             </motion.div>
@@ -54,7 +65,7 @@ export const CurrentVotes = ({ className }: { className: string }) => {
             animate={{ opacity: 1, scale: 1.1 }}
             transition={{ type: "spring", stiffness: 100, damping: 15 }}
           >
-            <Chip size="sm" color="primary" variant="dot">
+            <Chip size="sm" color="success" variant="shadow" className=' cursor-default'>
               {data.today + msgEvents.length}
             </Chip>
           </motion.div>

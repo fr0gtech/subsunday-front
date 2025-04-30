@@ -86,7 +86,7 @@ export const GameComp = ({ id }: { id: string }) => {
               {data.game.price.final && (
                 <Chip
                   variant="shadow"
-                  className="rankingChiptr absolute lg:-top-[6px] lg:-right-[12px] top-0 right-0 z-10"
+                  className="absolute z-10 lg:-left-2"
                 >
                   {data.game.price === 'free'
                     ? 'FREE'
@@ -95,9 +95,7 @@ export const GameComp = ({ id }: { id: string }) => {
               )}
             </CardBody>
             <CardHeader className="flex-col gap-3">
-              <div>
-                <p className=" whitespace-pre-wrap max-w-xl">{data.game.description}</p>
-              </div>
+              <p className=" whitespace-pre-wrap p-3 opacity-80">{data.game.description}</p>
             </CardHeader>
             <Divider />
           </>

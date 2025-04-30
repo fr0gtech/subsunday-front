@@ -80,50 +80,10 @@ export const Navbar = () => {
       </NavbarMenu>
       <CurrentVotes className={'hidden gap-5 lg:flex text-tiny lowercase'} />
       <NavbarContent className=" basis-1 pl-4" justify="end">
-        <Popover placement="right">
-          <PopoverTrigger>
-            <InfoCircledIcon className="text-default-500" />
-          </PopoverTrigger>
-          <PopoverContent>
-            <div className="p-2  flex flex-col max-w-xl">
-              <p>
-                This website was made for fun. Votes may not be accurate because its hard to find
-                any confirmed data about sub sunday. If you want to contribute, feel free. This may
-                also be a good project for ppl that want to get into web dev stuff. Only steam games
-                have images, price and so on but we also track non steam games just without any
-                metadata. If you have any questions or suggestions feel free to open an issue on
-                github
-              </p>
-            </div>
-          </PopoverContent>
-        </Popover>
-        <Popover placement="right">
-          <PopoverTrigger>
-            <GithubIcon className="text-default-500" />
-          </PopoverTrigger>
-          <PopoverContent>
-            <div className="px-1 py-2 !text-tiny flex flex-col">
-              <Link
-                size="sm"
-                color="foreground"
-                isExternal
-                aria-label="Github"
-                href={'https://github.com/fr0gtech/subsunday-back'}
-              >
-                fr0gtech/subsunday-back.git
-              </Link>
-              <Link
-                size="sm"
-                color="foreground"
-                isExternal
-                aria-label="Github"
-                href={'https://github.com/fr0gtech/subsunday-front'}
-              >
-                fr0gtech/subsunday-front.git
-              </Link>
-            </div>
-          </PopoverContent>
-        </Popover>
+
+        <Link href='/info'>
+          <GithubIcon className="text-default-500" />
+        </Link>
 
         <ThemeSwitch />
         <NavbarMenuToggle onClick={() => setMenuOpen(!menuOpen)} className="flex lg:hidden" />

@@ -1,6 +1,7 @@
 'use client';
 import useSWR from 'swr';
 import {
+  Card,
   Chip,
   Link,
   Table,
@@ -18,8 +19,8 @@ export default function Home() {
 
   return (
     <section className=" flex-wrap flex h-full lg:justify-center justify-start items-start w-full gap-4 p-5">
-      <div className="grow">
-        <h4 className="py-3 px-2 text-large lowercase">Top user by streak</h4>
+      <div className="grow p-3">
+        <h5 className='text-xl p-3'>Top Users by streak</h5>
         <Table aria-label="top user by streak">
           <TableHeader>
             <TableColumn>RANK</TableColumn>
@@ -46,8 +47,8 @@ export default function Home() {
           </TableBody>
         </Table>
       </div>
-      <div className="grow">
-        <h4 className="py-3 px-2 text-large lowercase">Top user by vote</h4>
+      <div className="grow p-3">
+        <h5 className='text-xl p-3'>Top Users by votes</h5>
         <Table aria-label="top user by vote">
           <TableHeader>
             <TableColumn>RANK</TableColumn>
@@ -76,8 +77,8 @@ export default function Home() {
           </TableBody>
         </Table>
       </div>
-      <div className="grow">
-        <h4 className="py-3 px-2 text-large lowercase">Top Games by vote</h4>
+      <div className="grow p-3">
+        <h5 className='text-xl p-3'>Top Games by votes</h5>
         <Table aria-label="top games by vote">
           <TableHeader>
             <TableColumn>RANK</TableColumn>
