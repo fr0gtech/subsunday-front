@@ -30,7 +30,7 @@ export const CurrentVotes = ({ className }: { className: string }) => {
 
   return (
     <div className={className}>
-      {data ? (
+      {data &&
         <div className='flex items-center gap-4'>
           <span className="opacity-60 font-bold lowercase">Votes this week: </span>
           <Tooltip content={`total votes: ${data && data.total + msgEvents.length}`}>
@@ -46,10 +46,20 @@ export const CurrentVotes = ({ className }: { className: string }) => {
               </Chip>
             </motion.div>
           </Tooltip>
+          <span className="opacity-60 font-bold lowercase">Votes today: </span>
+          <motion.div
+            className=''
+            key={data.today + msgEvents.length}
+            initial={{ opacity: 0.6, scale: 1 }}
+            animate={{ opacity: 1, scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 100, damping: 15 }}
+          >
+            <Chip size="sm" color="primary" variant="dot">
+              {data.today + msgEvents.length}
+            </Chip>
+          </motion.div>
         </div>
-      ) : (
-        <Spinner size="sm" color="white" />
-      )}
+      }
     </div>
   );
 };

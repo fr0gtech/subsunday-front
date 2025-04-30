@@ -5,10 +5,74 @@ import { fetcher, socket } from '../lib';
 import { Voted } from '@/components/voted';
 import { useState, useEffect, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { Line } from 'react-chartjs-2';
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { format, subDays } from 'date-fns';
+import { Card } from '@heroui/react';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+export const options = {
+  plugins: {
+    // legend: {
+    //   display: false
+    // },
+  },
+};
+
+
+const dayNames: string[] = [];
+
+for (let i = 6; i >= 0; i--) {
+  const date = subDays(new Date(), i);
+  const dayName = format(date, 'EEEE'); // Full weekday name like 'Monday'
+  dayNames.push(dayName);
+}
+
 
 export default function Home() {
   const { data } = useSWR(`/api/votes`, fetcher);
   const [msgEvents, setMsgEvents] = useState<any>([]);
+
+  const dataChart = useMemo(() => {
+    if (!data) return null
+    return {
+      labels: dayNames, // create labels for past 7 days
+      datasets: [
+        {
+          label: 'Votes This Week',
+          data: data.graph || [],
+          borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        },
+        {
+          label: "Votes Last Week",
+          data: data.graphPastWeek || [],
+          borderColor: 'rgb(55, 99, 132)',
+          backgroundColor: 'rgba(55, 99, 132, 0.5)',
+        }
+
+      ],
+    };
+  }, [data])
 
   useEffect(() => {
     function onMsgEvent(value: any) {
@@ -46,9 +110,12 @@ export default function Home() {
   }, [msgEvents, data]);
 
   return (
-    <section className="h-full  max-w-xl mx-auto  w-full gap-4 p-5">
-      <h4 className="py-3 px-2 text-large lowercase">Last 10 votes</h4>
-      <div className="flex-col flex flex-wrap justify-center gap-2 p-3 text-center">
+    <section className="h-full max-w-4xl mx-auto  w-full gap-4 ">
+      <Card className='p-5 mb-2'>
+        {dataChart && <Line className='' options={options} data={dataChart} />}
+      </Card>
+
+      <div className="flex-col flex flex-wrap justify-center gap-2  text-center">
         {liveVotes &&
           liveVotes.map(
             (

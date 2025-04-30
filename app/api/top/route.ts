@@ -6,6 +6,7 @@ export async function GET(req: NextRequest) {
   const top10voters = await prisma.user.findMany({
     select: {
       name: true,
+      id: true,
       _count: {
         select: {
           votes: true,

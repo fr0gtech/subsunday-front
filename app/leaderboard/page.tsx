@@ -20,7 +20,7 @@ export default function Home() {
     <section className=" flex-wrap flex h-full lg:justify-center justify-start items-start w-full gap-4 p-5">
       <div className="grow">
         <h4 className="py-3 px-2 text-large lowercase">Top user by streak</h4>
-        <Table aria-label="">
+        <Table aria-label="top user by streak">
           <TableHeader>
             <TableColumn>RANK</TableColumn>
             <TableColumn>USERNAME</TableColumn>
@@ -48,7 +48,7 @@ export default function Home() {
       </div>
       <div className="grow">
         <h4 className="py-3 px-2 text-large lowercase">Top user by vote</h4>
-        <Table aria-label="">
+        <Table aria-label="top user by vote">
           <TableHeader>
             <TableColumn>RANK</TableColumn>
             <TableColumn>USERNAME</TableColumn>
@@ -65,7 +65,7 @@ export default function Home() {
                     </TableCell>
                     <TableCell className="relative">
                       <Link href={`/user/${e.id}`} color="foreground" className=" cursor-pointer">
-                        {e.name}
+                        {e.name.substring(0, 25)}
                       </Link>
                     </TableCell>
                     <TableCell>{e._count.votes}</TableCell>
@@ -78,7 +78,7 @@ export default function Home() {
       </div>
       <div className="grow">
         <h4 className="py-3 px-2 text-large lowercase">Top Games by vote</h4>
-        <Table aria-label="">
+        <Table aria-label="top games by vote">
           <TableHeader>
             <TableColumn>RANK</TableColumn>
             <TableColumn>GAME</TableColumn>
@@ -94,7 +94,7 @@ export default function Home() {
                     </TableCell>
                     <TableCell>
                       <Link href={`/game/${e.id}`} color="foreground" className=" cursor-pointer">
-                        {e.name}
+                        {e.name.substring(0, 25)}
                       </Link>
                     </TableCell>
                     <TableCell>{e._count.votes}</TableCell>
