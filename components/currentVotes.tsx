@@ -30,8 +30,6 @@ export const CurrentVotes = ({ className }: { className: string }) => {
 
   return (
     <div className={className}>
-      {isLoading ? "loading" : ""}
-      {JSON.stringify(msgEvents)}
       {data ? (
         <div className='flex items-center gap-4'>
           <span className="opacity-60 font-bold lowercase">Votes this week: </span>
