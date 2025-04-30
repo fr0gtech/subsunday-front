@@ -4,7 +4,7 @@ import { Vote } from '@/generated/prisma';
 import { fetcher, socket } from '../lib';
 import { Voted } from '@/components/voted';
 import { useState, useEffect, useMemo } from 'react';
-import { randomUUID } from 'crypto';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Home() {
   const { data } = useSWR(`/api/votes`, fetcher);
@@ -37,7 +37,7 @@ export default function Home() {
             name: e.from.name,
             id: e.from.id,
           },
-          id: randomUUID(),
+          id: uuidv4(),
         };
       },
     );
