@@ -139,7 +139,7 @@ export const MainItem = () => {
                                             alt="Relaxing app background"
                                             shadow="sm"
                                             className={clsx([
-                                                'z-0 w-full h-full object-cover scale-[1.02] max-h-[140px] border-4',
+                                                'z-0 w-full h-full object-cover scale-[1.033] max-h-[140px] border-4',
                                                 borderColor,
                                             ])}
                                             src={e.picture}
@@ -149,7 +149,7 @@ export const MainItem = () => {
                                     <Tooltip content="Ranking & Votes">
                                         <Chip
                                             className={clsx([
-                                                'absolute  rankingChiptl text-xl !font-black -left-[2px] top-0 boldChip',
+                                                'absolute  rankingChiptl text-2xl !font-black -left-[3px] boldChip',
                                             ])}
                                             variant="shadow"
                                             color={color}
@@ -161,25 +161,25 @@ export const MainItem = () => {
                                     </Tooltip>
                                     {/* price chip */}
                                     {e.price.final === 'free' && (
-                                        <div className=" absolute top-0 -right-[2px] ">
+                                        <div className=" absolute top-0 -right-[3px] opacity-70">
                                             <Chip
                                                 size="sm"
                                                 variant="shadow"
-                                                className="!text-tiny uppercase rankingChiptr"
+                                                className="!text-tiny uppercase rankingChiptr text-opacity-70"
                                             >
                                                 {e.price.final}
                                             </Chip>
                                         </div>
                                     )}
                                     {typeof e.price.final === 'number' && (
-                                        <div className=" absolute top-0 -right-[2px] ">
+                                        <div className=" absolute -right-[3px] -top-[1px]">
                                             <Chip
                                                 color={color}
                                                 size="sm"
                                                 variant="shadow"
-                                                className="!text-tiny rankingChiptr"
+                                                className="!text-tiny rankingChiptr text-opacity-70"
                                             >
-                                                {(e.price.final as number) / 100} {e.price.currency}
+                                                {(e.price.final as number) / 100} <span className="text-[10px] font-bold">{e.price.currency}</span>
                                             </Chip>
                                         </div>
                                     )}

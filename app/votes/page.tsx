@@ -120,7 +120,7 @@ export default function Home() {
                 Every week, 6 games are selected for the main list and 4 as backups from the list of votes.
               </p>
             </CardBody>
-            <Alert variant='flat' className='m-5' color='danger'>
+            <Alert variant='flat' className='m-5 w-fit mx-auto' color='danger'>
               <p>
                 The info below is unconfirmed and taken from <Link color='foreground' href="https://lirikker.com/lirik/subday/">here </Link>
               </p>

@@ -4,7 +4,7 @@ import { addDays, startOfDay, subDays, subWeeks } from 'date-fns';
 
 export async function GET() {
   const votes = await prisma.vote.findMany({
-    take: 5,
+    take: 6,
     include: {
       for: {
         select: {

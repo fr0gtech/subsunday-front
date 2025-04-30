@@ -52,7 +52,7 @@ export const CurrentVotes = ({ className }: { className: string }) => {
               animate={{ opacity: 1, scale: 1.1 }}
               transition={{ type: "spring", stiffness: 100, damping: 15 }}
             >
-              <Chip size="sm" color="secondary" variant="shadow" className='cursor-default'>
+              <Chip size="sm" color="secondary" variant="shadow" className='cursor-default boldChip'>
                 {data.now + msgEvents.length}
               </Chip>
             </motion.div>
@@ -65,7 +65,7 @@ export const CurrentVotes = ({ className }: { className: string }) => {
             animate={{ opacity: 1, scale: 1.1 }}
             transition={{ type: "spring", stiffness: 100, damping: 15 }}
           >
-            <Chip size="sm" color="success" variant="shadow" className=' cursor-default'>
+            <Chip size="sm" color="success" variant="shadow" className=' cursor-default boldChip'>
               {data.today + msgEvents.length}
             </Chip>
           </motion.div>
