@@ -165,7 +165,7 @@ export const MainItem = () => {
                                         </Chip>
                                     </Tooltip>
                                     {/* price chip */}
-                                    {e.price.final === 'free' && (
+                                    {typeof e.price.final === 'string' && (
                                         <div className=" absolute top-0 -right-[3px] opacity-70">
                                             <Chip
                                                 size="sm"

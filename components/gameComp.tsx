@@ -96,8 +96,8 @@ export const GameComp = ({ id }: { id: string }) => {
                   variant="shadow"
                   className="absolute z-10 lg:-left-2"
                 >
-                  {data.game.price === 'free'
-                    ? 'FREE'
+                  {typeof data.game.price.final === 'string'
+                    ? data.game.price.final
                     : `${data.game.price.final / 100} ${data.game.price.currency}`}
                 </Chip>
               )}
