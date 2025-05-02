@@ -58,13 +58,15 @@ export const MainCard = ({e,i}:{e:gameNcount, i:number}) =>{
             <Tooltip content="Ranking & Votes">
                 <Chip
                     className={clsx([
-                        'absolute  rankingChiptl text-2xl !font-black -left-[3px] boldChip',
+                        'absolute  rankingChiptl -left-[3px] boldChip',
                     ])}
                     variant="shadow"
                     color={color}
                 >
-                    <span className="!text-tiny opacity-50 font-mono">#</span>
+                    <span className=" opacity-50 font-mono">#</span>
+                    <span className="text-2xl">
                     {i + 1}
+                    </span>
                     <span className="!text-tiny opacity-50">({e._count.votes})</span>
                 </Chip>
             </Tooltip>
