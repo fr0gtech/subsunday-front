@@ -92,26 +92,26 @@ export const MainItem = () => {
         )
     }
     return (
-        <div className="flex p-3 w-full">
-            <div className="container2 w-full">
-                {updateableGames &&
-                    updateableGames.map(
-                        (e, i: number,
-                        ) => {
-                            return (
-                                <MainCard key={e.id} e={e} i={i} />
-                            );
-                        },
-                    )}
-                <div className="fixed2 relative w-full h-full overflow-hidden">
-                    <div className="absolute w-full h-full top-0 left-0 whitespace-nowrap overflow-hidden2">
-                        <LiveVotes amount={3} bg={false} textRight />
+        <div className="flex w-full justify-center items-center">
+            <div className="flex p-3 w-full">
+                <div className="container2 w-full">
+                    {updateableGames &&
+                        updateableGames.map(
+                            (e, i: number,
+                            ) => {
+                                return (
+                                    <MainCard key={e.id} e={e} i={i} />
+                                );
+                            },
+                        )}
+                    <div className="fixed2 relative w-full h-full overflow-hidden">
+                        <div className="absolute w-full h-full top-0 left-0 whitespace-nowrap overflow-hidden2">
+                            <LiveVotes amount={3} bg={false} textRight />
+                        </div>
                     </div>
                 </div>
+                <Divider className="hidden lg:visible" />
             </div>
-            <Divider className="hidden lg:visible" />
-
         </div>
-
     )
 }

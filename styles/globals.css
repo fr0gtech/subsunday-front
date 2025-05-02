@@ -22,12 +22,17 @@
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(300px,350px));
   grid-auto-flow:dense;
-  gap: 1.9em;
-  align-items: start;
+  row-gap: 1em;
+  column-gap: 1.9em;
+  justify-items: stretch;
+
+  justify-content: center;
+
 }
 .container2 button{
   justify-self: center;
   max-height: 190px;
+
 }
 .container2  .fixed2 {
   grid-column-end:-1;
