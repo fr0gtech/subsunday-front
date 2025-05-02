@@ -5,8 +5,7 @@ import { GithubIcon } from '@/components/icons';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 import { fetcher } from '../lib';
-import { Game } from '@/generated/prisma';
-import { User } from '@prisma/client';
+import { Game, User } from '@/generated/prisma';
 
 export default function Home() {
   const searchParams = useSearchParams();
