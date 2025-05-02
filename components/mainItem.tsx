@@ -90,7 +90,7 @@ export const MainItem = () => {
         )
     }
     return (
-        <div className="flex">
+        <div className="flex p-3">
             <div className=" lg:p-5 flex flex-wrap gap-7">
                 {updateableGames &&
                     updateableGames.slice(0, 3).map(
@@ -101,7 +101,7 @@ export const MainItem = () => {
                             );
                         },
                     )}
-                <div className="">
+                <div className="hidden lg:block">
 
                 <LiveVotes amount={3} bg={false} textRight />
                 </div>
