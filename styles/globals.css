@@ -17,3 +17,23 @@
 .boldChip * {
   font-weight: 600 !important;
 }
+
+.container2 {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,350px));
+  grid-auto-flow:dense;
+  gap: 1.9em;
+  align-items: start;
+}
+.container2 button{
+  justify-self: center;
+  max-height: 190px;
+}
+.container2  .fixed2 {
+  grid-column-end:-1;
+  grid-row:1;
+
+}
+.overflow-hidden2 span{
+  overflow:hidden !important;
+}
