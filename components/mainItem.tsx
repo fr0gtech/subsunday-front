@@ -1,10 +1,8 @@
 import { Game } from "@/generated/prisma";
-import { addToast, Card, Chip, Divider, Image, Input, Kbd, Skeleton, Tooltip } from "@heroui/react";
+import { addToast, Card, Divider, Skeleton } from "@heroui/react";
 import clsx from "clsx";
-import Link from "next/link";
-import { Logo, SearchIcon, Steamicon } from "./icons";
 import { socket, fetcher } from "@/app/lib";
-import { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import useSWR from "swr";
 import { wsMsg } from "@/types";
 import { LiveVotes } from "./liveVotes";
@@ -49,7 +47,6 @@ export const MainItem = () => {
             acc[game.name] = (acc[game.name] || 0) + 1;
             return acc;
         }, {});
-        console.log(wsVotes);
 
         return data.games
             .map((e: Game & { _count: { votes: number } }) => {
