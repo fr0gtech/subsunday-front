@@ -5,7 +5,7 @@ import { Voted } from "./voted";
 import useSWR from "swr";
 import { v4 as uuidv4 } from 'uuid';
 
-export const LiveVotes = ({amount, bg = true, textRight=false}:{amount: number, bg?: boolean,textRight?:boolean}) => {
+export const LiveVotes = ({ amount, bg = true, textRight = false }: { amount: number, bg?: boolean, textRight?: boolean }) => {
     const [msgEvents, setMsgEvents] = useState<any>([]);
     const { data } = useSWR(`/api/votes?amount=${amount}`, fetcher);
 
