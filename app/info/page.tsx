@@ -28,7 +28,7 @@ export default function Home() {
 
           <Card>
             <CardHeader>
-              <h5 className='text-xl'>Supported Games</h5><GithubIcon className='ml-2' />
+              <h5 className='text-xl'>Supported Games</h5>
             </CardHeader>
             <CardBody>
               <p className='opacity-80'>

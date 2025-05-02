@@ -69,6 +69,7 @@ export const CurrentVotes = ({ className }: { className: string }) => {
               {data.today + msgEvents.length}
             </Chip>
           </motion.div>
+
         </div>
       }
     </div>

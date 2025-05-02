@@ -66,7 +66,7 @@ export const UserComp = ({ id }: { id: string }) => {
         <CardBody>
           {liveVotes &&
             liveVotes.map((e: Vote & { from: User } & { for: Game }, i: number) => {
-              return <Voted key={i} vote={e} />;
+              return <Voted key={i} vote={e} bg={false} />;
             })}
         </CardBody>
       </Card>

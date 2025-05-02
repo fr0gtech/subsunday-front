@@ -1,10 +1,12 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma';
 import { addDays, startOfDay, subDays, subWeeks } from 'date-fns';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const take = parseInt(req.nextUrl.searchParams.get('amount') as string)
+
   const votes = await prisma.vote.findMany({
-    take: 6,
+    take: take || 6,
     include: {
       for: {
         select: {

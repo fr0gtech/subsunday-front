@@ -1,10 +1,7 @@
 'use client';
 import useSWR from 'swr';
-import { Vote } from '@/generated/prisma';
-import { fetcher, socket } from '../lib';
-import { Voted } from '@/components/voted';
-import { useState, useEffect, useMemo } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { fetcher } from '../lib';
+import { useMemo } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import {
@@ -19,6 +16,7 @@ import {
 } from 'chart.js';
 import { format, subDays } from 'date-fns';
 import { Alert, Card, CardBody, CardHeader, Code, Link } from '@heroui/react';
+import { LiveVotes } from '@/components/liveVotes';
 
 ChartJS.register(
   CategoryScale,
@@ -29,6 +27,7 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
 const dayNames: string[] = [];
 
 for (let i = 6; i >= 0; i--) {
@@ -39,7 +38,6 @@ for (let i = 6; i >= 0; i--) {
 
 export default function Home() {
   const { data } = useSWR(`/api/votes`, fetcher);
-  const [msgEvents, setMsgEvents] = useState<any>([]);
 
   const dataChart = useMemo(() => {
     if (!data) return null
@@ -68,41 +66,6 @@ export default function Home() {
       ],
     };
   }, [data])
-
-  useEffect(() => {
-    function onMsgEvent(value: any) {
-      setMsgEvents((previous: any) => [...previous, value] as any);
-    }
-    socket.emit('join', 'main');
-    socket.on('vote', onMsgEvent);
-
-    return () => {
-      socket.emit('leave', 'main');
-      socket.off('vote', onMsgEvent);
-    };
-  }, []);
-
-  const liveVotes = useMemo(() => {
-    if (!data) return;
-    const wsVotes2Votes = msgEvents.map(
-      (e: { for: { id: number; name: string }; from: { id: number; name: string } }) => {
-        return {
-          createdAt: new Date(),
-          for: {
-            name: e.for.name,
-            id: e.for.id,
-          },
-          from: {
-            name: e.from.name,
-            id: e.from.id,
-          },
-          id: uuidv4(),
-        };
-      },
-    );
-
-    return [...wsVotes2Votes, ...data.votes];
-  }, [msgEvents, data]);
 
   return (
     <section className=" overflow-hidden p-5 mx-auto gap-2 flex flex-col">
@@ -220,24 +183,9 @@ export default function Home() {
                 }
               }} data={dataChart} />}
           </Card>
-          <div className="space-y-2 ">
-            {liveVotes &&
-              liveVotes.map(
-                (
-                  e: Vote & { from: { name: string; id: number } } & {
-                    for: { id: number; name: string };
-                  },
-                  i: number,
-                ) => {
-                  return <Voted key={e.id} vote={e} />;
-                },
-              )}
-          </div>
+         <LiveVotes amount={6}/>
         </div>
       </div>
-
-
-
-    </section >
+    </section>
   );
 }

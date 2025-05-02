@@ -15,13 +15,11 @@ import { ThemeSwitch } from './theme-switch';
 import { siteConfig } from '@/config/site';
 import clsx from 'clsx';
 import { link as linkStyles } from '@heroui/theme';
-import { Button, Link, Popover, PopoverContent, PopoverTrigger } from '@heroui/react';
-import { fetcher } from '@/app/lib';
-import useSWR from 'swr';
+import { Link} from '@heroui/react';
 import { CurrentVotes } from './currentVotes';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { InfoCircledIcon } from '@radix-ui/react-icons';
+
 export const Navbar = () => {
   const path = usePathname();
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
