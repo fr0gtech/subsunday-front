@@ -42,12 +42,15 @@ export const MainItem = () => {
     const { data, isLoading } = useSWR(`/api/games`, fetcher);
 
     const updateableGames = useMemo<gameNcount[]>(() => {
+
         if (!data) return;
         const wsVotes = msgEvents.reduce((acc: { [x: string]: any }, curr: { for: any }) => {
             const game = curr.for;
-            acc[game] = (acc[game] || 0) + 1;
+            acc[game.name] = (acc[game.name] || 0) + 1;
             return acc;
         }, {});
+        console.log(wsVotes);
+
         return data.games
             .map((e: Game & { _count: { votes: number } }) => {
                 return {
