@@ -47,7 +47,7 @@ export const LiveVotes = ({amount, bg = true, textRight=false}:{amount: number, 
     return (
         <div className="space-y-2 grow ">
             {liveVotes &&
-                liveVotes.map(
+                liveVotes.slice(0, amount).map(
                     (
                         e: Vote & { from: { name: string; id: number } } & {
                             for: { id: number; name: string };
