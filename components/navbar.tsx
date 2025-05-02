@@ -24,6 +24,27 @@ export const Navbar = () => {
   const path = usePathname();
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const router = useRouter()
+
+  const searchBar = <Input
+    aria-label="Search"
+    classNames={{
+      inputWrapper: "bg-default-100",
+      input: "text-sm",
+    }}
+    labelPlacement="outside"
+    placeholder="Search..."
+    startContent={
+      <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
+    }
+    type="search"
+    onKeyDown={(e) => {
+      if (e.code === "Enter") {
+        console.log(e);
+        router.push("/search?value=" + e.currentTarget.value)
+      }
+
+    }}
+  />
   return (
     <HeroUINavbar isMenuOpen={menuOpen} maxWidth="full" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -55,6 +76,8 @@ export const Navbar = () => {
 
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
+          {searchBar}
+
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem
               key={`${item}-${index}`}
@@ -80,27 +103,8 @@ export const Navbar = () => {
 
       <CurrentVotes className={'hidden gap-5 lg:flex text-tiny lowercase'} />
       <NavbarContent className=" basis-1 pl-4" justify="end">
-        <NavbarItem>
-          <Input
-            aria-label="Search"
-            classNames={{
-              inputWrapper: "bg-default-100",
-              input: "text-sm",
-            }}
-            labelPlacement="outside"
-            placeholder="Search..."
-            startContent={
-              <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-            }
-            type="search"
-            onKeyDown={(e) => {
-              if (e.code === "Enter") {
-                console.log(e);
-                router.push("/search?value=" + e.currentTarget.value)
-              }
-
-            }}
-          />
+        <NavbarItem className='hidden lg:block'>
+          {searchBar}
         </NavbarItem>
         <NextLink href='info'>
           <GithubIcon className="text-default-500" />
