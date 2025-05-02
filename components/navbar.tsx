@@ -10,19 +10,20 @@ import {
 } from '@heroui/navbar';
 import NextLink from 'next/link';
 
-import { GithubIcon, Logo } from '@/components/icons';
+import { GithubIcon, Logo, SearchIcon } from '@/components/icons';
 import { ThemeSwitch } from './theme-switch';
 import { siteConfig } from '@/config/site';
 import clsx from 'clsx';
 import { link as linkStyles } from '@heroui/theme';
-import { Link} from '@heroui/react';
+import { Input, Kbd, Link } from '@heroui/react';
 import { CurrentVotes } from './currentVotes';
 import { useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export const Navbar = () => {
   const path = usePathname();
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const router = useRouter()
   return (
     <HeroUINavbar isMenuOpen={menuOpen} maxWidth="full" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -76,8 +77,31 @@ export const Navbar = () => {
           ))}
         </div>
       </NavbarMenu>
+
       <CurrentVotes className={'hidden gap-5 lg:flex text-tiny lowercase'} />
       <NavbarContent className=" basis-1 pl-4" justify="end">
+        <NavbarItem>
+          <Input
+            aria-label="Search"
+            classNames={{
+              inputWrapper: "bg-default-100",
+              input: "text-sm",
+            }}
+            labelPlacement="outside"
+            placeholder="Search..."
+            startContent={
+              <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
+            }
+            type="search"
+            onKeyDown={(e) => {
+              if (e.code === "Enter") {
+                console.log(e);
+                router.push("/search?value=" + e.currentTarget.value)
+              }
+
+            }}
+          />
+        </NavbarItem>
         <NextLink href='info'>
           <GithubIcon className="text-default-500" />
         </NextLink>

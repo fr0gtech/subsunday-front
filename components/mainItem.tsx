@@ -1,8 +1,8 @@
 import { Game } from "@/generated/prisma";
-import { addToast, Card, Chip, Divider, Image, Skeleton, Tooltip } from "@heroui/react";
+import { addToast, Card, Chip, Divider, Image, Input, Kbd, Skeleton, Tooltip } from "@heroui/react";
 import clsx from "clsx";
 import Link from "next/link";
-import { Logo, Steamicon } from "./icons";
+import { Logo, SearchIcon, Steamicon } from "./icons";
 import { socket, fetcher } from "@/app/lib";
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import useSWR from "swr";
@@ -94,6 +94,7 @@ export const MainItem = () => {
             </section>
         )
     }
+
     return (
         <div className="flex w-full justify-center items-center">
             <div className="flex p-3 w-full">
