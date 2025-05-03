@@ -10,6 +10,7 @@ import {
   subDays,
   Day,
   previousDay,
+  isSaturday,
 } from 'date-fns';
 import { tz, TZDate } from '@date-fns/tz';
 
@@ -27,17 +28,18 @@ export function getDateRange({ fromDay, fromTime, toDay, toTime }: DateRangeOpti
   const periodStart = previousDay(now, fromDay, { in: tz('America/New_York') });
 
   const startDate = setMilliseconds(
-    setSeconds(setMinutes(setHours(periodStart, fromHour), fromMinute), 0),
+    setSeconds(setMinutes(setHours  (periodStart, fromHour), fromMinute), 0),
     0,
   );
   const [toHour, toMinute] = toTime.split(':').map(Number);
-
-  const periodEndDate = nextDay(now, toDay, { in: tz('America/New_York') });
+  const periodEndDate = isSaturday(now) ? now : nextDay(now, toDay, { in: tz('America/New_York') });
   const endDate = setMilliseconds(
     setSeconds(setMinutes(setHours(periodEndDate, toHour), toMinute), 0),
     0,
   );
 
+  console.log(startDate,endDate);
+  
   // const nextStartDay = nextDay(now, startDay, { in: tz('America/New_York') });
   // console.log('now', now);
   // console.log('nextStartDay', nextStartDay);
