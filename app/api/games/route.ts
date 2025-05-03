@@ -3,8 +3,8 @@ import { prisma } from '@/prisma';
 import { getDateRange } from '@/app/lib';
 
 export async function GET(req: NextRequest) {
-  const page = parseInt(req.nextUrl.searchParams.get('page') as string);
-
+  const page = parseInt(req.nextUrl.searchParams.get('page') as string) || 1;
+  
   const range = getDateRange();
   const itemsToLoad = 18;
   const games = await prisma.game.findMany({
