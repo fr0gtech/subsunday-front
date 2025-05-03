@@ -1,8 +1,5 @@
 'use client';
-import { CurrentVotes } from '@/components/currentVotes';
 import { MainItem } from '@/components/mainItem';
-import { VotingPeriod } from '@/components/votingPeriod';
-import { Image } from '@heroui/react';
 
 export default function Home() {
   return (

@@ -4,9 +4,8 @@ import Link from 'next/link';
 import { Image, Tooltip } from '@heroui/react';
 import { Logo, Steamicon } from './icons';
 import { gameNcount } from './mainItem';
-import { useRouter } from 'next/navigation';
 import NumberFlow from '@number-flow/react';
-import { CheckIcon, ClipboardIcon } from '@radix-ui/react-icons';
+import { ClipboardIcon } from '@radix-ui/react-icons';
 
 export const MainCard = ({
   e,
@@ -19,7 +18,6 @@ export const MainCard = ({
   onPress: (e: PressEvent) => void;
   className?: string;
 }) => {
-  const router = useRouter();
   const color = i === 0 ? 'success' : i === 1 ? 'warning' : i === 2 ? 'secondary' : 'default';
   const borderColor =
     i === 0

@@ -1,6 +1,4 @@
 'use client';
-import useSWR from 'swr';
-import { fetcher } from '../lib';
 
 import { Card, CardBody, CardHeader, Link } from '@heroui/react';
 import { GithubIcon } from '@/components/icons';

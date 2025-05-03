@@ -8,8 +8,7 @@ export const Search = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const search = searchParams.get('value');
-  // get query and do stuff
-
+  
   const { data } = useSWR(search && 'api/search?value=' + search, fetcher);
   return (
     <>

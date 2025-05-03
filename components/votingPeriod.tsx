@@ -7,8 +7,9 @@ export const VotingPeriod = ({ className }: { className: string }) => {
   const [time, setTime] = useState<Date>(new Date());
 
   // display period of voting on a calendar or something?
-  const voteRange = getDateRange();
-
+  const voteRange = useMemo(()=>{
+    return getDateRange();
+  }, [])
   const votingClosed = useMemo(() => {
     const today = new TZDate(Date.now(), 'America/New_York');
     return isBefore(today, voteRange.startDate);

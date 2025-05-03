@@ -1,13 +1,6 @@
 'use client';
-import useSWR from 'swr';
-import { fetcher } from '../lib';
-import { useMemo } from 'react';
-import { Line } from 'react-chartjs-2';
-
-import { format, subDays } from 'date-fns';
 import { Alert, Card, CardBody, CardHeader, Code, Link } from '@heroui/react';
 import { LiveVotes } from '@/components/liveVotes';
-import { TZDate } from '@date-fns/tz';
 import { Chart } from '@/components/chart';
 import { CurrentVotes } from '@/components/currentVotes';
 
