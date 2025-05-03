@@ -38,8 +38,6 @@ export function getDateRange({ fromDay, fromTime, toDay, toTime }: DateRangeOpti
     0,
   );
 
-  console.log(startDate,endDate);
-  
   // const nextStartDay = nextDay(now, startDay, { in: tz('America/New_York') });
   // console.log('now', now);
   // console.log('nextStartDay', nextStartDay);
