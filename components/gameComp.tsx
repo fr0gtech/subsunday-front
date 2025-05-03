@@ -8,6 +8,7 @@ import { Voted } from './voted';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { wsMsg } from '@/types';
+import { TZDate } from '@date-fns/tz';
 
 export const GameComp = ({ id }: { id: string }) => {
   const { data, isLoading } = useSWR(`/api/game?id=${id}`, fetcher);
@@ -38,7 +39,7 @@ export const GameComp = ({ id }: { id: string }) => {
     const wsVotes2Votes = msgEvents.map(
       (e: { for: { id: number; name: string }; from: { id: number; name: string } }) => {
         return {
-          createdAt: new Date(),
+          createdAt: new TZDate(new Date(), 'America/New_York'),
           for: {
             name: e.for.name,
             id: e.for.id,
@@ -120,7 +121,7 @@ export const GameComp = ({ id }: { id: string }) => {
               <div className="text-tiny text-default-500">
                 total:{' '}
                 <Chip size="sm" variant="shadow">
-                  {data.game.votes.length}
+                  {data.game._count.votes}
                 </Chip>
               </div>
             </div>

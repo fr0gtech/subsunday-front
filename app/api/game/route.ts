@@ -4,7 +4,8 @@ import { getDateRange } from '@/app/lib';
 
 export async function GET(req: NextRequest) {
   const gameId = req.nextUrl.searchParams.get('id') as string;
-  const range = getDateRange({ intervalDays: 7, startDay: 0, time: '12:00' });
+  const range = getDateRange({ fromDay: 1, fromTime: '00:00', toDay: 6, toTime: '22:00' });
+
   const game = await prisma.game.findFirst({
     where: {
       id: parseInt(gameId),
@@ -46,6 +47,9 @@ export async function GET(req: NextRequest) {
       },
     },
   });
+  console.log(game);
+  console.log(votesSubSunday);
+
   return NextResponse.json({
     game: game,
     votesSubSunday: votesSubSunday,

@@ -5,6 +5,7 @@ import { Card, CardBody, CardHeader, Divider, Spinner } from '@heroui/react';
 import useSWR from 'swr';
 import { Voted } from './voted';
 import { useState, useEffect, useMemo } from 'react';
+import { TZDate } from '@date-fns/tz';
 
 export const UserComp = ({ id }: { id: string }) => {
   const { data, isLoading } = useSWR(`/api/user?id=${id}`, fetcher);
@@ -28,7 +29,7 @@ export const UserComp = ({ id }: { id: string }) => {
     const wsVotes2Votes = msgEvents.map(
       (e: { for: { id: number; name: string }; from: { id: number; name: string } }) => {
         return {
-          createdAt: new Date(),
+          createdAt: new TZDate(new Date(), 'America/New_York'),
           for: {
             name: e.for.name,
             id: e.for.id,

@@ -25,7 +25,7 @@ export const MainCard = ({ e, i }: { e: gameNcount, i: number }) => {
             isPressable
             onPress={() => router.push(`game/${e.id}`)}
             isHoverable
-            className="overflow-visible min-w-[310px] grow cursor-pointer my-3 w-full h-full"
+            className="grid-item overflow-visible"
         >
 
             <div className="relative flex h-full">

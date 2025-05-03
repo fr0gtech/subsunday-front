@@ -2,9 +2,10 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/prisma';
 import { getDateRange } from '@/app/lib';
 import { endOfDay, startOfDay } from 'date-fns';
+import { TZDate } from '@date-fns/tz';
 
 export async function GET() {
-  const range = getDateRange({ intervalDays: 7, startDay: 0, time: '12:00' });
+  const range = getDateRange({ fromDay: 1, fromTime: '00:00', toDay: 6, toTime: '22:00' });
 
   const votesSubSunday = await prisma.game.findMany({
     select: {
@@ -32,9 +33,9 @@ export async function GET() {
       },
     },
   });
-
-  const start_of_day = startOfDay(new Date());
-  const end_of_day = endOfDay(new Date());
+  const today = new TZDate(new Date(), 'America/New_York');
+  const start_of_day = startOfDay(today);
+  const end_of_day = endOfDay(today);
 
   const votesToday = await prisma.game.findMany({
     select: {

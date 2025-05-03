@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/prisma';
+import { getDateRange } from '@/app/lib';
 
 export async function GET() {
-
   // we need to cursor this req and depending on screen size we
   // load more games on useIntersec? (visible) if needed this is the best way to create the exact amount of items we need?
   // but how would mutate work? we don't need cuz of socket?
@@ -10,6 +10,8 @@ export async function GET() {
   // easiest way to do it would be to provide index but still mutate?
   //
   // or we just load a shitton and don't give a fuck? <-
+  const range = getDateRange({ fromDay: 1, fromTime: '00:00', toDay: 6, toTime: '22:00' });
+
   const games = await prisma.game.findMany({
     where: {
       name: {
@@ -23,7 +25,16 @@ export async function GET() {
     },
     include: {
       _count: {
-        select: { votes: true },
+        select: {
+          votes: {
+            where: {
+              createdAt: {
+                gte: range.startDate,
+                lte: range.endDate,
+              },
+            },
+          },
+        },
       },
     },
     take: 50,

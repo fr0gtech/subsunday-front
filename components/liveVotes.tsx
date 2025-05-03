@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Voted } from "./voted";
 import useSWR from "swr";
 import { v4 as uuidv4 } from 'uuid';
+import { TZDate } from "@date-fns/tz";
 
 export const LiveVotes = ({ amount, bg = true, textRight = false }: { amount: number, bg?: boolean, textRight?: boolean }) => {
     const [msgEvents, setMsgEvents] = useState<any>([]);
@@ -27,7 +28,7 @@ export const LiveVotes = ({ amount, bg = true, textRight = false }: { amount: nu
         const wsVotes2Votes = msgEvents.map(
             (e: { for: { id: number; name: string }; from: { id: number; name: string } }) => {
                 return {
-                    createdAt: new Date(),
+                    createdAt: new TZDate(new Date(), 'America/New_York'),
                     for: {
                         name: e.for.name,
                         id: e.for.id,

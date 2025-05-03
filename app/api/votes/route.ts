@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma';
 import { addDays, startOfDay, subDays, subWeeks } from 'date-fns';
+import { tz, TZDate } from '@date-fns/tz';
 
 export async function GET(req: NextRequest) {
-  const take = parseInt(req.nextUrl.searchParams.get('amount') as string)
+  const take = parseInt(req.nextUrl.searchParams.get('amount') as string);
 
   const votes = await prisma.vote.findMany({
-    take: take || 6,
+    take: take || 6,
     include: {
       for: {
         select: {
@@ -26,7 +27,7 @@ export async function GET(req: NextRequest) {
     },
   });
 
-  const today = Date.now();
+  const today = new TZDate(Date.now(), 'America/New_York');
   const votesLast7Days = await getVotesBetween(subDays(today, 7), 7);
   const voteLastWeek = await getVotesBetween(subDays(today, 14), 7);
 

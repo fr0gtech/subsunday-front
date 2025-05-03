@@ -18,27 +18,32 @@
   font-weight: 600 !important;
 }
 
-.container2 {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,350px));
-  grid-auto-flow:dense;
-  row-gap: 1em;
-  column-gap: 1.9em;
-  justify-items: stretch;
+.overflow-hidden2 span{
+  overflow:hidden !important;
+}
 
+.grid-container {
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  gap: 2em;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(clamp(100px, 100%, 300px), 1fr)
+  );
+}
+
+.grid-item {
+  display: flex;
   justify-content: center;
+}
+.fixed2 {
+  grid-column-end:-1;
+  grid-row:2;
 
 }
-.container2 button{
-  justify-self: center;
-  max-height: 190px;
-
-}
-.container2  .fixed2 {
+.fixed3 {
   grid-column-end:-1;
   grid-row:1;
 
-}
-.overflow-hidden2 span{
-  overflow:hidden !important;
 }

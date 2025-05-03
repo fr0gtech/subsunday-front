@@ -101,8 +101,12 @@ export const Navbar = () => {
         </div>
       </NavbarMenu>
 
-      <CurrentVotes className={'hidden gap-5 lg:flex text-tiny lowercase'} />
+      {/* <CurrentVotes className={'font-bold hidden gap-5 lg:flex text-tiny lowercase'} /> */}
+
       <NavbarContent className=" basis-1 pl-4" justify="end">
+        <NavbarContent>
+
+        </NavbarContent>
         <NavbarItem className='hidden lg:block'>
           {searchBar}
         </NavbarItem>

@@ -7,6 +7,9 @@ import useSWR from "swr";
 import { wsMsg } from "@/types";
 import { LiveVotes } from "./liveVotes";
 import { MainCard } from "./mainCard";
+import { VotingPeriod } from "./votingPeriod";
+import { CurrentVotes } from "./currentVotes";
+import { Chart } from "./chart";
 export type gameNcount = Game & {
     _count: { votes: number };
     price: { final: number | string; currency: string }
@@ -95,7 +98,7 @@ export const MainItem = () => {
     return (
         <div className="flex w-full justify-center items-center">
             <div className="flex p-3 w-full">
-                <div className="container2 w-full">
+                <div className="grid-container">
                     {updateableGames &&
                         updateableGames.map(
                             (e, i: number,
@@ -109,6 +112,10 @@ export const MainItem = () => {
                         <div className="absolute w-full h-full top-0 left-0 whitespace-nowrap overflow-hidden2">
                             <LiveVotes amount={3} bg={false} textRight />
                         </div>
+                    </div>
+                    <div className="fixed3 flex item-center flex-col justify-evenly ">
+                        <VotingPeriod className=" text-center py-4 !font-bold" />
+                        <CurrentVotes className="gap-2 flex flex-row justify-evenly text-tiny" />
                     </div>
                 </div>
                 <Divider className="hidden lg:visible" />
