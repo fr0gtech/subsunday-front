@@ -1,14 +1,10 @@
 'use client';
 import { fetcher, socket } from '@/app/lib';
-import { Game, User, Vote } from '@/generated/prisma';
 import {
   addToast,
-  Card,
-  CardBody,
-  CardHeader,
+
   Chip,
   Divider,
-  Image,
   Link,
   Spinner,
 } from '@heroui/react';
@@ -16,13 +12,11 @@ import { ExternalLinkIcon } from '@radix-ui/react-icons';
 import useSWR from 'swr';
 import { Voted } from './voted';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { wsMsg } from '@/types';
 import { TZDate } from '@date-fns/tz';
 import clsx from 'clsx';
 import { VoteForFrom, wsVote } from './liveVotes';
 import { v4 as uuidv4 } from 'uuid';
-
+import Image from 'next/image';
 export const GameComp = ({
   id,
   page = false,
@@ -107,17 +101,19 @@ export const GameComp = ({
         {data.game.name}{' '}
         {data.game.dev[0].length > 0 && <span className="text-tiny">by {data.game.dev}</span>}
       </h4>
+
       {data.game.picture !== 'default' && (
         <>
+        <div className='w-1/2 relative h-[200px] rouned'>
           {withImage && (
             <Image
               alt={'item.title'}
-              radius="lg"
-              shadow="sm"
-              removeWrapper
+              fill
+              className=' object-cover rounded-md'
               src={data.game.picture}
             />
           )}
+          </div>
           <div className="flex gap-3 flex-wrap">
             {data.game.categories &&
               Object.values(data.game.categories).map((e: any, i) => {

@@ -1,12 +1,12 @@
 import { addToast, Button, Card, Chip, PressEvent } from '@heroui/react';
 import clsx from 'clsx';
 import Link from 'next/link';
-import { Image, Tooltip } from '@heroui/react';
+import { Tooltip } from '@heroui/react';
 import { Logo, Steamicon } from './icons';
 import { gameNcount } from './mainItem';
 import NumberFlow from '@number-flow/react';
 import { ClipboardIcon } from '@radix-ui/react-icons';
-
+import NextImage from 'next/image';
 export const MainCard = ({
   e,
   i,
@@ -50,18 +50,19 @@ export const MainCard = ({
             <span className="!text-[10px] lowercase mt-1 font-bold">No Image </span>
           </div>
         ) : (
-          // render game pic
-          <Image
-            isBlurred
-            removeWrapper
-            alt="Relaxing app background"
-            shadow="sm"
-            className={clsx([
-              'z-0 w-full h-full object-cover scale-[1.033] max-h-[140px] border-4',
+          <div className='h-[150px]'>
+
+            <NextImage
+            src={e.picture}
+            fill
+              className={clsx([
+              'z-0 w-full grow rounded-[20px] object-cover scale-[1.033]  border-4',
               borderColor,
             ])}
-            src={e.picture}
+          alt={e.name}
           />
+            </div>
+         
         )}
         {/* ranking and vote chip */}
 
