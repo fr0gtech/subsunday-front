@@ -45,7 +45,9 @@ export const LiveVotes = ({
       socket.off('vote', onMsgEvent);
     };
   }, []);
-
+  useEffect(()=>{
+    setMsgEvents([]) // reset realtime on mutate cuz we now got new data 
+  },[data])
   const liveVotes: (VoteForFrom | wsVote)[] | undefined = useMemo(() => {
     if (!data) return;
     const wsVotes2Votes: wsVote[] = msgEvents.map((e: wsVote) => {

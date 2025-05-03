@@ -34,6 +34,7 @@ export const MainCard = ({
       key={e.id}
       onPress={onPress}
       isPressable
+      as={"div"}
       // onPress={() => router.push(`game/${e.id}`)}
       isHoverable
       className={className}
