@@ -13,6 +13,7 @@ export async function GET(req: NextRequest) {
         { name: { endsWith: value, mode: 'insensitive' } },
       ],
     },
+    take: 10,
     include: {
       _count: {
         select: {
@@ -31,6 +32,7 @@ export async function GET(req: NextRequest) {
         { name: { endsWith: value, mode: 'insensitive' } },
       ],
     },
+    take: 10,
     include: {
       _count: {
         select: {
