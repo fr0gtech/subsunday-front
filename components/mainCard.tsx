@@ -39,76 +39,73 @@ export const MainCard = ({
     >
       <div className="relative flex h-full">
         {/* create "default image" if no pic for game that is just logo and bg */}
-        {e.picture === 'default' ? (
-          <div
-            className={clsx([
-              'flex flex-col justify-center grow min-h-[100px] min-w-[294px]  items-center z-0 w-full object-cover scale-[1.02] shadow-lg  border-4 rounded-[1em]',
-              borderColor,
-            ])}
-          >
-            <Logo size={25} />
-            <span className="!text-[10px] lowercase mt-1 font-bold">No Image </span>
-          </div>
-        ) : (
-          <div className='h-[150px]'>
-
-            <NextImage
-            src={e.picture}
-            fill
+        <div className={clsx(['scale-[1.033] w-full h-full overflow-clip relative rounded-[10px] border-4', borderColor])}>
+          {e.picture === 'default' ? (
+            <div
               className={clsx([
-              'z-0 w-full grow rounded-[20px] object-cover scale-[1.033]  border-4',
-              borderColor,
-            ])}
-          alt={e.name}
-          />
-            </div>
-         
-        )}
-        {/* ranking and vote chip */}
-
-        <Tooltip content="Ranking & Votes">
-          <Chip
-            className={clsx(['absolute rankingChiptl -left-[3px] boldChip !w-[200px]'])}
-            variant="shadow"
-            color={color}
-          >
-            <div className="flex items-center">
-              <div className=" opacity-50 font-mono">#</div>
-              <div className="text-2xl">
-                <NumberFlow isolate value={i + 1} />
-              </div>
-              <div className="top-0 right-0 opacity-50 !text-tiny h-full">
-                (<NumberFlow isolate className="left-0 bottom-0" value={e._count.votes} />)
-              </div>
-            </div>
-          </Chip>
-        </Tooltip>
-        {/* price chip */}
-        {typeof e.price.final === 'string' && (
-          <div className="absolute -right-[3px] -top-[1px]">
-            <Chip
-              color={color}
-              size="sm"
-              variant="shadow"
-              className="!text-tiny uppercase rankingChiptr text-opacity-70"
+                'flex flex-col justify-center h-full min-h-[100px] min-w-[294px]  items-center z-0 w-full object-cover shadow-lg  ',
+                borderColor,
+              ])}
             >
-              {e.price.final}
+              <Logo size={25} />
+              <span className="!text-[10px] lowercase mt-1 font-bold">No Image </span>
+            </div>
+          ) : (
+            <div className='h-[130px]'>
+
+              <NextImage
+                src={e.picture}
+                fill
+                className={clsx([
+                  'z-0 w-full grow object-cover',
+                  borderColor,
+                ])}
+                alt={e.name}
+              />
+            </div>
+
+          )}
+          <Tooltip content="Ranking & Votes">
+            <Chip
+              className={clsx(['absolute rankingChiptl top-0 left-0 boldChip !w-[200px]'])}
+              variant="shadow"
+              color={color}
+            >
+              <div className="flex items-center">
+                <div className=" opacity-50 font-mono">#</div>
+                <div className="text-2xl">
+                  <NumberFlow isolate value={i + 1} />
+                </div>
+                <div className="top-0 right-0 opacity-50 !text-tiny h-full">
+                  (<NumberFlow isolate className="left-0 bottom-0" value={e._count.votes} />)
+                </div>
+              </div>
             </Chip>
-          </div>
-        )}
-        {typeof e.price.final === 'number' && (
-          <div className=" absolute -right-[3px] -top-[1px]">
+          </Tooltip>
+          {typeof e.price.final === 'string' && (
+            <div className="absolute top-0'left-0 ">
+              <Chip
+                color={color}
+                size="sm"
+                variant="shadow"
+                className="!text-tiny uppercase rankingChiptr text-opacity-70"
+              >
+                {e.price.final}
+              </Chip>
+            </div>
+          )}
+          {typeof e.price.final === 'number' && (
             <Chip
               color={color}
               size="sm"
               variant="shadow"
-              className="!text-tiny rankingChiptr text-opacity-70"
+              className="!text-tiny rankingChiptr text-opacity-70 absolute top-0 right-0"
             >
               {(e.price.final as number) / 100}{' '}
               <span className="text-[10px] font-bold">{e.price.currency}</span>
             </Chip>
-          </div>
-        )}
+          )}
+        </div>
         <div className="flex flex-wrap gap-1 absolute bottom-3 left-2">
           {/* {e.categories && JSON.stringify(e.categories)} */}
           {e.categories &&
@@ -136,7 +133,7 @@ export const MainCard = ({
             <Button size='sm' variant='ghost' className='opacity-50 px-2 !border-none'
               onPress={() => {
                 navigator.clipboard.writeText(`!vote ${e.name}`);
-                addToast({ timeout: 2300,color: 'success', title: `"!vote ${e.name}" copied to clipboard` })
+                addToast({ timeout: 2300, color: 'success', title: `"!vote ${e.name}" copied to clipboard` })
               }}
             >
               <ClipboardIcon />
@@ -145,7 +142,6 @@ export const MainCard = ({
           {e.link !== 'notOnSteam' && (
             <Tooltip content="Open Steam Page">
               <Button size='sm' variant='ghost' className='opacity-50 px-2 !border-none'>
-
                 <Link
                   onClick={(e) => e.stopPropagation()}
                   className="px-5 z-10 relative"

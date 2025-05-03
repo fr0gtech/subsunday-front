@@ -87,45 +87,6 @@ export const MainItem = () => {
       .sort((a: any, b: any) => (a._count.votes > b._count.votes ? -1 : 1));
   }, [msgEvents, data]);
 
-//   if (isLoading) {
-//     return (
-//       <section className="flex h-full flex-col items-start justify-start gap-4">
-//         <div className="p-3 lg:p-5 flex flex-wrap gap-7">
-//           {[
-//             ...Array(25)
-//               .fill(0)
-//               .map((e, i) => {
-//                 return (
-//                   <Card
-//                     key={i}
-//                     className="overflow-visible max-w-[400px] min-w-[352px] grow min-h-[188px] cursor-pointer"
-//                   >
-//                     <div className="relative flex flex-col h-full">
-//                       <Skeleton
-//                         className={clsx([
-//                           'flex flex-col justify-center grow min-h-[100px] min-w-[294px]  items-center z-0 w-full object-cover scale-[1.02] shadow-lg  border-4 rounded-[1em]',
-//                           'dark:border-default light:border-neutral-200',
-//                         ])}
-//                       />
-//                       <div className="flex p-1">
-//                         <div className="flex flex-grow gap-2">
-//                           <div className="flex gap-2 p-2 max-w-[300px]">
-//                             <Skeleton className="font-bold text-left whitespace-pre-wrap rounded-lg">
-//                               testdasdadsada
-//                             </Skeleton>
-//                           </div>
-//                         </div>
-//                       </div>
-//                     </div>
-//                   </Card>
-//                 );
-//               }),
-//           ]}
-//         </div>
-//       </section>
-//     );
-//   }
-
   return (
     <div className="flex w-full justify-center items-center">
       <div className="flex w-full p-4">
@@ -135,7 +96,8 @@ export const MainItem = () => {
           </ModalContent>
         </Modal>
         <div className="grid-container">
-          {!isLoading && updateableGames &&
+          {!isLoading &&
+            updateableGames &&
             updateableGames.map((e, i: number) => {
               return (
                 <MainCard
@@ -150,30 +112,31 @@ export const MainItem = () => {
                 />
               );
             })}
-            {isLoading && [...Array(50).fill(0)].map((e, i: number) => {
+          {isLoading &&
+            [...Array(50).fill(0)].map((e, i: number) => {
               return (
                 <Card
-                key={i}
-                className="overflow-visible w-full min-w-[352px] grow min-h-[198px] cursor-pointer"
-              >
-                <div className="relative flex flex-col h-full">
-                  <Skeleton
-                    className={clsx([
-                      'flex flex-col justify-center grow min-h-[100px] min-w-[294px]  items-center z-0 w-full object-cover scale-[1.02] shadow-lg  border-4 rounded-[1em]',
-                      'dark:border-default light:border-neutral-200',
-                    ])}
-                  />
-                  <div className="flex p-1">
-                    <div className="flex flex-grow gap-2">
-                      <div className="flex gap-2 p-2 max-w-[300px]">
-                        <Skeleton className="font-bold text-left whitespace-pre-wrap rounded-lg">
-                          testdasdadsada
-                        </Skeleton>
+                  key={i}
+                  className="overflow-visible w-full min-w-[332px] grow min-h-[198px] cursor-pointer"
+                >
+                  <div className="relative flex flex-col h-full">
+                    <Skeleton
+                      className={clsx([
+                        'flex flex-col justify-center grow min-h-[100px] min-w-[294px]  items-center z-0 w-full object-cover scale-[1.02] shadow-lg  border-4 rounded-[1em]',
+                        'dark:border-default light:border-neutral-200',
+                      ])}
+                    />
+                    <div className="flex p-1">
+                      <div className="flex flex-grow gap-2">
+                        <div className="flex gap-2 p-2 max-w-[300px]">
+                          <Skeleton className="font-bold text-left whitespace-pre-wrap rounded-lg">
+                            testdasdadsada
+                          </Skeleton>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
               );
             })}
           <div className="fixed2 relative w-full h-full overflow-hidden">
@@ -182,11 +145,19 @@ export const MainItem = () => {
             </div>
           </div>
           <div className="fixed3 flex item-center flex-col justify-evenly p-5">
-      
             <VotingPeriod className="text-xl text-center py-4 " />
             <CurrentVotes className=" gap-5 justify-center flex flex-row text-tiny" />
-            <div className='mt-5 opacity-70 block lg:hidden'>
-            <div className=' text-center w-full text-xs flex flex-row justify-center mt-5 gap-2 items-center !leading'>*<div> this is <b>not</b> an official sub sunday website</div> <Link href={"info"}><InfoCircledIcon/></Link></div>
+            <div className="mt-5 opacity-70 block lg:hidden">
+              <div className=" text-center w-full text-xs flex flex-row justify-center mt-5 gap-2 items-center !leading">
+                *
+                <div>
+                  {' '}
+                  this is <b>not</b> an official sub sunday website
+                </div>{' '}
+                <Link href={'info'}>
+                  <InfoCircledIcon />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
