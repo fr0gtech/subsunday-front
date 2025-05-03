@@ -103,7 +103,7 @@ export const Navbar = () => {
         </div>
       </NavbarMenu>
         <NavbarItem className='hidden lg:block'>
-          <div className='text-xs flex flex-row gap-2 items-center !leading'><div> this is <b>not</b> an official sub sunday website</div> <NextLink href={"info"}><InfoCircledIcon/></NextLink></div>
+          <div className='text-xs flex flex-row gap-2 items-center !leading'>*<div> this is <b>not</b> an official sub sunday website</div> <NextLink href={"info"}><InfoCircledIcon/></NextLink></div>
         </NavbarItem>
       {/* <CurrentVotes className={'font-bold hidden gap-5 lg:flex text-tiny lowercase'} /> */}
 

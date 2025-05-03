@@ -63,7 +63,7 @@ export const CurrentVotes = ({ className }: { className: string }) => {
       {data && (
         <div className={className}>
           <div className="flex justify-end gap-2 flex-col-reverse items-center">
-            <span className="lowercase opacity-60">Votes this week</span>
+            <span className="lowercase opacity-60">Votes this week*</span>
             <Tooltip content={`total votes: ${data && data.total + msgEvents.length}`}>
               <Chip
                 size="lg"
@@ -80,14 +80,14 @@ export const CurrentVotes = ({ className }: { className: string }) => {
             </Tooltip>
           </div>
           <div className="flex justify-end gap-2 flex-col-reverse items-center">
-            <span className="lowercase  opacity-60">Votes today</span>
+            <span className="lowercase  opacity-60">Votes today*</span>
             <Chip size="lg" color="success" variant="shadow" className=" cursor-default boldChip">
               <NumberFlow
                 isolate
                 className="left-0 bottom-0"
                 value={data.today + msgEvents.length}
               />
-            </Chip>
+                </Chip>
           </div>
         </div>
       )}

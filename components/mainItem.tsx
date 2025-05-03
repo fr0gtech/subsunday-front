@@ -27,6 +27,8 @@ import { VotingPeriod } from './votingPeriod';
 import { CurrentVotes } from './currentVotes';
 import { Chart } from './chart';
 import { GameComp } from './gameComp';
+import { InfoCircledIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
 export type gameNcount = Game & {
   _count: { votes: number };
   price: { final: number | string; currency: string };
@@ -180,8 +182,12 @@ export const MainItem = () => {
             </div>
           </div>
           <div className="fixed3 flex item-center flex-col justify-evenly p-5">
+      
             <VotingPeriod className="text-xl text-center py-4 " />
             <CurrentVotes className=" gap-5 justify-center flex flex-row text-tiny" />
+            <div className='mt-5 opacity-70 block lg:hidden'>
+            <div className=' text-center w-full text-xs flex flex-row justify-center mt-5 gap-2 items-center !leading'>*<div> this is <b>not</b> an official sub sunday website</div> <Link href={"info"}><InfoCircledIcon/></Link></div>
+            </div>
           </div>
         </div>
         <Divider className="hidden lg:visible" />
