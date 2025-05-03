@@ -85,44 +85,44 @@ export const MainItem = () => {
       .sort((a: any, b: any) => (a._count.votes > b._count.votes ? -1 : 1));
   }, [msgEvents, data]);
 
-  if (isLoading) {
-    return (
-      <section className="flex h-full flex-col items-start justify-start gap-4">
-        <div className="p-3 lg:p-5 flex flex-wrap gap-7">
-          {[
-            ...Array(25)
-              .fill(0)
-              .map((e, i) => {
-                return (
-                  <Card
-                    key={i}
-                    className="overflow-visible max-w-[400px] min-w-[352px] grow min-h-[188px] cursor-pointer"
-                  >
-                    <div className="relative flex flex-col h-full">
-                      <Skeleton
-                        className={clsx([
-                          'flex flex-col justify-center grow min-h-[100px] min-w-[294px]  items-center z-0 w-full object-cover scale-[1.02] shadow-lg  border-4 rounded-[1em]',
-                          'dark:border-default light:border-neutral-200',
-                        ])}
-                      />
-                      <div className="flex p-1">
-                        <div className="flex flex-grow gap-2">
-                          <div className="flex gap-2 p-2 max-w-[300px]">
-                            <Skeleton className="font-bold text-left whitespace-pre-wrap rounded-lg">
-                              testdasdadsada
-                            </Skeleton>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Card>
-                );
-              }),
-          ]}
-        </div>
-      </section>
-    );
-  }
+//   if (isLoading) {
+//     return (
+//       <section className="flex h-full flex-col items-start justify-start gap-4">
+//         <div className="p-3 lg:p-5 flex flex-wrap gap-7">
+//           {[
+//             ...Array(25)
+//               .fill(0)
+//               .map((e, i) => {
+//                 return (
+//                   <Card
+//                     key={i}
+//                     className="overflow-visible max-w-[400px] min-w-[352px] grow min-h-[188px] cursor-pointer"
+//                   >
+//                     <div className="relative flex flex-col h-full">
+//                       <Skeleton
+//                         className={clsx([
+//                           'flex flex-col justify-center grow min-h-[100px] min-w-[294px]  items-center z-0 w-full object-cover scale-[1.02] shadow-lg  border-4 rounded-[1em]',
+//                           'dark:border-default light:border-neutral-200',
+//                         ])}
+//                       />
+//                       <div className="flex p-1">
+//                         <div className="flex flex-grow gap-2">
+//                           <div className="flex gap-2 p-2 max-w-[300px]">
+//                             <Skeleton className="font-bold text-left whitespace-pre-wrap rounded-lg">
+//                               testdasdadsada
+//                             </Skeleton>
+//                           </div>
+//                         </div>
+//                       </div>
+//                     </div>
+//                   </Card>
+//                 );
+//               }),
+//           ]}
+//         </div>
+//       </section>
+//     );
+//   }
 
   return (
     <div className="flex w-full justify-center items-center">
@@ -133,7 +133,7 @@ export const MainItem = () => {
           </ModalContent>
         </Modal>
         <div className="grid-container">
-          {updateableGames &&
+          {!isLoading && updateableGames &&
             updateableGames.map((e, i: number) => {
               return (
                 <MainCard
@@ -148,7 +148,32 @@ export const MainItem = () => {
                 />
               );
             })}
-
+            {isLoading && [...Array(50).fill(0)].map((e, i: number) => {
+              return (
+                <Card
+                key={i}
+                className="overflow-visible w-full min-w-[352px] grow min-h-[198px] cursor-pointer"
+              >
+                <div className="relative flex flex-col h-full">
+                  <Skeleton
+                    className={clsx([
+                      'flex flex-col justify-center grow min-h-[100px] min-w-[294px]  items-center z-0 w-full object-cover scale-[1.02] shadow-lg  border-4 rounded-[1em]',
+                      'dark:border-default light:border-neutral-200',
+                    ])}
+                  />
+                  <div className="flex p-1">
+                    <div className="flex flex-grow gap-2">
+                      <div className="flex gap-2 p-2 max-w-[300px]">
+                        <Skeleton className="font-bold text-left whitespace-pre-wrap rounded-lg">
+                          testdasdadsada
+                        </Skeleton>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+              );
+            })}
           <div className="fixed2 relative w-full h-full overflow-hidden">
             <div className="absolute w-full h-full top-0 left-0 whitespace-nowrap overflow-hidden2">
               <LiveVotes amount={3} bg={false} />
