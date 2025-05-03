@@ -69,11 +69,11 @@ export const MainCard = ({ e, i, onPress, className }: { e: gameNcount, i: numbe
                         <div className="flex items-center">
                             <div className=" opacity-50 font-mono">#</div>
                             <div className="text-2xl">
-                                {i + 1}
+                                <NumberFlow isolate value={i + 1} />
                             </div>
-                                <div className="top-0 right-0 opacity-50 !text-tiny h-full">
-                                    (<NumberFlow isolate className="left-0 bottom-0" value={e._count.votes} />)
-                                </div>
+                            <div className="top-0 right-0 opacity-50 !text-tiny h-full">
+                                (<NumberFlow isolate className="left-0 bottom-0" value={e._count.votes} />)
+                            </div>
                         </div>
                     </Chip>
                 </Tooltip>

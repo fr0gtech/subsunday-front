@@ -5,7 +5,7 @@ import { endOfDay, startOfDay } from 'date-fns';
 import { TZDate } from '@date-fns/tz';
 
 export async function GET() {
-  const range = getDateRange({ fromDay: 1, fromTime: '00:00', toDay: 6, toTime: '22:00' });
+  const range = getDateRange();
 
   const votesSubSunday = await prisma.game.findMany({
     select: {

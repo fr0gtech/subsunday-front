@@ -10,7 +10,7 @@ export async function GET() {
   // easiest way to do it would be to provide index but still mutate?
   //
   // or we just load a shitton and don't give a fuck? <-
-  const range = getDateRange({ fromDay: 1, fromTime: '00:00', toDay: 6, toTime: '22:00' });
+  const range = getDateRange();
 
   const games = await prisma.game.findMany({
     where: {

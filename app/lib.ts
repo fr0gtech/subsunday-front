@@ -17,13 +17,21 @@ import {
 import { tz, TZDate } from '@date-fns/tz';
 
 type DateRangeOptions = {
-  fromDay: Day;
-  fromTime: string;
-  toDay: Day;
-  toTime: string; // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  _fromDay?: Day;
+  _fromTime?: string;
+  _toDay?: Day;
+  _toTime?: string; // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 };
 
-export function getDateRange({ fromDay, fromTime, toDay, toTime }: DateRangeOptions) {
+export function getDateRange(options?: DateRangeOptions) {
+  const { _fromDay, _fromTime, _toDay, _toTime } = options || {};
+  // if we dont get any paras check env
+  const fromDay = (_fromDay || process.env.NEXT_PUBLIC_FROM_DAY) as Day
+  const fromTime = (_fromTime || process.env.NEXT_PUBLIC_FROM_TIME) as string
+  const toDay = (_toDay || process.env.NEXT_PUBLIC_TO_DAY) as Day
+  const toTime = (_toTime || process.env.NEXT_PUBLIC_TO_TIME) as string
+  // after a period is over this should return new period so we can do "vote open"
+  // with this we can also check if date is beofe start we are in closed voting period
   const now = new TZDate(new Date(), 'America/New_York');
   const [fromHour, fromMinute] = fromTime.split(':').map(Number);
   
@@ -34,24 +42,12 @@ export function getDateRange({ fromDay, fromTime, toDay, toTime }: DateRangeOpti
     0,
   );
   const [toHour, toMinute] = toTime.split(':').map(Number);
+  // so if we are at sunday when closed the period end is not going to be nextDay but lastDay
   const periodEndDate = isSaturday(now) ? now : nextDay(now, toDay, { in: tz('America/New_York') });
   const endDate = setMilliseconds(
     setSeconds(setMinutes(setHours(periodEndDate, toHour), toMinute), 0),
     0,
   );
-
-  // const nextStartDay = nextDay(now, startDay, { in: tz('America/New_York') });
-  // console.log('now', now);
-  // console.log('nextStartDay', nextStartDay);
-  // console.log('nextDay(now, startDay)', nextDay(now, startDay));
-  // console.log(new TZDate(now, 'America/New_York'));
-
-  // const endDate = setMilliseconds(
-  //   setSeconds(setMinutes(setHours(nextStartDay, hour), minute), 0),
-  //   0,
-  // );
-  // const startDate = subDays(endDate, intervalDays);
-
   return { startDate, endDate };
 }
 
