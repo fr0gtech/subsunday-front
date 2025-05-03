@@ -29,6 +29,7 @@ import { Chart } from './chart';
 import { GameComp } from './gameComp';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
+import { AnimatePresence, motion } from 'framer-motion';
 export type gameNcount = Game & {
   _count: { votes: number };
   price: { final: number | string; currency: string };
@@ -96,22 +97,34 @@ export const MainItem = () => {
           </ModalContent>
         </Modal>
         <div className="grid-container">
-          {!isLoading &&
-            updateableGames &&
-            updateableGames.map((e, i: number) => {
-              return (
-                <MainCard
-                  className="grid-item overflow-visible"
-                  key={e.id}
-                  onPress={() => {
-                    onOpen();
-                    setGameId(e.id);
-                  }}
-                  e={e}
-                  i={i}
-                />
-              );
-            })}
+          <AnimatePresence initial={false}>
+
+            {!isLoading &&
+              updateableGames &&
+              updateableGames.map((e, i: number) => {
+                return (
+                  <motion.div
+                    key={e.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  >
+                    <MainCard
+                      className="grid-item overflow-visible h-full"
+                      key={e.id}
+                      onPress={() => {
+                        onOpen();
+                        setGameId(e.id);
+                      }}
+                      e={e}
+                      i={i}
+                    />
+                  </motion.div>
+                );
+              })}
+          </AnimatePresence>
+
           {isLoading &&
             [...Array(50).fill(0)].map((e, i: number) => {
               return (

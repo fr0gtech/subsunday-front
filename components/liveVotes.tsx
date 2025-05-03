@@ -6,6 +6,7 @@ import useSWR from 'swr';
 import { v4 as uuidv4 } from 'uuid';
 import { TZDate } from '@date-fns/tz';
 import { Skeleton } from '@heroui/react';
+import { AnimatePresence, motion } from 'framer-motion';
 export type wsVote = {
   createdAt: Date;
   id: string;
@@ -34,6 +35,7 @@ export const LiveVotes = ({
     function onMsgEvent(value: any) {
       const valWithCreatedAT = {
         ...value,
+        id: uuidv4(),
         createdAt: new TZDate(new Date(), 'America/New_York'),
       };
       setMsgEvents((previous: any) => [...previous, valWithCreatedAT] as any);
@@ -46,9 +48,9 @@ export const LiveVotes = ({
       socket.off('vote', onMsgEvent);
     };
   }, []);
-  useEffect(()=>{
+  useEffect(() => {
     setMsgEvents([]) // reset realtime on mutate cuz we now got new data 
-  },[data])
+  }, [data])
   const liveVotes: (VoteForFrom | wsVote)[] | undefined = useMemo(() => {
     if (!data) return;
     const wsVotes2Votes: wsVote[] = msgEvents.map((e: wsVote) => {
@@ -62,7 +64,7 @@ export const LiveVotes = ({
           name: e.from.name,
           id: e.from.id,
         },
-        id: uuidv4(),
+        id: e.id,
       };
     });
     return [...wsVotes2Votes, ...(data.votes as VoteForFrom[])]
@@ -71,17 +73,34 @@ export const LiveVotes = ({
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       }) as (VoteForFrom | wsVote)[];
   }, [msgEvents, data]);
-  if (isLoading){
-   return (<div className=' flex flex-col justify-evenly grow h-full px-3'>
-       {[...Array(3).fill(0)].map((e,i)=><Skeleton key={i} className='w-full h-[30px] rounded-full'/>)}
+  if (isLoading) {
+    return (<div className=' flex flex-col justify-evenly grow h-full px-3'>
+      {[...Array(3).fill(0)].map((e, i) => <Skeleton key={i} className='w-full h-[30px] rounded-full' />)}
     </div>)
   }
   return (
     <div className="space-y-2 grow ">
-      {liveVotes &&
+      <AnimatePresence initial={false}>
+        {liveVotes &&
+          liveVotes.slice(0, amount).map((e) => {
+            return (
+              <motion.div
+                key={e.id}
+                layout
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className=" rounded shadow"
+              >
+                <Voted key={e.id} vote={e} bg={bg} textRight={textRight} />
+              </motion.div>
+            )
+          })}
+      </AnimatePresence>
+      {/* {liveVotes &&
         liveVotes.slice(0, amount).map((e) => {
           return <Voted key={e.id} vote={e} bg={bg} textRight={textRight} />;
-        })}
+        })} */}
     </div>
   );
 };
