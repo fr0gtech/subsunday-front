@@ -41,7 +41,7 @@ export const Navbar = () => {
       type="search"
       onKeyDown={(e) => {
         if (e.key === 'Enter') {
-          setMenuOpen(!menuOpen)
+          setMenuOpen(menuOpen ? false : menuOpen)
           router.push('/search?value=' + e.currentTarget.value);
         }
       }}
@@ -102,9 +102,9 @@ export const Navbar = () => {
           ))}
         </div>
       </NavbarMenu>
-        <NavbarItem className='hidden lg:block'>
-          <div className='text-xs flex flex-row gap-2 items-center !leading'>*<div> this is <b>not</b> an official sub sunday website</div> <NextLink href={"info"}><InfoCircledIcon/></NextLink></div>
-        </NavbarItem>
+      <NavbarItem className='hidden lg:block'>
+        <div className='text-xs flex flex-row gap-2 items-center !leading'>*<div> this is <b>not</b> an official sub sunday website</div> <NextLink href={"info"}><InfoCircledIcon /></NextLink></div>
+      </NavbarItem>
       {/* <CurrentVotes className={'font-bold hidden gap-5 lg:flex text-tiny lowercase'} /> */}
 
       <NavbarContent className=" basis-1 pl-4" justify="end">
