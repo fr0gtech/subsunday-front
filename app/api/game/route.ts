@@ -47,8 +47,6 @@ export async function GET(req: NextRequest) {
       },
     },
   });
-  console.log(game);
-  console.log(votesSubSunday);
 
   return NextResponse.json({
     game: game,

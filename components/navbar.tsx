@@ -39,7 +39,6 @@ export const Navbar = () => {
     type="search"
     onKeyDown={(e) => {
       if (e.code === "Enter") {
-        console.log(e);
         router.push("/search?value=" + e.currentTarget.value)
       }
 
