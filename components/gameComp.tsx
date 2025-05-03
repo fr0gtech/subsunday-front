@@ -9,6 +9,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { wsMsg } from '@/types';
 import { TZDate } from '@date-fns/tz';
+import clsx from 'clsx';
 
 export const GameComp = ({ id, page = false, withImage = false, cardBodyClass= "" }: { id: string, withImage?: boolean, cardBodyClass?: string, page?: boolean }) => {
   const { data, isLoading } = useSWR(`/api/game?id=${id}`, fetcher);
@@ -63,7 +64,7 @@ export const GameComp = ({ id, page = false, withImage = false, cardBodyClass= "
     );
   }
   return (
-    <div className="p-3 max-w-2xl flex flex-col gap-5 max-h-[calc(100vh-200px)] overflow-scroll">
+    <div className={clsx([!page && "max-h-[calc(100vh-200px)] overflow-scroll", "p-3 flex flex-col gap-5"])}>
       <h4 className="text-3xl font-bold">
         {data.game.name}{' '}
         {data.game.dev[0].length > 0 && <span className="text-tiny">by {data.game.dev}</span>}
@@ -73,7 +74,6 @@ export const GameComp = ({ id, page = false, withImage = false, cardBodyClass= "
             {withImage &&
               <Image
                 alt={'item.title'}
-                className="mx-auto object-cover"
                 radius="lg"
                 shadow="sm"
                 removeWrapper
