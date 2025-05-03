@@ -14,7 +14,6 @@ export const VotingPeriod = ({ className }: { className: string }) => {
 
     return (
         <p className={className}>
-            {voteRange.endDate.toString()}
             {votingClosed &&
                 `voting start in: ${formatDistance(new Date(), voteRange.startDate)}`
             }
