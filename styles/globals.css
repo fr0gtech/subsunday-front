@@ -29,7 +29,7 @@
   gap: 2em;
   grid-template-columns: repeat(
     auto-fit,
-    minmax(clamp(100px, 100%, 300px), 1fr)
+    minmax(clamp(330px, 100%, 390px), 1fr)
   );
 }
 
