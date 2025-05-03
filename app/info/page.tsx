@@ -1,26 +1,35 @@
 'use client';
 
-import { Card, CardBody, CardHeader, Link } from '@heroui/react';
+import { Alert, Card, CardBody, CardHeader, Link } from '@heroui/react';
 import { GithubIcon } from '@/components/icons';
 
 export default function Home() {
   return (
     <section className=" overflow-hidden p-5  mx-auto w-full gap-2 flex flex-col max-w-screen-xl">
       <div className="flex gap-2 w-full flex-col lg:flex-row">
+        
         <div className="gap-2 flex flex-col ">
+        <Alert color='danger' className='w-full mx-auto' hideIcon>
+            <p className="">This website was made for fun. This is <b>not</b> an Official sub sunday website</p>
+            </Alert>
           <Card className="h-fit" shadow="md">
             <CardHeader>
-              <h4 className=" text-2xl font-bold">Info</h4>
-              <p className="text-tiny ml-5">This website was made for fun. And is not official</p>
+              <h4 className=" text-2xl font-bold">About</h4>
               <span className="text-tiny"></span>
             </CardHeader>
+          
+
             <CardBody>
               <p>
-                Votes may not be accurate because its hard to find any confirmed information about
-                sub sunday.
+                This project was made for fun and does not represet what happens to your vote.
+                <br/>
+                <br/>
+                
+                <b>Votes may be inaccurate</b>
                 <br />
-                If you can confirm any information or want to contribute in any other way let us
-                know by opening a github issue.
+                <br />
+
+                If you can confirm any information or want to contribute in any other way open a github issue.
               </p>
             </CardBody>
           </Card>

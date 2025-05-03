@@ -19,6 +19,7 @@ import { Input, Kbd, Link } from '@heroui/react';
 import { CurrentVotes } from './currentVotes';
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { InfoCircledIcon } from '@radix-ui/react-icons';
 
 export const Navbar = () => {
   const path = usePathname();
@@ -39,7 +40,8 @@ export const Navbar = () => {
       }
       type="search"
       onKeyDown={(e) => {
-        if (e.code === 'Enter') {
+        if (e.key === 'Enter') {
+          setMenuOpen(!menuOpen)
           router.push('/search?value=' + e.currentTarget.value);
         }
       }}
@@ -100,11 +102,12 @@ export const Navbar = () => {
           ))}
         </div>
       </NavbarMenu>
-
+        <NavbarItem className='hidden lg:block'>
+          <div className='text-xs flex flex-row gap-2 items-center !leading'><div> this is <b>not</b> an official sub sunday website</div> <NextLink href={"info"}><InfoCircledIcon/></NextLink></div>
+        </NavbarItem>
       {/* <CurrentVotes className={'font-bold hidden gap-5 lg:flex text-tiny lowercase'} /> */}
 
       <NavbarContent className=" basis-1 pl-4" justify="end">
-        <NavbarContent></NavbarContent>
         <NavbarItem className="hidden lg:block">{searchBar}</NavbarItem>
         <NextLink href="info">
           <GithubIcon className="text-default-500" />

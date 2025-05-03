@@ -9,26 +9,29 @@ export default function Home() {
     <section className=" overflow-hidden p-5 mx-auto gap-2 flex flex-col">
       <div className="flex gap-2 lg:flex-row max-w-screen-xl flex-col justify-center">
         <div className="gap-2 flex flex-col  lg:w-1/2">
+        <div>
+        <Alert variant="flat" hideIcon className="" color="danger">
+          <p>
+            The info below is unconfirmed and taken from{' '}
+            <Link color="foreground" href="https://lirikker.com/lirik/subday/">
+              here{' '}
+            </Link>
+          </p>
+        </Alert>
+        </div>
           <Card className="h-fit" shadow="md">
             <CardHeader>
               <h4 className=" text-2xl font-bold">Voting</h4>
               <span className="text-tiny"></span>
             </CardHeader>
             <CardBody>
-              <p>
+              <p className='opacity-80'>
                 Sub Sunday is a weekly event where subscribers to the channel can vote for games
                 they'd like to see Lirik play. Every week, 6 games are selected for the main list
                 and 4 as backups from the list of votes.
               </p>
             </CardBody>
-            <Alert variant="flat" className="m-5 w-fit mx-auto" color="danger">
-              <p>
-                The info below is unconfirmed and taken from{' '}
-                <Link color="foreground" href="https://lirikker.com/lirik/subday/">
-                  here{' '}
-                </Link>
-              </p>
-            </Alert>
+           
           </Card>
           <Card>
             <CardHeader>
