@@ -32,11 +32,29 @@ export const CurrentVotes = ({ className }: { className: string }) => {
   if (isLoading) {
     return (
       <div className={className}>
-        <Skeleton className="w-[100px] h-[20px] rounded-lg" />
-        <Skeleton className="w-[30px] h-[20px] rounded-lg" />
-        <Skeleton className="w-[100px] h-[20px] rounded-lg" />
-        <Skeleton className="w-[30px] h-[20px] rounded-lg" />
+      <div className="flex justify-end gap-2 flex-col-reverse items-center">
+        <span className="lowercase opacity-60">Votes this week</span>
+        <Skeleton className='rounded-full'>
+
+          <Chip
+            size="lg"
+            color="secondary"
+            variant="shadow"
+            className="cursor-default boldChip"
+          >
+            dsfdd
+          </Chip>
+          </Skeleton>
       </div>
+      <div className="flex justify-end gap-2 flex-col-reverse items-center">
+        <span className="lowercase  opacity-60">Votes today</span>
+        <Skeleton className='rounded-full'>
+        <Chip size="lg" color="success" variant="shadow" className=" cursor-default boldChip">
+          cscdd
+        </Chip>
+        </Skeleton>
+      </div>
+    </div>
     );
   }
 

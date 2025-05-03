@@ -5,6 +5,7 @@ import { Voted } from './voted';
 import useSWR from 'swr';
 import { v4 as uuidv4 } from 'uuid';
 import { TZDate } from '@date-fns/tz';
+import { Skeleton } from '@heroui/react';
 export type wsVote = {
   createdAt: Date;
   id: string;
@@ -27,7 +28,7 @@ export const LiveVotes = ({
   textRight?: boolean;
 }) => {
   const [msgEvents, setMsgEvents] = useState<wsVote[]>([]);
-  const { data } = useSWR(`/api/votes?amount=${amount}`, fetcher);
+  const { data, isLoading } = useSWR(`/api/votes?amount=${amount}`, fetcher);
 
   useEffect(() => {
     function onMsgEvent(value: any) {
@@ -70,7 +71,11 @@ export const LiveVotes = ({
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       }) as (VoteForFrom | wsVote)[];
   }, [msgEvents, data]);
-
+  if (isLoading){
+   return (<div className=' flex flex-col justify-evenly grow h-full px-3'>
+       {[...Array(3).fill(0)].map((e,i)=><Skeleton key={i} className='w-full h-[30px] rounded-full'/>)}
+    </div>)
+  }
   return (
     <div className="space-y-2 grow ">
       {liveVotes &&
