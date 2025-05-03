@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
         orderBy: {
           createdAt: 'desc',
         },
-        take: 10,
+        take: 6,
       },
     },
   });
