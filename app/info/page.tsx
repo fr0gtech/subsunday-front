@@ -29,7 +29,7 @@ export default function Home() {
                 <br />
                 <br />
 
-                If you can confirm any information or want to contribute in any other way open a github issue.
+                open a github issue if you got any questions or want to contribute/share ideas.
               </p>
             </CardBody>
           </Card>
