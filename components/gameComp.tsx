@@ -11,7 +11,7 @@ import { wsMsg } from '@/types';
 import { TZDate } from '@date-fns/tz';
 import clsx from 'clsx';
 
-export const GameComp = ({ id, page = false, withImage = false, cardBodyClass= "" }: { id: string, withImage?: boolean, cardBodyClass?: string, page?: boolean }) => {
+export const GameComp = ({ id, page = false, withImage = false, cardBodyClass = "" }: { id: string, withImage?: boolean, cardBodyClass?: string, page?: boolean }) => {
   const { data, isLoading } = useSWR(`/api/game?id=${id}`, fetcher);
   const [msgEvents, setMsgEvents] = useState<wsMsg[]>([]);
 
@@ -71,92 +71,95 @@ export const GameComp = ({ id, page = false, withImage = false, cardBodyClass= "
       </h4>
       {data.game.picture !== 'default' && (
         <>
-            {withImage &&
-              <Image
-                alt={'item.title'}
-                radius="lg"
-                shadow="sm"
-                removeWrapper
-                src={data.game.picture}
-              />
-            }
-            <div className="flex gap-3 flex-wrap">
-              {data.game.categories &&
-                Object.values(data.game.categories).map((e: any, i) => {
-                  if (i > 2) return;
-                  return (
-                    <Chip variant="shadow" key={e.id} size="sm">
-                      {e.description}
-                    </Chip>
-                  );
-                })}
-              {data.game.price.final && (
-                <Chip
+          {withImage &&
+            <Image
+              alt={'item.title'}
+              radius="lg"
+              shadow="sm"
+              removeWrapper
+              src={data.game.picture}
+            />
+          }
+          <div className="flex gap-3 flex-wrap">
+            {data.game.categories &&
+              Object.values(data.game.categories).map((e: any, i) => {
+                if (i > 2) return;
+                return (
+                  <Chip variant="shadow" key={e.id} size="sm">
+                    {e.description}
+                  </Chip>
+                );
+              })}
+            {data.game.price.final && (
+              <Chip
+                size="sm"
+                variant="shadow"
+                color='primary'
+              >
+                {typeof data.game.price.final === 'string'
+                  ? data.game.price.final
+                  : `${data.game.price.final / 100} ${data.game.price.currency}`}
+              </Chip>
+            )}
+            <div className="flex gap-2 opacity-50 hover:opacity-100 transition-opacity">
+              {data.game.website.length > 0 && (
+                <Link
                   size="sm"
-                  variant="shadow"
-                  color='primary'
+                  color="foreground"
+                  className=""
+                  href={data.game.website}
+                  target="_blank"
                 >
-                  {typeof data.game.price.final === 'string'
-                    ? data.game.price.final
-                    : `${data.game.price.final / 100} ${data.game.price.currency}`}
-                </Chip>
+                  Website
+                  <ExternalLinkIcon color="gray" />
+                </Link>
               )}
-              <div className="flex gap-2 opacity-50 hover:opacity-100 transition-opacity">
-                {data.game.website.length > 0 && (
-                  <Link
-                    size="sm"
-                    color="foreground"
-                    className=""
-                    href={data.game.website}
-                    target="_blank"
-                  >
-                    Website
-                    <ExternalLinkIcon color="gray" />
-                  </Link>
-                )}
-                {data.game.link !== 'notOnSteam' && (
-                  <Link
-                    size="sm"
-                    color="foreground"
-                    className=""
-                    href={`https://store.steampowered.com/app/${data.game.steamId}`}
-                    target="_blank"
-                  >
-                    Open on steam <ExternalLinkIcon color="gray" />
-                  </Link>
-                )}
-              </div>
+              {data.game.link !== 'notOnSteam' && (
+                <Link
+                  size="sm"
+                  color="foreground"
+                  className=""
+                  href={`https://store.steampowered.com/app/${data.game.steamId}`}
+                  target="_blank"
+                >
+                  Open on steam <ExternalLinkIcon color="gray" />
+                </Link>
+              )}
             </div>
+          </div>
           <div className="flex-col gap-3">
             <p className=" whitespace-pre-wrap opacity-80 ">{data.game.description}</p>
           </div>
           <Divider />
         </>
       )}
-      <div className="gap-2 ">
-        <div className="flex gap-5 justify-between">
-          <div className="flex gap-5">
-            <div className="text-tiny text-default-500">
-              votes this sub sunday:{' '}
-              <Chip size="sm" color="secondary" variant="shadow">
-                {data.votesSubSunday._count.votes}
-              </Chip>
-            </div>
-            <div className="text-tiny text-default-500">
-              total:{' '}
-              <Chip size="sm" variant="shadow">
-                {data.game._count.votes}
-              </Chip>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div className="gap-2 flex flex-col mt-2">
+      
+      <div className="gap-2 flex flex-col">
         {liveVotes &&
           liveVotes.map((e: Vote & { from: User } & { for: Game }, i: number) => {
             return <Voted cardBodyClass={cardBodyClass} onGame bg={page} key={i} vote={e} />;
           })}
+      </div>
+      <Divider/>
+      <div className="mx-2 ">
+          <div className="flex gap-5 mx-auto">
+            <div className="text-tiny text-default-500 flex items-center flex-row-reverse gap-2">
+              <span>
+                votes this week
+              </span>
+              <Chip color="secondary" variant="shadow">
+                {data.votesSubSunday._count.votes}
+              </Chip>
+            </div>
+            <div className="text-tiny text-default-500 flex items-center flex-row-reverse gap-2">
+              <span>
+                total votes
+              </span>
+              <Chip variant="shadow">
+                {data.game._count.votes}
+              </Chip>
+            </div>
+          </div>
       </div>
     </div>
   );
