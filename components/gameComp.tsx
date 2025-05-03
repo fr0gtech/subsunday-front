@@ -1,7 +1,17 @@
 'use client';
 import { fetcher, socket } from '@/app/lib';
 import { Game, User, Vote } from '@/generated/prisma';
-import { addToast, Card, CardBody, CardHeader, Chip, Divider, Image, Link, Spinner } from '@heroui/react';
+import {
+  addToast,
+  Card,
+  CardBody,
+  CardHeader,
+  Chip,
+  Divider,
+  Image,
+  Link,
+  Spinner,
+} from '@heroui/react';
 import { ExternalLinkIcon } from '@radix-ui/react-icons';
 import useSWR from 'swr';
 import { Voted } from './voted';
@@ -13,18 +23,28 @@ import clsx from 'clsx';
 import { VoteForFrom, wsVote } from './liveVotes';
 import { v4 as uuidv4 } from 'uuid';
 
-export const GameComp = ({ id, page = false, withImage = false, cardBodyClass = "" }: { id: string, withImage?: boolean, cardBodyClass?: string, page?: boolean }) => {
+export const GameComp = ({
+  id,
+  page = false,
+  withImage = false,
+  cardBodyClass = '',
+}: {
+  id: string;
+  withImage?: boolean;
+  cardBodyClass?: string;
+  page?: boolean;
+}) => {
   const { data, isLoading } = useSWR(`/api/game?id=${id}`, fetcher);
   const [msgEvents, setMsgEvents] = useState<wsVote[]>([]);
 
   useEffect(() => {
     function onMsgEvent(value: any) {
       const valWithCreatedAT = {
-          ...value,
-          createdAt: new TZDate(new Date(), 'America/New_York')
-      }
+        ...value,
+        createdAt: new TZDate(new Date(), 'America/New_York'),
+      };
       setMsgEvents((previous: any) => [...previous, valWithCreatedAT] as any);
-  }
+    }
     socket.emit('join', 'game-' + id);
     socket.on('vote', onMsgEvent);
 
@@ -34,34 +54,37 @@ export const GameComp = ({ id, page = false, withImage = false, cardBodyClass = 
     };
   }, []);
 
-  const toast = useCallback((value: { for: { name: any; }; from: { name: any; }; }) => {
-    addToast({
-      color: "primary",
-      title: `New Vote for ${value.for.name} from ${value.from.name}`,
-    });
-  }, [msgEvents])
+  const toast = useCallback(
+    (value: { for: { name: any }; from: { name: any } }) => {
+      addToast({
+        color: 'primary',
+        title: `New Vote for ${value.for.name} from ${value.from.name}`,
+      });
+    },
+    [msgEvents],
+  );
   const liveVotes = useMemo(() => {
     if (!data) return;
-    const wsVotes2Votes: wsVote[] = msgEvents.map(
-      (e: wsVote) => {
-          return {
-              createdAt: e.createdAt,
-              for: {
-                  name: e.for.name,
-                  id: e.for.id,
-              },
-              from: {
-                  name: e.from.name,
-                  id: e.from.id,
-              },
-              id: uuidv4(),
-          };
-      },
-  )
+    const wsVotes2Votes: wsVote[] = msgEvents.map((e: wsVote) => {
+      return {
+        createdAt: e.createdAt,
+        for: {
+          name: e.for.name,
+          id: e.for.id,
+        },
+        from: {
+          name: e.from.name,
+          id: e.from.id,
+        },
+        id: uuidv4(),
+      };
+    });
 
-    return [...wsVotes2Votes, ...data.game.votes as VoteForFrom[]].filter((e) => e).sort((a, b) => {
-              return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          }) as (VoteForFrom | wsVote)[]
+    return [...wsVotes2Votes, ...(data.game.votes as VoteForFrom[])]
+      .filter((e) => e)
+      .sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      }) as (VoteForFrom | wsVote)[];
   }, [msgEvents, data]);
 
   if (isLoading) {
@@ -72,14 +95,19 @@ export const GameComp = ({ id, page = false, withImage = false, cardBodyClass = 
     );
   }
   return (
-    <div className={clsx([!page && "max-h-[calc(100vh-200px)] overflow-scroll", "p-3 flex flex-col gap-5"])}>
+    <div
+      className={clsx([
+        !page && 'max-h-[calc(100vh-200px)] overflow-scroll',
+        'p-3 flex flex-col gap-5',
+      ])}
+    >
       <h4 className="text-3xl font-bold">
         {data.game.name}{' '}
         {data.game.dev[0].length > 0 && <span className="text-tiny">by {data.game.dev}</span>}
       </h4>
       {data.game.picture !== 'default' && (
         <>
-          {withImage &&
+          {withImage && (
             <Image
               alt={'item.title'}
               radius="lg"
@@ -87,7 +115,7 @@ export const GameComp = ({ id, page = false, withImage = false, cardBodyClass = 
               removeWrapper
               src={data.game.picture}
             />
-          }
+          )}
           <div className="flex gap-3 flex-wrap">
             {data.game.categories &&
               Object.values(data.game.categories).map((e: any, i) => {
@@ -99,11 +127,7 @@ export const GameComp = ({ id, page = false, withImage = false, cardBodyClass = 
                 );
               })}
             {data.game.price.final && (
-              <Chip
-                size="sm"
-                variant="shadow"
-                color='primary'
-              >
+              <Chip size="sm" variant="shadow" color="primary">
                 {typeof data.game.price.final === 'string'
                   ? data.game.price.final
                   : `${data.game.price.final / 100} ${data.game.price.currency}`}
@@ -141,33 +165,27 @@ export const GameComp = ({ id, page = false, withImage = false, cardBodyClass = 
           <Divider />
         </>
       )}
-      
+
       <div className="gap-2 flex flex-col">
         {liveVotes &&
-          liveVotes.slice(0,6).map((e: wsVote | VoteForFrom, i) => {
+          liveVotes.slice(0, 6).map((e: wsVote | VoteForFrom, i) => {
             return <Voted cardBodyClass={cardBodyClass} onGame bg={page} key={i} vote={e} />;
           })}
       </div>
-      <Divider/>
+      <Divider />
       <div className="mx-2 ">
-          <div className="flex gap-5 mx-auto">
-            <div className="text-tiny text-default-500 flex items-center flex-row-reverse gap-2">
-              <span>
-                votes this week
-              </span>
-              <Chip color="secondary" variant="shadow">
-                {data.votesSubSunday._count.votes}
-              </Chip>
-            </div>
-            <div className="text-tiny text-default-500 flex items-center flex-row-reverse gap-2">
-              <span>
-                total votes
-              </span>
-              <Chip variant="shadow">
-                {data.game._count.votes}
-              </Chip>
-            </div>
+        <div className="flex gap-5 mx-auto">
+          <div className="text-tiny text-default-500 flex items-center flex-row-reverse gap-2">
+            <span>votes this week</span>
+            <Chip color="secondary" variant="shadow">
+              {data.votesSubSunday._count.votes}
+            </Chip>
           </div>
+          <div className="text-tiny text-default-500 flex items-center flex-row-reverse gap-2">
+            <span>total votes</span>
+            <Chip variant="shadow">{data.game._count.votes}</Chip>
+          </div>
+        </div>
       </div>
     </div>
   );

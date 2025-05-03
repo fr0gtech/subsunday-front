@@ -20,7 +20,7 @@ export default function Home() {
   return (
     <section className=" flex-wrap flex h-full lg:justify-center justify-start items-start w-full max-w-screen-xl mx-auto gap-4 ">
       <div className="grow p-3">
-        <h5 className='text-xl p-3'>Top Users by streak</h5>
+        <h5 className="text-xl p-3">Top Users by streak</h5>
         <Table aria-label="top user by streak">
           <TableHeader>
             <TableColumn>RANK</TableColumn>
@@ -48,7 +48,7 @@ export default function Home() {
         </Table>
       </div>
       <div className="grow p-3">
-        <h5 className='text-xl p-3'>Top Users by votes</h5>
+        <h5 className="text-xl p-3">Top Users by votes</h5>
         <Table aria-label="top user by vote">
           <TableHeader>
             <TableColumn>RANK</TableColumn>
@@ -78,7 +78,7 @@ export default function Home() {
         </Table>
       </div>
       <div className="grow p-3">
-        <h5 className='text-xl p-3'>Top Games by votes</h5>
+        <h5 className="text-xl p-3">Top Games by votes</h5>
         <Table aria-label="top games by vote">
           <TableHeader>
             <TableColumn>RANK</TableColumn>

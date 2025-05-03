@@ -6,11 +6,13 @@ import { Navbar } from '@/components/navbar';
 
 export const metadata = {
   title: 'Sub Sunday',
-  description: "A website to track lirik's sub sunday votes. With leaderboards, game info, direct link to steam and more.",
+  description:
+    "A website to track lirik's sub sunday votes. With leaderboards, game info, direct link to steam and more.",
   openGraph: {
     title: 'Sub Sunday',
-    description: "A website to track lirik's sub sunday votes. With leaderboards, game info, direct link to steam and more.",
-    images:  ['https://sub-sunday.com/og.png'],
+    description:
+      "A website to track lirik's sub sunday votes. With leaderboards, game info, direct link to steam and more.",
+    images: ['https://sub-sunday.com/og.png'],
   },
 };
 export default function RootLayout({ children }: { children: React.ReactNode }) {

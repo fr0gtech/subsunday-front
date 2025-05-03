@@ -23,27 +23,28 @@ import { usePathname, useRouter } from 'next/navigation';
 export const Navbar = () => {
   const path = usePathname();
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const router = useRouter()
+  const router = useRouter();
 
-  const searchBar = <Input
-    aria-label="Search"
-    classNames={{
-      inputWrapper: "bg-default-100",
-      input: "text-sm",
-    }}
-    labelPlacement="outside"
-    placeholder="Search..."
-    startContent={
-      <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-    }
-    type="search"
-    onKeyDown={(e) => {
-      if (e.code === "Enter") {
-        router.push("/search?value=" + e.currentTarget.value)
+  const searchBar = (
+    <Input
+      aria-label="Search"
+      classNames={{
+        inputWrapper: 'bg-default-100',
+        input: 'text-sm',
+      }}
+      labelPlacement="outside"
+      placeholder="Search..."
+      startContent={
+        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
       }
-
-    }}
-  />
+      type="search"
+      onKeyDown={(e) => {
+        if (e.code === 'Enter') {
+          router.push('/search?value=' + e.currentTarget.value);
+        }
+      }}
+    />
+  );
   return (
     <HeroUINavbar isMenuOpen={menuOpen} maxWidth="full" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -103,13 +104,9 @@ export const Navbar = () => {
       {/* <CurrentVotes className={'font-bold hidden gap-5 lg:flex text-tiny lowercase'} /> */}
 
       <NavbarContent className=" basis-1 pl-4" justify="end">
-        <NavbarContent>
-
-        </NavbarContent>
-        <NavbarItem className='hidden lg:block'>
-          {searchBar}
-        </NavbarItem>
-        <NextLink href='info'>
+        <NavbarContent></NavbarContent>
+        <NavbarItem className="hidden lg:block">{searchBar}</NavbarItem>
+        <NextLink href="info">
           <GithubIcon className="text-default-500" />
         </NextLink>
         <ThemeSwitch />

@@ -26,19 +26,20 @@ type DateRangeOptions = {
 export function getDateRange(options?: DateRangeOptions) {
   const { _fromDay, _fromTime, _toDay, _toTime } = options || {};
   // if we dont get any paras check env
-  const fromDay = (_fromDay || process.env.NEXT_PUBLIC_FROM_DAY) as Day
-  const fromTime = (_fromTime || process.env.NEXT_PUBLIC_FROM_TIME) as string
-  const toDay = (_toDay || process.env.NEXT_PUBLIC_TO_DAY) as Day
-  const toTime = (_toTime || process.env.NEXT_PUBLIC_TO_TIME) as string
+  const fromDay = (_fromDay || process.env.NEXT_PUBLIC_FROM_DAY) as Day;
+  const fromTime = (_fromTime || process.env.NEXT_PUBLIC_FROM_TIME) as string;
+  const toDay = (_toDay || process.env.NEXT_PUBLIC_TO_DAY) as Day;
+  const toTime = (_toTime || process.env.NEXT_PUBLIC_TO_TIME) as string;
   // after a period is over this should return new period so we can do "vote open"
   // with this we can also check if date is beofe start we are in closed voting period
   const now = new TZDate(new Date(), 'America/New_York');
   const [fromHour, fromMinute] = fromTime.split(':').map(Number);
-  
-  const periodStart = getDay(now) === fromDay ? now : previousDay(now, fromDay, { in: tz('America/New_York') });
+
+  const periodStart =
+    getDay(now) === fromDay ? now : previousDay(now, fromDay, { in: tz('America/New_York') });
 
   const startDate = setMilliseconds(
-    setSeconds(setMinutes(setHours  (periodStart, fromHour), fromMinute), 0),
+    setSeconds(setMinutes(setHours(periodStart, fromHour), fromMinute), 0),
     0,
   );
   const [toHour, toMinute] = toTime.split(':').map(Number);
