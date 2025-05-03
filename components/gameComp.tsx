@@ -63,7 +63,7 @@ export const GameComp = ({ id, withImage = false }: { id: string, withImage?: bo
     );
   }
   return (
-    <div className="p-3 max-w-2xl flex flex-col gap-5">
+    <div className="p-3 max-w-2xl flex flex-col gap-5 max-h-[calc(100vh-100px)] overflow-scroll">
       <h4 className="text-3xl font-bold">
         {data.game.name}{' '}
         {data.game.dev[0].length > 0 && <span className="text-tiny">by {data.game.dev}</span>}
@@ -80,7 +80,7 @@ export const GameComp = ({ id, withImage = false }: { id: string, withImage?: bo
                 src={data.game.picture}
               />
             }
-            <div className="flex gap-3">
+            <div className="flex gap-3 flex-wrap">
               {data.game.categories &&
                 Object.values(data.game.categories).map((e: any, i) => {
                   if (i > 2) return;
@@ -155,7 +155,7 @@ export const GameComp = ({ id, withImage = false }: { id: string, withImage?: bo
       <div className="gap-2 flex flex-col mt-2">
         {liveVotes &&
           liveVotes.map((e: Vote & { from: User } & { for: Game }, i: number) => {
-            return <Voted bg={false} key={i} vote={e} />;
+            return <Voted onGame bg={false} key={i} vote={e} />;
           })}
       </div>
     </div>

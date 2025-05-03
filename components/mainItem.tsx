@@ -1,5 +1,5 @@
 import { Game } from "@/generated/prisma";
-import { addToast, Button, Card, Divider, Popover, PopoverContent, PopoverTrigger, Skeleton } from "@heroui/react";
+import { addToast, Button, Card, Divider, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Popover, PopoverContent, PopoverTrigger, Skeleton, useDisclosure } from "@heroui/react";
 import clsx from "clsx";
 import { socket, fetcher } from "@/app/lib";
 import { useState, useEffect, useMemo, useCallback } from "react";
@@ -16,8 +16,10 @@ export type gameNcount = Game & {
     price: { final: number | string; currency: string }
 }
 export const MainItem = () => {
-    const [msgEvents, setMsgEvents] = useState<wsMsg[]>([]);
 
+    const [msgEvents, setMsgEvents] = useState<wsMsg[]>([]);
+    const [gameId, setGameId] = useState<number | null>(null)
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     useEffect(() => {
         const onMsgEvent = (value: wsMsg) => {
@@ -99,26 +101,29 @@ export const MainItem = () => {
     return (
         <div className="flex w-full justify-center items-center">
             <div className="flex p-3 w-full">
+                <Modal isOpen={isOpen} onOpenChange={onOpenChange} className="max-h-2/3">
+                    <ModalContent className="">
+                        {(onClose) => (
+                            <>
+                                {gameId && <GameComp id={gameId.toString()} />}
+                            </>
+                        )}
+                    </ModalContent>
+                </Modal>
                 <div className="grid-container">
                     {updateableGames &&
                         updateableGames.map(
                             (e, i: number,
                             ) => {
                                 return (
-                                    <Popover key={e.id} placement="right">
-                                    <PopoverTrigger>
-                                        <div>
-                                        <MainCard  e={e} i={i} />
-                                        </div>
-                                    </PopoverTrigger>
-                                    <PopoverContent>
-                                        <GameComp id={e.id.toString()}/>
-                                    </PopoverContent>
-                                    </Popover>
+                                    <MainCard key={e.id} onPress={()=>{
+                                        onOpen()
+                                        setGameId(e.id)
+                                    }} e={e} i={i} />
                                 );
                             },
                         )}
-                        
+
                     <div className="fixed2 relative w-full h-full overflow-hidden">
                         <div className="absolute w-full h-full top-0 left-0 whitespace-nowrap overflow-hidden2">
                             <LiveVotes amount={3} bg={false} textRight />

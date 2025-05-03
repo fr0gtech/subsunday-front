@@ -1,4 +1,4 @@
-import { Card, Chip } from "@heroui/react";
+import { Card, Chip, PressEvent } from "@heroui/react";
 import clsx from "clsx";
 import { color } from "framer-motion";
 import Link from "next/link";
@@ -7,7 +7,7 @@ import { Logo, Steamicon } from "./icons";
 import { gameNcount } from "./mainItem";
 import { useRouter } from "next/navigation";
 
-export const MainCard = ({ e, i }: { e: gameNcount, i: number }) => {
+export const MainCard = ({ e, i, onPress }: { e: gameNcount, i: number, onPress: (e: PressEvent) => void }) => {
     const router = useRouter();
     const color =
         i === 0 ? 'success' : i === 1 ? 'warning' : i === 2 ? 'secondary' : 'default';
@@ -22,7 +22,8 @@ export const MainCard = ({ e, i }: { e: gameNcount, i: number }) => {
     return (
         <Card
             key={e.id}
-            // isPressable
+            onPress={onPress}
+            isPressable
             // onPress={() => router.push(`game/${e.id}`)}
             isHoverable
             className="grid-item overflow-visible"

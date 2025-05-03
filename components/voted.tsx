@@ -7,29 +7,44 @@ import { useEffect, useState } from 'react';
 export const Voted = ({
   vote,
   bg = true,
-  textRight = false
+  textRight = false,
+  onGame = false
 }: {
   vote: Vote & { from: { name: string; id: number } } & { for: { id: number; name: string } },
   bg?: boolean
   textRight?: boolean
+  onGame?: boolean
 }) => {
   const [time, setTime] = useState<Date>(new Date())
   // make relative dates update, this is probably not the best way to do this but should be fine if we only display a few items
-  useEffect(() =>{
-    const interval = setInterval(()=>{
+  useEffect(() => {
+    const interval = setInterval(() => {
       setTime(new Date())
     }, 5000)
 
-    return () =>{
+    return () => {
       clearInterval(interval)
     }
-  },[])
+  }, [])
   return (
-    <Card shadow='md' style={{background: bg ? "" : "none" , boxShadow: bg ? "" : "none"}}>
+    <Card shadow='md' style={{ background: bg ? "" : "none", boxShadow: bg ? "" : "none" }}>
       <CardBody className="">
-        <span className="text-tiny leading-8" style={{ textAlign: textRight ? "right" : "left"}}>
+        {onGame ?
+          <span className="text-tiny leading-8" style={{ textAlign: textRight ? "right" : "left" }}>
+            <Link href={`/user/${vote.from.id}`}>
+              <Chip size="sm" color="primary" variant="flat" className="whitespace-pre-wrap">
+                {vote.from.name}
+              </Chip>
+            </Link>{' '}
+            <span>voted</span>{' '}
+            <span className='text-tiny opacity-80'>
+              {time && formatDistance(new Date(vote.createdAt), new Date(), { addSuffix: true })}{' '}
+            </span>
+          </span>
+        :
+        <span className="text-tiny leading-8" style={{ textAlign: textRight ? "right" : "left" }}>
           <span className='text-tiny opacity-80'>
-          {time && formatDistance(new Date(vote.createdAt), new Date(), { addSuffix: true })}{' '}
+            {time && formatDistance(new Date(vote.createdAt), new Date(), { addSuffix: true })}{' '}
           </span>
           <Link href={`/user/${vote.from.id}`}>
             <Chip size="sm" color="primary" variant="flat" className="whitespace-pre-wrap">
@@ -43,6 +58,7 @@ export const Voted = ({
             </Chip>
           </Link>
         </span>
+}
       </CardBody>
     </Card>
   );
