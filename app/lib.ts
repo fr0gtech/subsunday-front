@@ -11,6 +11,8 @@ import {
   Day,
   previousDay,
   isSaturday,
+  isToday,
+  getDay,
 } from 'date-fns';
 import { tz, TZDate } from '@date-fns/tz';
 
@@ -24,8 +26,8 @@ type DateRangeOptions = {
 export function getDateRange({ fromDay, fromTime, toDay, toTime }: DateRangeOptions) {
   const now = new TZDate(new Date(), 'America/New_York');
   const [fromHour, fromMinute] = fromTime.split(':').map(Number);
-
-  const periodStart = previousDay(now, fromDay, { in: tz('America/New_York') });
+  
+  const periodStart = getDay(now) === fromDay ? now : previousDay(now, fromDay, { in: tz('America/New_York') });
 
   const startDate = setMilliseconds(
     setSeconds(setMinutes(setHours  (periodStart, fromHour), fromMinute), 0),
