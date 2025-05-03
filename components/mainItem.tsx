@@ -116,7 +116,7 @@ export const MainItem = () => {
                             (e, i: number,
                             ) => {
                                 return (
-                                    <MainCard key={e.id} onPress={()=>{
+                                    <MainCard className="grid-item overflow-visible" key={e.id} onPress={()=>{
                                         onOpen()
                                         setGameId(e.id)
                                     }} e={e} i={i} />

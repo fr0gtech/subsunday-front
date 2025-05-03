@@ -47,3 +47,22 @@
   grid-row:1;
 
 }
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 0px rgba(138, 32, 32, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 10px rgb(237, 47, 47);
+  }
+  100% {
+    box-shadow: 0 0 0px rgba(117, 45, 45, 0.7);
+  }
+}
+
+.glow {
+  animation: glow 1s ease-in-out;
+}
+.glow-once {
+  animation: glow 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}

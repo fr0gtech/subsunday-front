@@ -136,7 +136,7 @@ export const GameComp = ({ id, page = false, withImage = false, cardBodyClass = 
       
       <div className="gap-2 flex flex-col">
         {liveVotes &&
-          liveVotes.map((e: Vote & { from: User } & { for: Game }, i: number) => {
+          liveVotes.slice(0,6).map((e: Vote & { from: User } & { for: Game }, i: number) => {
             return <Voted cardBodyClass={cardBodyClass} onGame bg={page} key={i} vote={e} />;
           })}
       </div>

@@ -1,13 +1,14 @@
 import { Card, Chip, PressEvent } from "@heroui/react";
 import clsx from "clsx";
-import { color } from "framer-motion";
+import { color, motion } from "framer-motion";
 import Link from "next/link";
 import { Image, Tooltip } from "@heroui/react";
 import { Logo, Steamicon } from "./icons";
 import { gameNcount } from "./mainItem";
 import { useRouter } from "next/navigation";
+import NumberFlow from '@number-flow/react'
 
-export const MainCard = ({ e, i, onPress }: { e: gameNcount, i: number, onPress: (e: PressEvent) => void }) => {
+export const MainCard = ({ e, i, onPress, className }: { e: gameNcount, i: number, onPress: (e: PressEvent) => void, className?: string }) => {
     const router = useRouter();
     const color =
         i === 0 ? 'success' : i === 1 ? 'warning' : i === 2 ? 'secondary' : 'default';
@@ -26,7 +27,7 @@ export const MainCard = ({ e, i, onPress }: { e: gameNcount, i: number, onPress:
             isPressable
             // onPress={() => router.push(`game/${e.id}`)}
             isHoverable
-            className="grid-item overflow-visible"
+            className={className}
         >
 
             <div className="relative flex h-full">
@@ -56,19 +57,24 @@ export const MainCard = ({ e, i, onPress }: { e: gameNcount, i: number, onPress:
                     />
                 )}
                 {/* ranking and vote chip */}
+
                 <Tooltip content="Ranking & Votes">
                     <Chip
                         className={clsx([
-                            'absolute  rankingChiptl -left-[3px] boldChip',
+                            'absolute rankingChiptl -left-[3px] boldChip !w-[200px]',
                         ])}
                         variant="shadow"
                         color={color}
                     >
-                        <span className=" opacity-50 font-mono">#</span>
-                        <span className="text-2xl">
-                            {i + 1}
-                        </span>
-                        <span className="!text-tiny opacity-50">({e._count.votes})</span>
+                        <div className="flex items-center">
+                            <div className=" opacity-50 font-mono">#</div>
+                            <div className="text-2xl">
+                                {i + 1}
+                            </div>
+                                <div className="top-0 right-0 opacity-50 !text-tiny h-full">
+                                    (<NumberFlow isolate className="left-0 bottom-0" value={e._count.votes} />)
+                                </div>
+                        </div>
                     </Chip>
                 </Tooltip>
                 {/* price chip */}
