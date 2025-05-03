@@ -63,7 +63,7 @@ export const GameComp = ({ id, withImage = false }: { id: string, withImage?: bo
     );
   }
   return (
-    <div className="p-3 max-w-2xl flex flex-col gap-5 max-h-[calc(100vh-100px)] overflow-scroll">
+    <div className="p-3 max-w-2xl flex flex-col gap-5 max-h-[calc(100vh-200px)] overflow-scroll">
       <h4 className="text-3xl font-bold">
         {data.game.name}{' '}
         {data.game.dev[0].length > 0 && <span className="text-tiny">by {data.game.dev}</span>}
