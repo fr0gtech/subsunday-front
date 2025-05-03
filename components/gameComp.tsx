@@ -44,6 +44,7 @@ export const GameComp = ({
         createdAt: new TZDate(new Date(), 'America/New_York'),
       };
       setMsgEvents((previous: any) => [...previous, valWithCreatedAT] as any);
+      // toast(value);
     }
     socket.emit('join', 'game-' + id);
     socket.on('vote', onMsgEvent);
