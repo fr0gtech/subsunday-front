@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { wsMsg } from '@/types';
 import { TZDate } from '@date-fns/tz';
 
-export const GameComp = ({ id, withImage = false }: { id: string, withImage?: boolean }) => {
+export const GameComp = ({ id, page = false, withImage = false, cardBodyClass= "" }: { id: string, withImage?: boolean, cardBodyClass?: string, page?: boolean }) => {
   const { data, isLoading } = useSWR(`/api/game?id=${id}`, fetcher);
   const [msgEvents, setMsgEvents] = useState<wsMsg[]>([]);
 
@@ -155,7 +155,7 @@ export const GameComp = ({ id, withImage = false }: { id: string, withImage?: bo
       <div className="gap-2 flex flex-col mt-2">
         {liveVotes &&
           liveVotes.map((e: Vote & { from: User } & { for: Game }, i: number) => {
-            return <Voted onGame bg={false} key={i} vote={e} />;
+            return <Voted cardBodyClass={cardBodyClass} onGame bg={page} key={i} vote={e} />;
           })}
       </div>
     </div>

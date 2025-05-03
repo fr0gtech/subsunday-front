@@ -10,6 +10,7 @@ import { Alert, Card, CardBody, CardHeader, Code, Link } from '@heroui/react';
 import { LiveVotes } from '@/components/liveVotes';
 import { TZDate } from '@date-fns/tz';
 import { Chart } from '@/components/chart';
+import { CurrentVotes } from '@/components/currentVotes';
 
 export default function Home() {
   return (
@@ -81,17 +82,9 @@ export default function Home() {
           </Card>
         </div>
         <div className='flex flex-col gap-2 lg:w-1/2'>
+
           <Card className='p-5 ' shadow='md'>
-            <div className=" mx-auto flex gap-5 opacity-70">
-              <div className='flex  items-center'>
-                <div className='w-2 h-2 bg-[#17C964] mx-1 rounded-full'></div>
-                <div className='text-tiny lowercase'>Votes this week</div>
-              </div>
-              <div className='flex  items-center'>
-                <div className='w-2 h-2 bg-[#9353D3] mx-1 rounded-full'></div>
-                <div className='text-tiny lowercase'>Votes last week</div>
-              </div>
-            </div>
+          <CurrentVotes className={'text-xs flex  gap-5 p-0 justify-center'}/>
             <Chart />
           </Card>
           <LiveVotes amount={6} />

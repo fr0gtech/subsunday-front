@@ -100,12 +100,12 @@ export const MainItem = () => {
 
     return (
         <div className="flex w-full justify-center items-center">
-            <div className="flex p-3 w-full">
+            <div className="flex w-full p-4">
                 <Modal isOpen={isOpen} onOpenChange={onOpenChange} className="max-h-2/3">
-                    <ModalContent className="">
-                        {(onClose) => (
+                    <ModalContent className="p-2">
+                        {() => (
                             <>
-                                {gameId && <GameComp id={gameId.toString()} />}
+                                {gameId && <GameComp cardBodyClass="py-1 px-0" id={gameId.toString()} />}
                             </>
                         )}
                     </ModalContent>
@@ -126,12 +126,12 @@ export const MainItem = () => {
 
                     <div className="fixed2 relative w-full h-full overflow-hidden">
                         <div className="absolute w-full h-full top-0 left-0 whitespace-nowrap overflow-hidden2">
-                            <LiveVotes amount={3} bg={false} textRight />
+                            <LiveVotes amount={3} bg={false} />
                         </div>
                     </div>
-                    <div className="fixed3 flex item-center flex-col justify-evenly ">
-                        <VotingPeriod className=" text-center py-4 !font-bold" />
-                        <CurrentVotes className="gap-2 flex flex-row justify-evenly text-tiny" />
+                    <div className="fixed3 flex item-center flex-col justify-evenly p-5">
+                        <VotingPeriod className="text-xl text-center py-4 " />
+                        <CurrentVotes className="gap-5 justify-center flex flex-row text-tiny" />
                     </div>
                 </div>
                 <Divider className="hidden lg:visible" />

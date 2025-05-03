@@ -26,13 +26,13 @@ export const VotingPeriod = ({ className }: { className: string }) => {
         }
       },[])
     return (
-        <p className={className}>
+        <span className={className}>
             {votingClosed &&
                 `voting start in: ${time && formatDistance(new Date(), voteRange.startDate)}`
             }
             {!votingClosed &&
                 `voting ends in ${time && formatDistance(new Date(), voteRange.endDate)}`
             }
-        </p>
+        </span>
     )
 }

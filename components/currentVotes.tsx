@@ -43,7 +43,7 @@ export const CurrentVotes = ({ className }: { className: string }) => {
     <div>
       {data &&
         <div className={className}>
-          <div className='flex justify-end gap-5 flex-row-reverse items-center'>
+          <div className='flex justify-end gap-2 flex-col-reverse items-center'>
             <span className="lowercase">Votes this week </span>
             <Tooltip content={`total votes: ${data && data.total + msgEvents.length}`}>
               <motion.div
@@ -53,13 +53,13 @@ export const CurrentVotes = ({ className }: { className: string }) => {
                 animate={{ opacity: 1, scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 100, damping: 15 }}
               >
-                <Chip size="sm" color="secondary" variant="shadow" className='cursor-default boldChip'>
+                <Chip size="lg" color="secondary" variant="shadow" className='cursor-default boldChip'>
                   {data.now + msgEvents.length}
                 </Chip>
               </motion.div>
             </Tooltip>
           </div>
-          <div className='flex justify-end gap-2 flex-row-reverse items-center'>
+          <div className='flex justify-end gap-2 flex-col-reverse items-center'>
             <span className="lowercase">Votes today</span>
             <motion.div
               className=''
@@ -68,7 +68,7 @@ export const CurrentVotes = ({ className }: { className: string }) => {
               animate={{ opacity: 1, scale: 1.1 }}
               transition={{ type: "spring", stiffness: 100, damping: 15 }}
             >
-              <Chip size="sm" color="success" variant="shadow" className=' cursor-default boldChip'>
+              <Chip size="lg" color="success" variant="shadow" className=' cursor-default boldChip'>
                 {data.today + msgEvents.length}
               </Chip>
             </motion.div>
