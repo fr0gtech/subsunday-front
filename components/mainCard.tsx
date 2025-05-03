@@ -1,12 +1,12 @@
-import { Card, Chip, PressEvent } from '@heroui/react';
+import { addToast, Button, Card, Chip, PressEvent } from '@heroui/react';
 import clsx from 'clsx';
-import { color, motion } from 'framer-motion';
 import Link from 'next/link';
 import { Image, Tooltip } from '@heroui/react';
 import { Logo, Steamicon } from './icons';
 import { gameNcount } from './mainItem';
 import { useRouter } from 'next/navigation';
 import NumberFlow from '@number-flow/react';
+import { CheckIcon, ClipboardIcon } from '@radix-ui/react-icons';
 
 export const MainCard = ({
   e,
@@ -131,19 +131,34 @@ export const MainCard = ({
             </Tooltip>
           </div>
         </div>
-
-        {e.link !== 'notOnSteam' && (
-          <Tooltip content="Open Steam Page">
-            <Link
-              onClick={(e) => e.stopPropagation()}
-              className="px-5 z-10 relative"
-              href={`https://store.steampowered.com/app/${e.steamId}`}
-              target="_blank"
+        <div className='flex gap-2'>
+          <Tooltip content={`Copy "!vote ${e.name}" to your clipboard`}>
+            <Button size='sm' variant='ghost' className='opacity-50 px-2 !border-none'
+              onPress={() => {
+                navigator.clipboard.writeText(`!vote ${e.name}`);
+                addToast({ color: 'success', title: `"!vote ${e.name}" copied to clipboard` })
+              }}
             >
-              <Steamicon size={20} className="opacity-70" />
-            </Link>
+              <ClipboardIcon />
+            </Button>
           </Tooltip>
-        )}
+          {e.link !== 'notOnSteam' && (
+            <Tooltip content="Open Steam Page">
+              <Button size='sm' variant='ghost' className='opacity-50 px-2 !border-none'>
+
+                <Link
+                  onClick={(e) => e.stopPropagation()}
+                  className="px-5 z-10 relative"
+                  href={`https://store.steampowered.com/app/${e.steamId}`}
+                  target="_blank"
+                >
+                  <Steamicon size={20} className="opacity-70" />
+                </Link>
+              </Button>
+
+            </Tooltip>
+          )}
+        </div>
       </div>
     </Card>
   );
