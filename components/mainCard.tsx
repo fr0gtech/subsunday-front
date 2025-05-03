@@ -43,7 +43,7 @@ export const MainCard = ({
           {e.picture === 'default' ? (
             <div
               className={clsx([
-                'flex flex-col justify-center h-full min-h-[100px] min-w-[294px]  items-center z-0 w-full object-cover shadow-lg  ',
+                'flex flex-col justify-center h-full bg-neutral-100 dark:bg-neutral-900 min-h-[100px] min-w-[294px] items-center z-0  object-cover shadow-lg  ',
                 borderColor,
               ])}
             >
@@ -129,9 +129,10 @@ export const MainCard = ({
             </Tooltip>
           </div>
         </div>
-        <div className='flex gap-2'>
+        <div className='flex gap-2 mr-1'>
           <Tooltip content={`Copy "!vote ${e.name}" to your clipboard`}>
             <Button size='sm' variant='ghost' className='opacity-50 px-2 !border-none'
+              style={{ width: "30px", minWidth: "unset" }}
               onPress={() => {
                 navigator.clipboard.writeText(`!vote ${e.name}`);
                 addToast({ timeout: 2300, color: 'success', title: `"!vote ${e.name}" copied to clipboard` })
@@ -142,7 +143,9 @@ export const MainCard = ({
           </Tooltip>
           {e.link !== 'notOnSteam' && (
             <Tooltip content="Open Steam Page">
-              <Button size='sm' variant='ghost' className='opacity-50 px-2 !border-none'>
+              <Button size='sm' variant='ghost' className='opacity-50  !border-none'
+                style={{ width: "30px", minWidth: "unset" }}
+              >
                 <Link
                   onClick={(e) => e.stopPropagation()}
                   className="px-5 z-10 relative"
