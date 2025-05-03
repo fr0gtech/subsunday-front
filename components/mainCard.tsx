@@ -22,8 +22,8 @@ export const MainCard = ({ e, i }: { e: gameNcount, i: number }) => {
     return (
         <Card
             key={e.id}
-            isPressable
-            onPress={() => router.push(`game/${e.id}`)}
+            // isPressable
+            // onPress={() => router.push(`game/${e.id}`)}
             isHoverable
             className="grid-item overflow-visible"
         >

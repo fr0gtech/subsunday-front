@@ -1,5 +1,5 @@
 import { Game } from "@/generated/prisma";
-import { addToast, Card, Divider, Skeleton } from "@heroui/react";
+import { addToast, Button, Card, Divider, Popover, PopoverContent, PopoverTrigger, Skeleton } from "@heroui/react";
 import clsx from "clsx";
 import { socket, fetcher } from "@/app/lib";
 import { useState, useEffect, useMemo, useCallback } from "react";
@@ -10,6 +10,7 @@ import { MainCard } from "./mainCard";
 import { VotingPeriod } from "./votingPeriod";
 import { CurrentVotes } from "./currentVotes";
 import { Chart } from "./chart";
+import { GameComp } from "./gameComp";
 export type gameNcount = Game & {
     _count: { votes: number };
     price: { final: number | string; currency: string }
@@ -104,10 +105,20 @@ export const MainItem = () => {
                             (e, i: number,
                             ) => {
                                 return (
-                                    <MainCard key={e.id} e={e} i={i} />
+                                    <Popover key={e.id} placement="right">
+                                    <PopoverTrigger>
+                                        <div>
+                                        <MainCard  e={e} i={i} />
+                                        </div>
+                                    </PopoverTrigger>
+                                    <PopoverContent>
+                                        <GameComp id={e.id.toString()}/>
+                                    </PopoverContent>
+                                    </Popover>
                                 );
                             },
                         )}
+                        
                     <div className="fixed2 relative w-full h-full overflow-hidden">
                         <div className="absolute w-full h-full top-0 left-0 whitespace-nowrap overflow-hidden2">
                             <LiveVotes amount={3} bg={false} textRight />
