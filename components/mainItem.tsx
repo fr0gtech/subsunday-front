@@ -1,5 +1,5 @@
 import { Game } from "@/generated/prisma";
-import { addToast, Button, Card, Divider, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Popover, PopoverContent, PopoverTrigger, Skeleton, useDisclosure } from "@heroui/react";
+import { addToast, Button, Card, Divider, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Popover, PopoverContent, PopoverTrigger, Skeleton, useDisclosure } from "@heroui/react";
 import clsx from "clsx";
 import { socket, fetcher } from "@/app/lib";
 import { useState, useEffect, useMemo, useCallback } from "react";
@@ -16,7 +16,10 @@ export type gameNcount = Game & {
     price: { final: number | string; currency: string }
 }
 export const MainItem = () => {
+    const [cnt, setCnt] = useState(1)
+    const { data, isLoading } = useSWR(`/api/games?page=${cnt}`, fetcher);
 
+    
     const [msgEvents, setMsgEvents] = useState<wsMsg[]>([]);
     const [gameId, setGameId] = useState<number | null>(null)
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -43,7 +46,6 @@ export const MainItem = () => {
         });
     }, [msgEvents])
 
-    const { data, isLoading } = useSWR(`/api/games`, fetcher);
 
     const updateableGames = useMemo<gameNcount[]>(() => {
 
@@ -131,7 +133,7 @@ export const MainItem = () => {
                     </div>
                     <div className="fixed3 flex item-center flex-col justify-evenly p-5">
                         <VotingPeriod className="text-xl text-center py-4 " />
-                        <CurrentVotes className="gap-5 justify-center flex flex-row text-tiny" />
+                        <CurrentVotes className=" gap-5 justify-center flex flex-row text-tiny" />
                     </div>
                 </div>
                 <Divider className="hidden lg:visible" />

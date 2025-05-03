@@ -3,6 +3,7 @@ import { Card, CardBody, Chip } from '@heroui/react';
 import { formatDistance } from 'date-fns';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { VoteForFrom, wsVote } from './liveVotes';
 
 export const Voted = ({
   vote,
@@ -11,7 +12,7 @@ export const Voted = ({
   onGame = false,
   cardBodyClass = ""
 }: {
-  vote: Vote & { from: { name: string; id: number } } & { for: { id: number; name: string } },
+  vote: wsVote | VoteForFrom
   bg?: boolean
   textRight?: boolean
   onGame?: boolean

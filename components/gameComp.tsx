@@ -10,16 +10,21 @@ import { useRouter } from 'next/navigation';
 import { wsMsg } from '@/types';
 import { TZDate } from '@date-fns/tz';
 import clsx from 'clsx';
+import { VoteForFrom, wsVote } from './liveVotes';
+import { v4 as uuidv4 } from 'uuid';
 
 export const GameComp = ({ id, page = false, withImage = false, cardBodyClass = "" }: { id: string, withImage?: boolean, cardBodyClass?: string, page?: boolean }) => {
   const { data, isLoading } = useSWR(`/api/game?id=${id}`, fetcher);
-  const [msgEvents, setMsgEvents] = useState<wsMsg[]>([]);
+  const [msgEvents, setMsgEvents] = useState<wsVote[]>([]);
 
   useEffect(() => {
-    function onMsgEvent(value: wsMsg) {
-      setMsgEvents((previous: wsMsg[]) => [...previous, value]);
-      toast(value)
-    }
+    function onMsgEvent(value: any) {
+      const valWithCreatedAT = {
+          ...value,
+          createdAt: new TZDate(new Date(), 'America/New_York')
+      }
+      setMsgEvents((previous: any) => [...previous, valWithCreatedAT] as any);
+  }
     socket.emit('join', 'game-' + id);
     socket.on('vote', onMsgEvent);
 
@@ -37,23 +42,26 @@ export const GameComp = ({ id, page = false, withImage = false, cardBodyClass = 
   }, [msgEvents])
   const liveVotes = useMemo(() => {
     if (!data) return;
-    const wsVotes2Votes = msgEvents.map(
-      (e: { for: { id: number; name: string }; from: { id: number; name: string } }) => {
-        return {
-          createdAt: new TZDate(new Date(), 'America/New_York'),
-          for: {
-            name: e.for.name,
-            id: e.for.id,
-          },
-          from: {
-            name: e.from.name,
-            id: e.from.id,
-          },
-        };
+    const wsVotes2Votes: wsVote[] = msgEvents.map(
+      (e: wsVote) => {
+          return {
+              createdAt: e.createdAt,
+              for: {
+                  name: e.for.name,
+                  id: e.for.id,
+              },
+              from: {
+                  name: e.from.name,
+                  id: e.from.id,
+              },
+              id: uuidv4(),
+          };
       },
-    );
+  )
 
-    return [...wsVotes2Votes, ...data.game.votes];
+    return [...wsVotes2Votes, ...data.game.votes as VoteForFrom[]].filter((e) => e).sort((a, b) => {
+              return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          }) as (VoteForFrom | wsVote)[]
   }, [msgEvents, data]);
 
   if (isLoading) {
@@ -136,7 +144,7 @@ export const GameComp = ({ id, page = false, withImage = false, cardBodyClass = 
       
       <div className="gap-2 flex flex-col">
         {liveVotes &&
-          liveVotes.slice(0,6).map((e: Vote & { from: User } & { for: Game }, i: number) => {
+          liveVotes.slice(0,6).map((e: wsVote | VoteForFrom, i) => {
             return <Voted cardBodyClass={cardBodyClass} onGame bg={page} key={i} vote={e} />;
           })}
       </div>
