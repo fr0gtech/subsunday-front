@@ -56,6 +56,7 @@ export const MainCard = ({
               <NextImage
                 src={e.picture}
                 fill
+                loading="lazy"
                 className={clsx([
                   'z-0 w-full grow object-cover',
                   borderColor,
