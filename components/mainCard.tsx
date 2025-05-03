@@ -137,7 +137,7 @@ export const MainCard = ({
             <Button size='sm' variant='ghost' className='opacity-50 px-2 !border-none'
               onPress={() => {
                 navigator.clipboard.writeText(`!vote ${e.name}`);
-                addToast({ color: 'success', title: `"!vote ${e.name}" copied to clipboard` })
+                addToast({ timeout: 2300,color: 'success', title: `"!vote ${e.name}" copied to clipboard` })
               }}
             >
               <ClipboardIcon />

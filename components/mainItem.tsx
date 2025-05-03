@@ -57,7 +57,7 @@ export const MainItem = () => {
   const toast = useCallback(
     (value: { for: { name: any }; from: { name: any } }) => {
       addToast({
-        timeout: 500,
+        timeout: 2300,
         color: 'primary',
         title: `New Vote for ${value.for.name} from ${value.from.name}`,
       });
