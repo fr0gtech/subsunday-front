@@ -104,16 +104,16 @@ export const GameComp = ({
 
       {data.game.picture !== 'default' && (
         <>
-        <div className='w-1/2 relative h-[200px] rouned'>
           {withImage && (
+          <div className='w-1/2 relative h-[200px] rouned'>
             <Image
               alt={'item.title'}
               fill
               className=' object-cover rounded-md'
               src={data.game.picture}
             />
-          )}
           </div>
+          )}
           <div className="flex gap-3 flex-wrap">
             {data.game.categories &&
               Object.values(data.game.categories).map((e: any, i) => {
