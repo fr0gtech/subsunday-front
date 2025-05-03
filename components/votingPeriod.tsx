@@ -31,7 +31,7 @@ export const VotingPeriod = ({ className }: { className: string }) => {
                 `voting start in: ${time && formatDistance(new Date(), voteRange.startDate)}`
             }
             {!votingClosed &&
-                `vote ends in: ${time && formatDistance(new Date(), voteRange.endDate)}`
+                `voting ends in ${time && formatDistance(new Date(), voteRange.endDate)}`
             }
         </p>
     )
