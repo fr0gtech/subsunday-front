@@ -106,7 +106,6 @@ export const MainItem = () => {
                   <motion.div
                     key={e.id}
                     layout
-                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   >
@@ -130,7 +129,7 @@ export const MainItem = () => {
               return (
                 <Card
                   key={i}
-                  className="overflow-visible w-full min-w-[332px] grow min-h-[198px] cursor-pointer"
+                  className="overflow-visible w-full min-w-[332px] grow min-h-[186px] cursor-pointer"
                 >
                   <div className="relative flex flex-col h-full">
                     <Skeleton
