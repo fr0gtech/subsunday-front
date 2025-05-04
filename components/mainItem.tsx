@@ -85,7 +85,6 @@ export const MainItem = () => {
   if (!data || !data.games) {
     return (
       <div className="flex w-full justify-center items-center">
-
         <div className="flex w-full p-4">
           <div className="grid-container">
             {isLoading &&
@@ -93,13 +92,13 @@ export const MainItem = () => {
                 return (
                   <Card
                     key={i}
-                    className="overflow-visible w-full min-w-[332px] grow min-h-[186px] cursor-pointer"
+                    className="overflow-visible w-full grow min-h-[200px] cursor-pointer"
                   >
                     <div className="relative flex flex-col h-full">
                       <Skeleton
                         isLoaded={data && data.games.length === 0}
                         className={clsx([
-                          'flex flex-col justify-center grow min-h-[100px] min-w-[294px]  items-center z-0 w-full object-cover scale-[1.02] shadow-lg  border-4 rounded-[1em]',
+                          'flex flex-col justify-center grow min-h-[100px] min-w-[200px]  items-center z-0 w-full object-cover scale-[1.02] shadow-lg  border-4 rounded-[1em]',
                           'dark:border-default light:border-neutral-200',
                         ])}
                       />
@@ -129,7 +128,7 @@ export const MainItem = () => {
 
               </div>
             </div>
-            <div className="fixed3 flex flex-col justify-evenly p-3  ">
+            <div className="fixed3 flex flex-col justify-evenly p-3 gap-5 ">
               <VotingPeriod className="text-xl w-full text-center" />
               <CurrentVotes className="gap-5 justify-center flex flex-row text-tiny" />
 
@@ -198,46 +197,7 @@ export const MainItem = () => {
               <h4 className='text-xl font-bold'>No data available</h4>
             </div>
           }
-          {(isLoading || (data && data.games.length === 0)) &&
-            [...Array(25).fill(0)].map((e, i: number) => {
-              return (
-                <Card
-                  key={i}
-                  className="overflow-visible w-full min-w-[332px] grow min-h-[186px] cursor-pointer"
-                >
-                  <div className="relative flex flex-col h-full">
-                    <Skeleton
-                      isLoaded={data && data.games.length === 0}
-                      className={clsx([
-                        'flex flex-col justify-center grow min-h-[100px] min-w-[294px]  items-center z-0 w-full object-cover scale-[1.02] shadow-lg  border-4 rounded-[1em]',
-                        'dark:border-default light:border-neutral-200',
-                      ])}
-                    />
-                    <div className="flex p-1">
-                      <div className="flex flex-grow gap-2">
-                        <div className="flex gap-2 p-2 max-w-[300px]">
-                          <Skeleton
-                            isLoaded={data && data.games.length === 0}
-                            className="font-bold text-left whitespace-pre-wrap rounded-lg !w-20 !h-6">
-
-                          </Skeleton>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              );
-            })}
-
-          <div className="fixed2 relative w-full h-full overflow-hidden">
-            <div>
-            </div>
-            <div className="absolute w-full h-full top-0 left-0 whitespace-nowrap overflow-hidden2">
-              <LiveVotes amount={3} bg={false} />
-            </div>
-          </div>
           <div className="fixed3 flex flex-col justify-evenly p-3 gap-5 ">
-
             <VotingPeriod className="text-xl w-full text-center" />
             <CurrentVotes className="gap-5 justify-center flex flex-row text-tiny" />
             <div className='flex lg:hidden justify-center'>
@@ -255,6 +215,13 @@ export const MainItem = () => {
                   <InfoCircledIcon />
                 </Link>
               </div>
+            </div>
+          </div>
+          <div className="fixed2 relative w-full h-full overflow-hidden">
+            <div>
+            </div>
+            <div className="absolute w-full h-full top-0 left-0 whitespace-nowrap overflow-hidden2">
+              <LiveVotes amount={3} bg={false} />
             </div>
           </div>
         </div>

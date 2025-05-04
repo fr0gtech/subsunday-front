@@ -78,8 +78,8 @@ export const LiveVotes = ({
       }) as (VoteForFrom | wsVote)[];
   }, [msgEvents, data]);
   if (isLoading) {
-    return (<div className=' flex flex-col justify-evenly grow h-full px-3'>
-      {[...Array(3).fill(0)].map((e, i) => <Skeleton key={i} className='w-full h-[30px] rounded-full' />)}
+    return (<div className=' flex flex-col gap-8 justify-evenly pb-7 pt-3 grow h-full px-3'>
+      {[...Array(3).fill(0)].map((e, i) => <Skeleton key={i} className='w-full h-[20px] rounded-full' />)}
     </div>)
   }
   return (
