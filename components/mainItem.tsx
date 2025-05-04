@@ -173,7 +173,7 @@ export const MainItem = () => {
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   >
                     <MainCard
-                      className="grid-item overflow-visible h-full"
+                      className="grid-item overflow-visible h-[200px]"
                       key={e.id}
                       onPress={() => {
                         onOpen();
@@ -185,6 +185,9 @@ export const MainItem = () => {
                   </motion.div>
                 );
               })}
+            {updateableGames && [...Array(50 - updateableGames.length).fill(0).map((e, i) => {
+              return <Card key={i + "aa"} className='w-full h-[170px]'></Card>
+            })]}
           </AnimatePresence>
           {(!isLoading && data && data.games.length === 0) &&
             <div className='flex items-center justify-center h-full w-full'>
