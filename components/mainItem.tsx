@@ -124,8 +124,6 @@ export const MainItem = () => {
             </pre>
           </div> */}
             <div className="fixed2 relative w-full h-full overflow-hidden">
-
-
               <div className="absolute w-full h-full top-0 left-0 whitespace-nowrap overflow-hidden2">
                 <LiveVotes amount={3} bg={false} />
 
@@ -230,11 +228,7 @@ export const MainItem = () => {
                 </Card>
               );
             })}
-          {/* <div className='bg-black absolute z-[9999999] top-0 left-0'>
-            <pre>
-              {JSON.stringify(selectedRange, null, 2)}
-            </pre>
-          </div> */}
+
           <div className="fixed2 relative w-full h-full overflow-hidden">
             <div>
             </div>

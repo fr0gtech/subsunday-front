@@ -39,7 +39,7 @@ export const MainCard = ({
     >
       <div className="relative flex h-full">
         {/* create "default image" if no pic for game that is just logo and bg */}
-        <div className={clsx(['scale-[1.033] w-full h-full overflow-clip relative rounded-[10px] border-4', borderColor])}>
+        <div className={clsx(['scale-[1.033] w-full h-full relative rounded-[10px] border-4', borderColor])}>
           {e.picture === 'default' ? (
             <div
               className={clsx([
@@ -68,7 +68,7 @@ export const MainCard = ({
           )}
           <Tooltip content="Ranking & Votes">
             <Chip
-              className={clsx(['absolute rankingChiptl top-0 left-0 boldChip !w-[200px]'])}
+              className={clsx(['absolute rankingChiptl -top-[2px] -left-[2px] boldChip !w-[200px]'])}
               variant="shadow"
               color={color}
             >
@@ -84,12 +84,12 @@ export const MainCard = ({
             </Chip>
           </Tooltip>
           {typeof e.price.final === 'string' && (
-            <div className="absolute top-0'left-0 ">
+            <div className="absolute top-0 right-0">
               <Chip
                 color={color}
                 size="sm"
                 variant="shadow"
-                className="!text-tiny uppercase rankingChiptr text-opacity-70"
+                className="!text-tiny rankingChiptr text-opacity-70 absolute -top-[2px] -right-[2px]"
               >
                 {e.price.final}
               </Chip>
@@ -100,7 +100,7 @@ export const MainCard = ({
               color={color}
               size="sm"
               variant="shadow"
-              className="!text-tiny rankingChiptr text-opacity-70 absolute top-0 right-0"
+              className="!text-tiny rankingChiptr text-opacity-70 absolute -top-[2px] -right-[2px]"
             >
               {(e.price.final as number) / 100}{' '}
               <span className="text-[10px] font-bold">{e.price.currency}</span>
