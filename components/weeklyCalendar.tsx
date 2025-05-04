@@ -13,7 +13,7 @@ import {
 } from 'date-fns';
 import { useState } from 'react';
 import clsx from 'clsx';
-import { Popover, PopoverContent, PopoverTrigger } from '@heroui/react';
+import { Button, Popover, PopoverContent, PopoverTrigger } from '@heroui/react';
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 import { useAppStore } from '@/store/store';
 import { tz, TZDate } from '@date-fns/tz';
@@ -56,12 +56,12 @@ export default function WeeklyCalendarPopover() {
         <div className="relative inline-block text-left">
             <Popover className="relative">
                 <PopoverTrigger className="inline-flex justify-between items-center rounded-md text-sm font-medium focus:outline-none">
-                    <div>
+                    <Button size='sm'>
                         {selectedWeek
                             ? `${format(selectedWeek, 'MMM d')} – ${format(addDays(selectedWeek, 5), 'MMM d')}`
                             : 'Select a week'}
                         <ChevronDownIcon className="ml-2 h-5 w-5" />
-                    </div>
+                    </Button>
                 </PopoverTrigger>
 
                 <PopoverContent>
