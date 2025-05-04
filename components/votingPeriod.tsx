@@ -12,7 +12,7 @@ export const VotingPeriod = ({ className }: { className: string }) => {
   }, [])
   const votingClosed = useMemo(() => {
     const today = new TZDate(Date.now(), 'America/New_York');
-    return isBefore(today, voteRange.startDate);
+    return isAfter(today, voteRange.endDate);
   }, []);
 
   // make relative dates update, this is probably not the best way to do this but should be fine if we only display a few items
@@ -27,8 +27,7 @@ export const VotingPeriod = ({ className }: { className: string }) => {
   }, []);
   return (
     <span className={className}>
-      {votingClosed &&
-        `voting start in: ${time && formatDistance(new Date(), voteRange.startDate)}`}
+      {votingClosed && `voting starts in ${time && formatDistance(new Date(), voteRange.nextStart)}`}
       {!votingClosed && `voting ends in ${time && formatDistance(new Date(), voteRange.endDate)}`}
     </span>
   );

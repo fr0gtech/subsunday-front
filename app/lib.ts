@@ -24,6 +24,7 @@ type DateRangeOptions = {
 };
 
 export function getDateRange(options?: DateRangeOptions) {
+  // we create a period that is open for voting any anything between is not in range
   const { _fromDay, _fromTime, _toDay, _toTime } = options || {};
   // if we dont get any paras check env
   const fromDay = (_fromDay || process.env.NEXT_PUBLIC_FROM_DAY) as Day;
@@ -35,8 +36,7 @@ export function getDateRange(options?: DateRangeOptions) {
   const now = new TZDate(new Date(), 'America/New_York');
   const [fromHour, fromMinute] = fromTime.split(':').map(Number);
 
-  const periodStart =
-    getDay(now) === fromDay ? now : previousDay(now, fromDay, { in: tz('America/New_York') });
+  const periodStart = getDay(now) === fromDay ? now : previousDay(now, fromDay, { in: tz('America/New_York') });
 
   const startDate = setMilliseconds(
     setSeconds(setMinutes(setHours(periodStart, fromHour), fromMinute), 0),
@@ -44,12 +44,13 @@ export function getDateRange(options?: DateRangeOptions) {
   );
   const [toHour, toMinute] = toTime.split(':').map(Number);
   // so if we are at sunday when closed the period end is not going to be nextDay but lastDay
-  const periodEndDate = isSaturday(now) ? now : nextDay(now, toDay, { in: tz('America/New_York') });
+  const periodEndDate = nextDay(periodStart, toDay, { in: tz('America/New_York') });
   const endDate = setMilliseconds(
     setSeconds(setMinutes(setHours(periodEndDate, toHour), toMinute), 0),
     0,
   );
-  return { startDate, endDate };
+  const nextStart = nextDay(periodEndDate, fromDay, { in: tz('America/New_York') })
+  return { startDate, endDate, nextStart };
 }
 
 export const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL);
