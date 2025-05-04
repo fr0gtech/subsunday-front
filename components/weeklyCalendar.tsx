@@ -104,7 +104,7 @@ export default function WeeklyCalendarPopover() {
                     <Button size="sm">
                         {selectedWeek
                             ? `${format(selectedWeek, 'MMM d')} – ${format(
-                                addDays(selectedWeek, 5),
+                                addDays(selectedWeek, 6),
                                 'MMM d'
                             )}`
                             : 'Select a week'}
@@ -149,7 +149,7 @@ export default function WeeklyCalendarPopover() {
                                     <div
                                         key={weekStart.toString()}
                                         className={clsx(
-                                            'grid grid-cols-7 gap-1 rounded-lg m-1 transition-colors',
+                                            'grid grid-cols-7 gap-1 my-2 rounded-lg m-1 transition-colors',
                                             isFuture
                                                 ? 'cursor-not-allowed opacity-50'
                                                 : 'cursor-pointer hover:bg-neutral-200 hover:dark:bg-neutral-800',
