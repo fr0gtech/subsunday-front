@@ -23,6 +23,7 @@ import { InfoCircledIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAppStore } from '@/store/store';
+import WeeklyCalendar from './weeklyCalendar';
 export type gameNcount = Game & {
   _count: { votes: number };
   price: { final: number | string; currency: string };
@@ -84,6 +85,7 @@ export const MainItem = () => {
   if (!data || !data.games) {
     return (
       <div className="flex w-full justify-center items-center">
+
         <div className="flex w-full p-4">
           <div className="grid-container">
             {isLoading &&
@@ -123,13 +125,16 @@ export const MainItem = () => {
           </div> */}
             <div className="fixed2 relative w-full h-full overflow-hidden">
 
+
               <div className="absolute w-full h-full top-0 left-0 whitespace-nowrap overflow-hidden2">
                 <LiveVotes amount={3} bg={false} />
+
               </div>
             </div>
             <div className="fixed3 flex flex-col justify-evenly p-3  ">
               <VotingPeriod className="text-xl w-full text-center" />
               <CurrentVotes className="gap-5 justify-center flex flex-row text-tiny" />
+
               <div className="mt-5 opacity-70 block lg:hidden">
                 <div className=" text-center w-full text-xs flex flex-row justify-center mt-5 gap-2 items-center !leading">
                   *
@@ -142,6 +147,7 @@ export const MainItem = () => {
                   </Link>
                 </div>
               </div>
+
             </div>
           </div>
           <Divider className="hidden lg:visible" />
@@ -230,14 +236,20 @@ export const MainItem = () => {
             </pre>
           </div> */}
           <div className="fixed2 relative w-full h-full overflow-hidden">
-
+            <div>
+            </div>
             <div className="absolute w-full h-full top-0 left-0 whitespace-nowrap overflow-hidden2">
               <LiveVotes amount={3} bg={false} />
             </div>
           </div>
-          <div className="fixed3 flex flex-col justify-evenly p-3  ">
+          <div className="fixed3 flex flex-col justify-evenly p-3 gap-5 ">
+
             <VotingPeriod className="text-xl w-full text-center" />
             <CurrentVotes className="gap-5 justify-center flex flex-row text-tiny" />
+            <div className='flex lg:hidden justify-center'>
+              <WeeklyCalendar />
+            </div>
+
             <div className="mt-5 opacity-70 block lg:hidden">
               <div className=" text-center w-full text-xs flex flex-row justify-center mt-5 gap-2 items-center !leading">
                 *

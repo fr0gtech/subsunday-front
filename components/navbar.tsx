@@ -76,7 +76,7 @@ export const Navbar = () => {
           ))}
         </ul>
       </NavbarContent>
-      <NavbarItem>
+      <NavbarItem className='hidden lg:block'>
         <WeeklyCalendar />
       </NavbarItem>
       <NavbarMenu>

@@ -10,55 +10,103 @@ import {
     addDays,
     subWeeks,
     isAfter,
+    max as dateMax,
 } from 'date-fns';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { Button, Popover, PopoverContent, PopoverTrigger } from '@heroui/react';
-import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
+import {
+    Button,
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@heroui/react';
+import {
+    ChevronDownIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+} from '@radix-ui/react-icons';
 import { useAppStore } from '@/store/store';
 import { tz, TZDate } from '@date-fns/tz';
 import { getDateRange } from '@/app/lib';
 
-const START_DATE = new Date(2025, 4, 0);
+const START_DATE = new Date(2025, 3, 28);
 const TODAY = new TZDate(new Date(), 'America/New_York');
+const WEEK_PAGE_SIZE = 4;
 
-function generateWeeks(start: Date, count: number = 6) {
+const MIN_START = startOfWeek(START_DATE, {
+    in: tz('America/New_York'),
+    weekStartsOn: 0,
+});
+
+function generateWeeks(start: Date, count: number = WEEK_PAGE_SIZE) {
     return Array.from({ length: count }, (_, i) => addWeeks(start, i));
 }
 
 export default function WeeklyCalendarPopover() {
-    const { setSelectedWeek, selectedWeek, setSelectedRange } = useAppStore()
-    const [currentStart, setCurrentStart] = useState(() =>
-        startOfWeek(selectedWeek || TODAY, {
+    const { setSelectedWeek, selectedWeek, setSelectedRange } = useAppStore();
+
+    const [currentStart, setCurrentStart] = useState<Date>(() => {
+        const initial = startOfWeek(
+            selectedWeek || TODAY,
+            { in: tz('America/New_York'), weekStartsOn: 0 }
+        );
+        return dateMax([initial, MIN_START]);
+    });
+
+    useEffect(() => {
+        if (selectedWeek) {
+            const week = startOfWeek(selectedWeek, {
+                in: tz('America/New_York'),
+                weekStartsOn: 0,
+            });
+            setCurrentStart(dateMax([week, MIN_START]));
+        }
+    }, [selectedWeek]);
+
+    const onSelect = (weekStart: Date) => {
+        setSelectedRange(getDateRange({ offset: weekStart }));
+        setSelectedWeek(weekStart);
+    };
+
+    const weeks = generateWeeks(currentStart, WEEK_PAGE_SIZE);
+
+    const handlePrev = () => {
+        const newStart = dateMax([
+            subWeeks(currentStart, WEEK_PAGE_SIZE),
+            MIN_START,
+        ]);
+        setCurrentStart(newStart);
+    };
+    const handleNext = () => {
+        const candidate = addWeeks(currentStart, WEEK_PAGE_SIZE);
+        const maxStart = startOfWeek(TODAY, {
+            in: tz('America/New_York'),
+            weekStartsOn: 0,
+        });
+        setCurrentStart(dateMax([candidate, MIN_START]) <= maxStart ? candidate : maxStart);
+    };
+
+    const prevDisabled = isSameDay(currentStart, MIN_START);
+    const nextDisabled = isSameDay(
+        currentStart,
+        startOfWeek(TODAY, {
             in: tz('America/New_York'),
             weekStartsOn: 0,
         })
     );
-    const onSelect = (weekStart: Date) => {
-        setSelectedRange(getDateRange({ offset: weekStart }))
-    }
 
-    const weeks = generateWeeks(currentStart, 4);
-
-    const handlePrev = () => {
-        const newStart = subWeeks(currentStart, 4);
-        if (isBefore(newStart, START_DATE)) return;
-        setCurrentStart(newStart);
-    };
-
-    const handleNext = () => {
-        const nextStart = addWeeks(currentStart, 4);
-        if (!isBefore(nextStart, TODAY)) return;
-        setCurrentStart(nextStart);
-    };
+    const middleWeek = weeks[Math.floor(weeks.length / 2)];
 
     return (
-        <div className="relative inline-block text-left">
+        <div className="relative">
             <Popover className="relative">
-                <PopoverTrigger className="inline-flex justify-between items-center rounded-md text-sm font-medium focus:outline-none">
-                    <Button size='sm'>
+                <PopoverTrigger className="inline-flex items-center">
+                    <Button size="sm">
                         {selectedWeek
-                            ? `${format(selectedWeek, 'MMM d')} – ${format(addDays(selectedWeek, 5), 'MMM d')}`
+                            ? `${format(selectedWeek, 'MMM d')} – ${format(
+                                addDays(selectedWeek, 5),
+                                'MMM d'
+                            )}`
                             : 'Select a week'}
                         <ChevronDownIcon className="ml-2 h-5 w-5" />
                     </Button>
@@ -69,56 +117,60 @@ export default function WeeklyCalendarPopover() {
                         <div className="flex justify-between items-center mb-2">
                             <button
                                 onClick={handlePrev}
-                                className="p-1 rounded  disabled:opacity-30"
-                                disabled={isBefore(currentStart, addWeeks(START_DATE, 1))}
+                                className="p-1 rounded disabled:opacity-30"
+                                disabled={prevDisabled}
                             >
                                 <ChevronLeftIcon className="h-5 w-5" />
                             </button>
                             <span className="text-sm font-semibold">
-                                {format(currentStart, 'MMM yyyy')}
+                                {format(middleWeek, 'MMM yyyy')}
                             </span>
                             <button
                                 onClick={handleNext}
-                                className="p-1 rounded  disabled:opacity-30"
-                                disabled={!isBefore(addWeeks(currentStart, 4), TODAY)}
+                                className="p-1 rounded disabled:opacity-30"
+                                disabled={nextDisabled}
                             >
                                 <ChevronRightIcon className="h-5 w-5" />
                             </button>
                         </div>
 
-                        <div className="grid grid-cols-7 gap-2 text-center text-xs opacity-70  mb-1">
-                            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-                                <div key={day}>{day}</div>
+                        <div className="grid grid-cols-7 gap-2 text-center text-xs opacity-70 mb-1">
+                            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
+                                <div key={d}>{d}</div>
                             ))}
                         </div>
+
                         <div className="space-y-1 max-h-72 overflow-y-auto">
                             {weeks.map((weekStart) => {
-                                const isSelected = selectedWeek && isSameDay(weekStart, selectedWeek);
+                                const isSel = selectedWeek && isSameDay(weekStart, selectedWeek);
                                 const isFuture = isAfter(weekStart, TODAY);
-                                const isNow = isSameDay(weekStart, TODAY)
+                                const isNow = isSameDay(weekStart, TODAY);
                                 return (
                                     <div
                                         key={weekStart.toString()}
                                         className={clsx(
-                                            'grid grid-cols-7 gap-1  rounded-lg m-1 transition-colors duration-300',
+                                            'grid grid-cols-7 gap-1 rounded-lg m-1 transition-colors',
                                             isFuture
                                                 ? 'cursor-not-allowed opacity-50'
                                                 : 'cursor-pointer hover:bg-neutral-200 hover:dark:bg-neutral-800',
-                                            isSelected && '!outline-primary outline-2 outline !bg-opacity-45',
+                                            isSel && '!outline-primary-300 outline-2 outline ',
                                             isNow && 'bg-primary-100'
                                         )}
                                         onClick={() => {
-                                            if (!isFuture) {
-                                                onSelect(weekStart)
-                                                setSelectedWeek(weekStart)
-                                            }
+                                            if (!isFuture) onSelect(weekStart);
                                         }}
                                     >
                                         {[...Array(7)].map((_, i) => {
                                             const day = addDays(weekStart, i);
-                                            const today = isSameDay(day, TODAY)
+                                            const today = isSameDay(day, TODAY);
                                             return (
-                                                <div key={i} className={clsx(["text-center text-tiny py-1 rounded", today && "bg-secondary-300"])}>
+                                                <div
+                                                    key={i}
+                                                    className={clsx(
+                                                        'text-center text-tiny py-1 rounded',
+                                                        today && 'bg-secondary-300'
+                                                    )}
+                                                >
                                                     {format(day, 'd')}
                                                 </div>
                                             );
