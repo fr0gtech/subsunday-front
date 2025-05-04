@@ -142,7 +142,7 @@ export const MainItem = () => {
                     {' '}
                     this is <b>not</b> an official sub sunday website
                   </div>{' '}
-                  <Link href={'info'}>
+                  <Link href={'/info'}>
                     <InfoCircledIcon />
                   </Link>
                 </div>
@@ -257,7 +257,7 @@ export const MainItem = () => {
                   {' '}
                   this is <b>not</b> an official sub sunday website
                 </div>{' '}
-                <Link href={'info'}>
+                <Link href={'/info'}>
                   <InfoCircledIcon />
                 </Link>
               </div>
