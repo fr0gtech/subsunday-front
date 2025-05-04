@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma';
-import { getDateRange } from '@/app/lib';
 
 export async function GET(req: NextRequest) {
   const gameId = req.nextUrl.searchParams.get('id') as string;
-  const range = getDateRange();
+  const rangeStart = parseInt(req.nextUrl.searchParams.get('rangeStart') as string) || 1;
+  const rangeEnd = parseInt(req.nextUrl.searchParams.get('rangeEnd') as string) || 1;
 
   const game = await prisma.game.findFirst({
     where: {
@@ -38,8 +38,8 @@ export async function GET(req: NextRequest) {
           votes: {
             where: {
               createdAt: {
-                gte: range.startDate,
-                lte: range.endDate,
+                gte: new Date(rangeStart),
+                lte: new Date(rangeEnd),
               },
             },
           },

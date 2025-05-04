@@ -20,6 +20,7 @@ import { CurrentVotes } from './currentVotes';
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
+import WeeklyCalendar from './weeklyCalendar';
 
 export const Navbar = () => {
   const path = usePathname();
@@ -75,7 +76,9 @@ export const Navbar = () => {
           ))}
         </ul>
       </NavbarContent>
-
+      <NavbarItem>
+        <WeeklyCalendar />
+      </NavbarItem>
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {searchBar}

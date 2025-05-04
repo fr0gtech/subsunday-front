@@ -5,8 +5,16 @@ import { tz, TZDate } from '@date-fns/tz';
 
 export async function GET(req: NextRequest) {
   const take = parseInt(req.nextUrl.searchParams.get('amount') as string);
+  const rangeStart = parseInt(req.nextUrl.searchParams.get('rangeStart') as string) || 1;
+  const rangeEnd = parseInt(req.nextUrl.searchParams.get('rangeEnd') as string) || 1;
 
   const votes = await prisma.vote.findMany({
+    where: {
+      createdAt: {
+        gte: new Date(rangeStart),
+        lte: new Date(rangeEnd),
+      },
+    },
     take: take || 6,
     include: {
       for: {

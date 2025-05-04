@@ -17,6 +17,7 @@ import clsx from 'clsx';
 import { VoteForFrom, wsVote } from './liveVotes';
 import { v4 as uuidv4 } from 'uuid';
 import Image from 'next/image';
+import { useAppStore } from '@/store/store';
 export const GameComp = ({
   id,
   page = false,
@@ -28,7 +29,8 @@ export const GameComp = ({
   cardBodyClass?: string;
   page?: boolean;
 }) => {
-  const { data, isLoading } = useSWR(`/api/game?id=${id}`, fetcher);
+  const { currentRange } = useAppStore()
+  const { data, isLoading } = useSWR(`/api/game?id=${id}&rangeStart=${currentRange.currentPeriod.startDate.getTime()}&rangeEnd=${currentRange.currentPeriod.endDate.getTime()}`, fetcher);
   const [msgEvents, setMsgEvents] = useState<wsVote[]>([]);
 
   useEffect(() => {
@@ -105,14 +107,14 @@ export const GameComp = ({
       {data.game.picture !== 'default' && (
         <>
           {withImage && (
-          <div className='w-1/2 relative h-[200px] rouned'>
-            <Image
-              alt={'item.title'}
-              fill
-              className=' object-cover rounded-md'
-              src={data.game.picture}
-            />
-          </div>
+            <div className='w-1/2 relative h-[200px] rouned'>
+              <Image
+                alt={'item.title'}
+                fill
+                className=' object-cover rounded-md'
+                src={data.game.picture}
+              />
+            </div>
           )}
           <div className="flex gap-3 flex-wrap">
             {data.game.categories &&

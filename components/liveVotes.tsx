@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { TZDate } from '@date-fns/tz';
 import { Skeleton } from '@heroui/react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useAppStore } from '@/store/store';
 export type wsVote = {
   createdAt: Date;
   id: string;
@@ -28,8 +29,9 @@ export const LiveVotes = ({
   bg?: boolean;
   textRight?: boolean;
 }) => {
+  const { selectedRange } = useAppStore()
   const [msgEvents, setMsgEvents] = useState<wsVote[]>([]);
-  const { data, isLoading } = useSWR(`/api/votes?amount=${amount}`, fetcher);
+  const { data, isLoading } = useSWR(`/api/votes?amount=${amount}&rangeStart=${selectedRange.currentPeriod.startDate.getTime()}&rangeEnd=${selectedRange.currentPeriod.endDate.getTime()}`, fetcher);
 
   useEffect(() => {
     function onMsgEvent(value: any) {
@@ -48,9 +50,11 @@ export const LiveVotes = ({
       socket.off('vote', onMsgEvent);
     };
   }, []);
+
   useEffect(() => {
     setMsgEvents([]) // reset realtime on mutate cuz we now got new data 
   }, [data])
+
   const liveVotes: (VoteForFrom | wsVote)[] | undefined = useMemo(() => {
     if (!data) return;
     const wsVotes2Votes: wsVote[] = msgEvents.map((e: wsVote) => {

@@ -1,18 +1,16 @@
-import { getDateRange } from '@/app/lib';
+import { useAppStore } from '@/store/store';
 import { TZDate } from '@date-fns/tz';
-import { formatDistance, isAfter, isBefore } from 'date-fns';
+import { formatDistance, formatISO, isAfter, isBefore } from 'date-fns';
 import { useEffect, useMemo, useState } from 'react';
 
 export const VotingPeriod = ({ className }: { className: string }) => {
   const [time, setTime] = useState<Date>(new Date());
-
+  const { currentRange } = useAppStore()
   // display period of voting on a calendar or something?
-  const voteRange = useMemo(()=>{
-    return getDateRange();
-  }, [])
+
   const votingClosed = useMemo(() => {
     const today = new TZDate(Date.now(), 'America/New_York');
-    return isAfter(today, voteRange.endDate);
+    return isAfter(today, currentRange.currentPeriod.endDate) && isBefore(today, currentRange.currentPeriod.nextStartDate)
   }, []);
 
   // make relative dates update, this is probably not the best way to do this but should be fine if we only display a few items
@@ -27,8 +25,24 @@ export const VotingPeriod = ({ className }: { className: string }) => {
   }, []);
   return (
     <span className={className}>
-      {votingClosed && `voting starts in ${time && formatDistance(new Date(), voteRange.nextStart)}`}
-      {!votingClosed && `voting ends in ${time && formatDistance(new Date(), voteRange.endDate)}`}
+      {/* <br />
+      last Period:<br />
+      <span className='text-tiny'>
+        {formatISO(voteRange.lastPeriod.startDate)}<br />
+        {formatISO(voteRange.lastPeriod.endDate)}<br />
+        {formatISO(voteRange.lastPeriod.nextStartDate)}<br />
+      </span>
+      <br />
+      current Period:<br />
+      <span className='text-tiny'>
+        {formatISO(voteRange.currentPeriod.startDate)}<br />
+        {formatISO(voteRange.currentPeriod.endDate)}<br />
+        {formatISO(voteRange.currentPeriod.nextStartDate)}<br />
+      </span>
+      <br /> */}
+      {votingClosed && `voting starts in ${time && formatDistance(new TZDate(Date.now(), 'America/New_York'), currentRange.currentPeriod.nextStartDate)}`}
+      {!votingClosed && `voting ends in ${time && formatDistance(new TZDate(Date.now(), 'America/New_York'), currentRange.currentPeriod.endDate)}`}
+      <br />
     </span>
   );
 };

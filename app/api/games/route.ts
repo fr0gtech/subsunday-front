@@ -1,16 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma';
-import { getDateRange } from '@/app/lib';
 
 export async function GET(req: NextRequest) {
-  const page = parseInt(req.nextUrl.searchParams.get('page') as string) || 1;
-  
-  const range = getDateRange();
+  const rangeStart = parseInt(req.nextUrl.searchParams.get('rangeStart') as string) || 1;
+  const rangeEnd = parseInt(req.nextUrl.searchParams.get('rangeEnd') as string) || 1;
+
   const itemsToLoad = 50;
   const games = await prisma.game.findMany({
     where: {
       name: {
         not: '',
+      },
+      votes: {
+        some: {
+          createdAt: {
+            gte: new Date(rangeStart),
+            lte: new Date(rangeEnd),
+          },
+        },
       },
     },
     orderBy: {
@@ -24,16 +31,15 @@ export async function GET(req: NextRequest) {
           votes: {
             where: {
               createdAt: {
-                gte: range.startDate,
-                lte: range.endDate,
+                gte: new Date(rangeStart),
+                lte: new Date(rangeEnd),
               },
             },
           },
         },
       },
     },
-    skip: page < 1 ? 0 : (page - 1) * itemsToLoad,
-    take: page * itemsToLoad,
+    take: itemsToLoad,
   });
 
   return NextResponse.json({

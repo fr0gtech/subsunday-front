@@ -1,11 +1,11 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma';
-import { getDateRange } from '@/app/lib';
 import { endOfDay, startOfDay } from 'date-fns';
 import { TZDate } from '@date-fns/tz';
 
-export async function GET() {
-  const range = getDateRange();
+export async function GET(req: NextRequest) {
+  const rangeStart = parseInt(req.nextUrl.searchParams.get('rangeStart') as string) || 1;
+  const rangeEnd = parseInt(req.nextUrl.searchParams.get('rangeEnd') as string) || 1;
 
   const votesSubSunday = await prisma.game.findMany({
     select: {
@@ -14,8 +14,8 @@ export async function GET() {
           votes: {
             where: {
               createdAt: {
-                gte: range.startDate,
-                lte: range.endDate,
+                gte: new Date(rangeStart),
+                lte: new Date(rangeEnd),
               },
             },
           },
