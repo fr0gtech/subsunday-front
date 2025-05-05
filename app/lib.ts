@@ -10,8 +10,6 @@ import {
   subDays,
   Day,
   previousDay,
-  isSaturday,
-  isToday,
   getDay,
 } from 'date-fns';
 import { tz, TZDate } from '@date-fns/tz';

@@ -1,6 +1,5 @@
 import { Game } from '@/generated/prisma';
 import {
-  addToast,
   Card,
   Divider,
   Modal,
@@ -9,62 +8,35 @@ import {
   useDisclosure,
 } from '@heroui/react';
 import clsx from 'clsx';
-import { socket, fetcher } from '@/app/lib';
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { fetcher } from '@/app/lib';
+import { useState, useMemo } from 'react';
 import useSWR from 'swr';
-import { wsMsg } from '@/types';
 import { LiveVotes } from './liveVotes';
 import { MainCard } from './mainCard';
 import { VotingPeriod } from './votingPeriod';
 import { CurrentVotes } from './currentVotes';
-import { Chart } from './chart';
 import { GameComp } from './gameComp';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAppStore } from '@/store/store';
 import WeeklyCalendar from './weeklyCalendar';
+
 export type gameNcount = Game & {
   _count: { votes: number };
   price: { final: number | string; currency: string };
 };
+
 export const MainItem = () => {
-  const { selectedRange } = useAppStore()
+  const { selectedRange, wsMsg } = useAppStore()
   const { data, isLoading } = useSWR(selectedRange && `/api/games?rangeStart=${selectedRange.currentPeriod.startDate.getTime()}&rangeEnd=${selectedRange.currentPeriod.endDate.getTime()}`, fetcher);
 
-  const [msgEvents, setMsgEvents] = useState<wsMsg[]>([]);
   const [gameId, setGameId] = useState<number | null>(null);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  useEffect(() => {
-    const onMsgEvent = (value: wsMsg) => {
-      setMsgEvents((previous: wsMsg[]) => [...previous, value]);
-      toast(value);
-    };
-
-    socket.emit('join', 'main');
-    socket.on('vote', onMsgEvent);
-
-    return () => {
-      socket.emit('leave', 'main');
-      socket.off('vote', onMsgEvent);
-    };
-  }, []);
-
-  const toast = useCallback(
-    (value: { for: { name: any }; from: { name: any } }) => {
-      addToast({
-        timeout: 2300,
-        color: 'primary',
-        title: `New Vote for ${value.for.name} from ${value.from.name}`,
-      });
-    },
-    [msgEvents],
-  );
-
   const updateableGames = useMemo<gameNcount[]>(() => {
     if (!data || !data.games) return;
-    const wsVotes = msgEvents.reduce((acc: { [x: string]: any }, curr: { for: any }) => {
+    const wsVotes = wsMsg.reduce((acc: { [x: string]: any }, curr: { for: any }) => {
       const game = curr.for;
       acc[game.name] = (acc[game.name] || 0) + 1;
       return acc;
@@ -80,7 +52,7 @@ export const MainItem = () => {
         };
       })
       .sort((a: any, b: any) => (a._count.votes > b._count.votes ? -1 : 1));
-  }, [msgEvents, data]);
+  }, [wsMsg, data]);
 
   if (!data || !data.games) {
     return (

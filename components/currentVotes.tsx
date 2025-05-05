@@ -2,34 +2,13 @@
 
 import { Chip, Skeleton, Spinner, Tooltip } from '@heroui/react';
 import useSWR from 'swr';
-import { fetcher, socket } from '@/app/lib';
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { fetcher } from '@/app/lib';
 import NumberFlow from '@number-flow/react';
 import { useAppStore } from '@/store/store';
 
 export const CurrentVotes = ({ className }: { className: string }) => {
-  const { selectedRange } = useAppStore()
+  const { selectedRange, wsMsg } = useAppStore()
   const { data, isLoading } = useSWR(`/api/voteoverview?rangeStart=${selectedRange.currentPeriod.startDate.getTime()}&rangeEnd=${selectedRange.currentPeriod.endDate.getTime()}`, fetcher);
-  const [msgEvents, setMsgEvents] = useState<any>([]);
-
-  useEffect(() => {
-    const onMsgEvent = (value: any) => {
-      setMsgEvents((previous: any) => [...previous, value]);
-    };
-
-    socket.emit('join', 'main');
-    socket.on('vote', onMsgEvent);
-
-    return () => {
-      socket.emit('leave', 'main');
-      socket.off('vote', onMsgEvent);
-    };
-  }, []);
-
-  useEffect(() => {
-    setMsgEvents([]);
-  }, [data]);
 
   if (isLoading) {
     return (
@@ -66,7 +45,7 @@ export const CurrentVotes = ({ className }: { className: string }) => {
         <div className={className}>
           <div className="flex justify-end gap-2 flex-col-reverse items-center">
             <span className="lowercase opacity-60">Votes this week*</span>
-            <Tooltip content={`total votes: ${data && data.total + msgEvents.length}`}>
+            <Tooltip content={`total votes: ${data && data.total + wsMsg.length}`}>
               <Chip
                 size="lg"
                 color="secondary"
@@ -76,7 +55,7 @@ export const CurrentVotes = ({ className }: { className: string }) => {
                 <NumberFlow
                   isolate
                   className="left-0 bottom-0"
-                  value={data.now + msgEvents.length}
+                  value={data.now + wsMsg.length}
                 />
               </Chip>
             </Tooltip>
@@ -87,7 +66,7 @@ export const CurrentVotes = ({ className }: { className: string }) => {
               <NumberFlow
                 isolate
                 className="left-0 bottom-0"
-                value={data.today + msgEvents.length}
+                value={data.today + wsMsg.length}
               />
             </Chip>
           </div>

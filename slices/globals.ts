@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getDateRange } from '@/app/lib';
+import { Vote } from '@/generated/prisma';
 import { tz, TZDate } from '@date-fns/tz';
 import { previousSunday } from 'date-fns';
 import { StateCreator } from 'zustand';
@@ -17,11 +18,16 @@ type SelectedRange = {
   };
   isSunday: boolean;
 };
-
+export type VoteForFrom = Vote & { from: { name: string; id: number } } & {
+  for: { name: string; id: number };
+};
 export interface GlobalSlice {
   selectedWeek: Date;
   selectedRange: SelectedRange;
   currentRange: SelectedRange;
+  wsMsg: VoteForFrom[];
+  addWsMsg: (query: VoteForFrom) => void;
+  setWsMsg: (query: VoteForFrom[]) => void;
   setSelectedWeek: (query: Date) => void;
   setSelectedRange: (query: SelectedRange) => void;
   setCurrentRange: (query: SelectedRange) => void;
@@ -33,6 +39,13 @@ export const createGlobalSlice: StateCreator<GlobalSlice> = (set, get) => ({
   selectedWeek,
   selectedRange: getDateRange({ offset: selectedWeek }),
   currentRange: getDateRange(),
+  wsMsg: [],
+  addWsMsg: (query: VoteForFrom) => {
+    set((state) => ({ wsMsg: [query, ...state.wsMsg] }));
+  },
+  setWsMsg: (query: VoteForFrom[]) => {
+    set({ wsMsg: query });
+  },
   setSelectedWeek: (query: Date) => {
     set({ selectedWeek: query });
   },

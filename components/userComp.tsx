@@ -1,32 +1,20 @@
 'use client';
-import { fetcher, socket } from '@/app/lib';
+import { fetcher } from '@/app/lib';
 import { Game, User, Vote } from '@/generated/prisma';
 import { Card, CardBody, CardHeader, Divider, Spinner } from '@heroui/react';
 import useSWR from 'swr';
 import { Voted } from './voted';
-import { useState, useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { TZDate } from '@date-fns/tz';
+import { useAppStore } from '@/store/store';
 
 export const UserComp = ({ id }: { id: string }) => {
+  const { wsMsg } = useAppStore()
   const { data, isLoading } = useSWR(`/api/user?id=${id}`, fetcher);
-  const [msgEvents, setMsgEvents] = useState<any>([]);
-
-  useEffect(() => {
-    function onMsgEvent(value: any) {
-      setMsgEvents((previous: any) => [...previous, value] as any);
-    }
-    socket.emit('join', 'user-' + id);
-    socket.on('vote', onMsgEvent);
-
-    return () => {
-      socket.emit('leave', 'user-' + id);
-      socket.off('vote', onMsgEvent);
-    };
-  }, []);
 
   const liveVotes = useMemo(() => {
     if (!data) return;
-    const wsVotes2Votes = msgEvents.map(
+    const wsVotes2Votes = wsMsg.map(
       (e: { for: { id: number; name: string }; from: { id: number; name: string } }) => {
         return {
           createdAt: new TZDate(new Date(), 'America/New_York'),
@@ -43,7 +31,8 @@ export const UserComp = ({ id }: { id: string }) => {
     );
 
     return [...wsVotes2Votes, ...data.user.votes];
-  }, [msgEvents, data]);
+  }, [wsMsg, data]);
+
   if (isLoading) {
     return (
       <div className="w-full h-full flex items-center justify-center">

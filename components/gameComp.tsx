@@ -1,8 +1,6 @@
 'use client';
-import { fetcher, socket } from '@/app/lib';
+import { fetcher } from '@/app/lib';
 import {
-  addToast,
-
   Chip,
   Divider,
   Link,
@@ -11,13 +9,13 @@ import {
 import { ExternalLinkIcon } from '@radix-ui/react-icons';
 import useSWR from 'swr';
 import { Voted } from './voted';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { TZDate } from '@date-fns/tz';
+import { useMemo } from 'react';
 import clsx from 'clsx';
-import { VoteForFrom, wsVote } from './liveVotes';
+import { VoteForFrom } from './liveVotes';
 import { v4 as uuidv4 } from 'uuid';
 import Image from 'next/image';
 import { useAppStore } from '@/store/store';
+import { wsVote } from '@/app/providers';
 export const GameComp = ({
   id,
   page = false,
@@ -29,41 +27,13 @@ export const GameComp = ({
   cardBodyClass?: string;
   page?: boolean;
 }) => {
-  const { currentRange } = useAppStore()
+  const { currentRange, wsMsg } = useAppStore()
   const { data, isLoading } = useSWR(`/api/game?id=${id}&rangeStart=${currentRange.currentPeriod.startDate.getTime()}&rangeEnd=${currentRange.currentPeriod.endDate.getTime()}`, fetcher);
-  const [msgEvents, setMsgEvents] = useState<wsVote[]>([]);
 
-  useEffect(() => {
-    function onMsgEvent(value: any) {
-      const valWithCreatedAT = {
-        ...value,
-        createdAt: new TZDate(new Date(), 'America/New_York'),
-      };
-      setMsgEvents((previous: any) => [...previous, valWithCreatedAT] as any);
-      // toast(value);
-    }
-    socket.emit('join', 'game-' + id);
-    socket.on('vote', onMsgEvent);
 
-    return () => {
-      socket.emit('leave', 'game-' + id);
-      socket.off('vote', onMsgEvent);
-    };
-  }, []);
-
-  const toast = useCallback(
-    (value: { for: { name: any }; from: { name: any } }) => {
-      addToast({
-        timeout: 2300,
-        color: 'primary',
-        title: `New Vote for ${value.for.name} from ${value.from.name}`,
-      });
-    },
-    [msgEvents],
-  );
   const liveVotes = useMemo(() => {
     if (!data) return;
-    const wsVotes2Votes: wsVote[] = msgEvents.map((e: wsVote) => {
+    const wsVotes2Votes: wsVote[] = wsMsg.map((e) => {
       return {
         createdAt: e.createdAt,
         for: {
@@ -83,7 +53,7 @@ export const GameComp = ({
       .sort((a, b) => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       }) as (VoteForFrom | wsVote)[];
-  }, [msgEvents, data]);
+  }, [wsMsg, data]);
 
   if (isLoading) {
     return (
