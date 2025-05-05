@@ -11,11 +11,10 @@ import useSWR from 'swr';
 import { Voted } from './voted';
 import { useMemo } from 'react';
 import clsx from 'clsx';
-import { VoteForFrom } from './liveVotes';
 import { v4 as uuidv4 } from 'uuid';
 import Image from 'next/image';
 import { useAppStore } from '@/store/store';
-import { wsVote } from '@/app/providers';
+import { VoteForFrom } from '@/slices/globals';
 export const GameComp = ({
   id,
   page = false,
@@ -33,9 +32,11 @@ export const GameComp = ({
 
   const liveVotes = useMemo(() => {
     if (!data) return;
-    const wsVotes2Votes: wsVote[] = wsMsg.map((e) => {
+    const wsVotes2Votes = wsMsg.map((e) => {
       return {
+        updated: e.updated,
         createdAt: e.createdAt,
+        updatedAt: e.updatedAt,
         for: {
           name: e.for.name,
           id: e.for.id,
@@ -48,11 +49,11 @@ export const GameComp = ({
       };
     });
 
-    return [...wsVotes2Votes, ...(data.game.votes as VoteForFrom[])]
+    return [...wsVotes2Votes, ...data.game.votes]
       .filter((e) => e)
       .sort((a, b) => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-      }) as (VoteForFrom | wsVote)[];
+      });
   }, [wsMsg, data]);
 
   if (isLoading) {
@@ -77,7 +78,7 @@ export const GameComp = ({
       {data.game.picture !== 'default' && (
         <>
           {withImage && (
-            <div className='w-1/2 relative h-[200px] rouned'>
+            <div className=' relative h-[200px] lg:w-1/2 w-full lg:mx-auto rouned'>
               <Image
                 alt={'item.title'}
                 fill
@@ -138,7 +139,7 @@ export const GameComp = ({
 
       <div className="gap-2 flex flex-col">
         {liveVotes &&
-          liveVotes.slice(0, 6).map((e: wsVote | VoteForFrom, i) => {
+          liveVotes.slice(0, 6).map((e: VoteForFrom, i) => {
             return <Voted cardBodyClass={cardBodyClass} onGame bg={page} key={i} vote={e} />;
           })}
       </div>

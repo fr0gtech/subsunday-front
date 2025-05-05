@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma';
-import { addDays, startOfDay, subDays, subWeeks } from 'date-fns';
+import { addDays, addMinutes, addSeconds, isAfter, startOfDay, subDays, subWeeks } from 'date-fns';
 import { tz, TZDate } from '@date-fns/tz';
 
 export async function GET(req: NextRequest) {
@@ -31,8 +31,15 @@ export async function GET(req: NextRequest) {
       },
     },
     orderBy: {
-      createdAt: 'desc',
+      updatedAt: 'desc',
     },
+  });
+  const taggedVotes = votes.map((e) => {
+    const updated = isAfter(e.updatedAt, addSeconds(e.createdAt, 5));
+    return {
+      ...e,
+      updated: updated,
+    };
   });
 
   const today = new TZDate(Date.now(), 'America/New_York');
@@ -40,7 +47,7 @@ export async function GET(req: NextRequest) {
   const voteLastWeek = await getVotesBetween(subDays(today, 14), 7);
 
   return NextResponse.json({
-    votes: votes,
+    votes: taggedVotes,
     graph: votesLast7Days,
     graphPastWeek: voteLastWeek,
   });

@@ -18,7 +18,7 @@ type SelectedRange = {
   };
   isSunday: boolean;
 };
-export type VoteForFrom = Vote & { from: { name: string; id: number } } & {
+export type VoteForFrom = Vote & { updated: boolean } & { from: { name: string; id: number } } & {
   for: { name: string; id: number };
 };
 export interface GlobalSlice {
@@ -26,6 +26,7 @@ export interface GlobalSlice {
   selectedRange: SelectedRange;
   currentRange: SelectedRange;
   wsMsg: VoteForFrom[];
+  replaceOrAddWsMsg: (query: VoteForFrom) => void;
   addWsMsg: (query: VoteForFrom) => void;
   setWsMsg: (query: VoteForFrom[]) => void;
   setSelectedWeek: (query: Date) => void;
@@ -40,6 +41,9 @@ export const createGlobalSlice: StateCreator<GlobalSlice> = (set, get) => ({
   selectedRange: getDateRange({ offset: selectedWeek }),
   currentRange: getDateRange(),
   wsMsg: [],
+  replaceOrAddWsMsg: (query: VoteForFrom) => {
+    set((state) => ({ wsMsg: [query, ...state.wsMsg.filter((e) => e.from.id !== query.from.id)] }));
+  },
   addWsMsg: (query: VoteForFrom) => {
     set((state) => ({ wsMsg: [query, ...state.wsMsg] }));
   },

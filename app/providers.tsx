@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { TZDate } from '@date-fns/tz';
 import { socket } from './lib';
 import { useAppStore } from '@/store/store';
+import { VoteForFrom } from '@/slices/globals';
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -35,30 +36,35 @@ export type wsVote = {
 
 export function Providers({ children, themeProps }: ProvidersProps) {
   const router = useRouter();
-  const { addWsMsg, wsMsg } = useAppStore()
+  const { addWsMsg, replaceOrAddWsMsg, wsMsg } = useAppStore()
 
   useEffect(() => {
-    function onMsgEvent(value: any) {
+    function vote(value: any, update?: boolean) {
       const valWithCreatedAT = {
         ...value,
+        updated: true,
         id: uuidv4(),
         createdAt: new TZDate(new Date(), 'America/New_York'),
-      };
-      addWsMsg(valWithCreatedAT);
-      toast(value)
+      } as VoteForFrom;
+      update ? replaceOrAddWsMsg(valWithCreatedAT) : addWsMsg(valWithCreatedAT);
+      toast(value, update)
     }
     socket.emit('join', 'main');
-    socket.on('vote', onMsgEvent);
+    socket.on('vote', vote);
+    socket.on('voteUpdate', (value) => vote(value, true));
 
     return () => {
       socket.emit('leave', 'main');
-      socket.off('vote', onMsgEvent);
+      socket.off('vote', vote);
+      socket.off('voteUpdate', vote);
     };
   }, []);
-  const toast = useCallback((value: { for: { name: any; }; from: { name: any; }; }) => {
+  const toast = useCallback((value: { for: { name: any; }; from: { name: any; }; }, update?: boolean) => {
     addToast({
-      color: "primary",
-      title: `New Vote for ${value.for.name} from ${value.from.name}`,
+      variant: "solid",
+      timeout: 2500,
+      color: update ? "warning" : "primary",
+      title: update ? `${value.from.name} updated vote to ${value.for.name}` : `${value.from.name} voted for ${value.for.name}`,
     });
   }, [wsMsg])
   return (

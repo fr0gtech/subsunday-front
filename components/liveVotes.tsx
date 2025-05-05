@@ -1,18 +1,14 @@
-import { fetcher, socket } from '@/app/lib';
-import { Vote } from '@/generated/prisma';
-import { useEffect, useMemo, useState } from 'react';
+import { fetcher } from '@/app/lib';
+import { useEffect, useMemo } from 'react';
 import { Voted } from './voted';
 import useSWR from 'swr';
-import { v4 as uuidv4 } from 'uuid';
-import { TZDate } from '@date-fns/tz';
 import { Skeleton } from '@heroui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAppStore } from '@/store/store';
-import { wsVote } from '@/app/providers';
+import { VoteForFrom } from '@/slices/globals';
+import { Vote } from '@/generated/prisma';
 
-export type VoteForFrom = Vote & { from: { name: string; id: number } } & {
-  for: { name: string; id: number };
-};
+
 export const LiveVotes = ({
   amount,
   bg = true,
@@ -29,11 +25,13 @@ export const LiveVotes = ({
     setWsMsg([]) // reset realtime on mutate cuz we now got new data 
   }, [data])
 
-  const liveVotes: (VoteForFrom | wsVote)[] | undefined = useMemo(() => {
+  const liveVotes: VoteForFrom[] | undefined = useMemo(() => {
     if (!data) return;
     const wsVotes2Votes = wsMsg.map((e) => {
       return {
+        updated: e.updated,
         createdAt: e.createdAt,
+        updatedAt: e.updatedAt,
         for: {
           name: e.for.name,
           id: e.for.id,
@@ -45,11 +43,14 @@ export const LiveVotes = ({
         id: e.id,
       };
     });
-    return [...wsVotes2Votes, ...(data.votes as VoteForFrom[])]
+    const realtimeVoteUser = wsMsg.map((e) => e.from.id)
+    // because of update votes we should check that no other vote for that user is in data.user.votes
+    const filteredVotes = data.votes.filter((e: VoteForFrom) => !realtimeVoteUser.includes(e.from.id))
+    return [...wsVotes2Votes, ...filteredVotes]
       .filter((e) => e)
       .sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-      }) as (VoteForFrom | wsVote)[];
+        return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+      }) as VoteForFrom[];
   }, [wsMsg, data]);
 
   if (isLoading) {

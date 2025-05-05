@@ -2,8 +2,8 @@ import { Card, CardBody, Chip } from '@heroui/react';
 import { formatDistance } from 'date-fns';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { VoteForFrom } from './liveVotes';
 import { wsVote } from '@/app/providers';
+import { VoteForFrom } from '@/slices/globals';
 
 export const Voted = ({
   vote,
@@ -12,7 +12,7 @@ export const Voted = ({
   onGame = false,
   cardBodyClass = '',
 }: {
-  vote: wsVote | VoteForFrom;
+  vote: VoteForFrom;
   bg?: boolean;
   textRight?: boolean;
   onGame?: boolean;
@@ -39,22 +39,24 @@ export const Voted = ({
                 {vote.from.name}
               </Chip>
             </Link>{' '}
+
             <span>voted</span>{' '}
             <span className="text-tiny opacity-80">
-              {time && formatDistance(new Date(vote.createdAt), new Date(), { addSuffix: true })}{' '}
+              {time && formatDistance(new Date(vote.updatedAt), new Date(), { addSuffix: true })}{' '}
             </span>
           </span>
         ) : (
           <span className="text-tiny leading-8" style={{ textAlign: textRight ? 'right' : 'left' }}>
             <span className="text-tiny opacity-80">
-              {time && formatDistance(new Date(vote.createdAt), new Date(), { addSuffix: true })}{' '}
+              {time && formatDistance(new Date(vote.updatedAt), new Date(), { addSuffix: true })}{' '}
             </span>
             <Link href={`/user/${vote.from.id}`}>
               <Chip size="sm" color="primary" variant="flat" className="whitespace-pre-wrap">
                 {vote.from.name}
               </Chip>
             </Link>{' '}
-            <span>voted for</span>{' '}
+            {vote.updated ? <span>update vote to</span> : <span>voted for</span>}
+            {' '}
             <Link href={`/game/${vote.for.id}`}>
               <Chip size="sm" color="secondary" variant="flat" className=" whitespace-pre-wrap">
                 {vote.for.name}

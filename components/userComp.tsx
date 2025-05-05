@@ -1,13 +1,12 @@
 'use client';
 import { fetcher } from '@/app/lib';
-import { Game, User, Vote } from '@/generated/prisma';
 import { Card, CardBody, CardHeader, Divider, Spinner } from '@heroui/react';
 import useSWR from 'swr';
 import { Voted } from './voted';
 import { useMemo } from 'react';
-import { TZDate } from '@date-fns/tz';
 import { useAppStore } from '@/store/store';
 import StreakDisplay from './streakDisplay';
+import { VoteForFrom } from '@/slices/globals';
 
 export const UserComp = ({ id }: { id: string }) => {
   const { wsMsg } = useAppStore()
@@ -15,24 +14,24 @@ export const UserComp = ({ id }: { id: string }) => {
 
   const liveVotes = useMemo(() => {
     if (!data) return;
-    const wsVotes2Votes = wsMsg.map(
-      (e: { for: { id: number; name: string }; from: { id: number; name: string } }) => {
-        return {
-          createdAt: new TZDate(new Date(), 'America/New_York'),
-          for: {
-            name: e.for.name,
-            id: e.for.id,
-          },
-          from: {
-            name: e.from.name,
-            id: e.from.id,
-          },
-        };
-      },
-    );
-
+    const wsVotes2Votes = wsMsg.map((e) => {
+      return {
+        updated: e.updated,
+        createdAt: e.createdAt,
+        updatedAt: e.updatedAt,
+        for: {
+          name: e.for.name,
+          id: e.for.id,
+        },
+        from: {
+          name: e.from.name,
+          id: e.from.id,
+        },
+        id: e.id,
+      };
+    });
     return [...wsVotes2Votes, ...data.user.votes];
-  }, [wsMsg, data]);
+  }, [wsMsg, data])
 
   if (isLoading) {
     return (
@@ -57,7 +56,7 @@ export const UserComp = ({ id }: { id: string }) => {
         <Divider />
         <CardBody>
           {liveVotes &&
-            liveVotes.map((e: Vote & { from: User } & { for: Game }, i: number) => {
+            liveVotes.map((e: VoteForFrom, i: number) => {
               return <Voted key={i} vote={e} bg={false} />;
             })}
         </CardBody>
