@@ -7,6 +7,7 @@ import { Voted } from './voted';
 import { useMemo } from 'react';
 import { TZDate } from '@date-fns/tz';
 import { useAppStore } from '@/store/store';
+import StreakDisplay from './streakDisplay';
 
 export const UserComp = ({ id }: { id: string }) => {
   const { wsMsg } = useAppStore()
@@ -44,12 +45,13 @@ export const UserComp = ({ id }: { id: string }) => {
     <div className="w-full flex flex-wrap justify-center gap-5 p-5 text-center">
       <Card>
         <CardHeader className="flex gap-3">
-          <div className="uppercase bg-primary w-10 h-10 rounded-full flex justify-center items-center">
-            <div>{data && data.user.name.charAt(0)}</div>
+          <div className="uppercase relative w-10 h-10 p-0 m-0 flex justify-center items-center">
+            {/* <div>{data && data.user.name.charAt(0)}</div> */}
+            <StreakDisplay className="absolute w-[180px] h-[180px] -top-[3rem] -left-[2rem]" streak={50} />
           </div>
           <div className="flex flex-col">
             <p className="text-md">{data.user.name}</p>
-            <p className="text-small text-left text-default-500">Votes: {data.user.votes.length}</p>
+            <p className="text-small text-left text-default-500"> {data.user.streak && `Current Streak: ${data.user.streak}`} {`votes: ${data.user.votes.length}`}</p>
           </div>
         </CardHeader>
         <Divider />
