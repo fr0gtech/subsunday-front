@@ -26,7 +26,7 @@ export const MainCard = ({
         ? 'border-warning'
         : i === 2
           ? 'border-secondary'
-          : 'dark:border-default light:border-neutral-200';
+          : 'border-default';
   return (
     <Card
       key={e.id}
@@ -43,7 +43,7 @@ export const MainCard = ({
           {e.picture === 'default' ? (
             <div
               className={clsx([
-                'flex flex-col rounded-[5px] justify-center h-full bg-neutral-100 dark:bg-neutral-900 min-h-[100px] min-w-[294px] items-center z-0  object-cover shadow-lg  ',
+                'flex flex-col transition-all duration-300 opacity-95 hover:opacity-100 rounded-[5px] justify-center h-full bg-neutral-100 dark:bg-neutral-900 min-h-[100px] min-w-[294px] items-center z-0  object-cover shadow-lg  ',
                 borderColor,
               ])}
             >
@@ -51,15 +51,15 @@ export const MainCard = ({
               <span className="!text-[10px] lowercase mt-1 font-bold">No Image </span>
             </div>
           ) : (
-            <div className='h-[130px]'>
+            <div className=''>
 
               <NextImage
                 src={e.picture}
                 fill
                 loading="lazy"
-                
+
                 className={clsx([
-                  'rounded-[5px] z-0 w-full grow object-cover',
+                  'rounded-[5px] transition-all duration-300 opacity-95 hover:opacity-100 z-0 w-full scale-[1.002] grow object-cover',
                   borderColor,
                 ])}
                 alt={e.name}

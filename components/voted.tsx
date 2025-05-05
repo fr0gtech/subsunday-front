@@ -30,7 +30,7 @@ export const Voted = ({
     };
   }, []);
   return (
-    <Card shadow="md" style={{ background: bg ? '' : 'none', boxShadow: bg ? '' : 'none' }}>
+    <Card shadow={bg ? "none" : "md"} style={{ background: bg ? '' : 'none', boxShadow: bg ? '' : 'none' }}>
       <CardBody className={cardBodyClass}>
         {onGame ? (
           <span className="text-tiny leading-8" style={{ textAlign: textRight ? 'right' : 'left' }}>

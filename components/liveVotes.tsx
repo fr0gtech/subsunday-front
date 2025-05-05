@@ -70,7 +70,7 @@ export const LiveVotes = ({
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                className=" rounded shadow"
+                className="rounded"
               >
                 <Voted key={e.id} vote={e} bg={bg} textRight={textRight} />
               </motion.div>
