@@ -16,6 +16,9 @@ export async function GET(req: NextRequest) {
           for: true,
           from: true,
         },
+        orderBy:{
+          createdAt: "desc"
+        }
       },
     },
   });
