@@ -1,9 +1,9 @@
-import { Vote } from '@/generated/prisma';
 import { Card, CardBody, Chip } from '@heroui/react';
 import { formatDistance } from 'date-fns';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { VoteForFrom, wsVote } from './liveVotes';
+import { VoteForFrom } from './liveVotes';
+import { wsVote } from '@/app/providers';
 
 export const Voted = ({
   vote,
