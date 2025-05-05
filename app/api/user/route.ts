@@ -14,11 +14,12 @@ export async function GET(req: NextRequest) {
       votes: {
         select: {
           createdAt: true,
+          updatedAt: true,
           for: true,
           from: true,
         },
         orderBy: {
-          createdAt: 'desc',
+          updatedAt: 'desc',
         },
       },
     },
