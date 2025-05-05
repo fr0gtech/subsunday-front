@@ -9,18 +9,18 @@ import {
   NavbarMenuItem,
 } from '@heroui/navbar';
 import NextLink from 'next/link';
-
-import { GithubIcon, Logo, SearchIcon } from '@/components/icons';
-import { ThemeSwitch } from './theme-switch';
-import { siteConfig } from '@/config/site';
 import clsx from 'clsx';
 import { link as linkStyles } from '@heroui/theme';
-import { Input, Kbd, Link } from '@heroui/react';
-import { CurrentVotes } from './currentVotes';
+import { Input, Link } from '@heroui/react';
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
+
+import { ThemeSwitch } from './theme-switch';
 import WeeklyCalendar from './weeklyCalendar';
+
+import { siteConfig } from '@/config/site';
+import { GithubIcon, Logo, SearchIcon } from '@/components/icons';
 
 export const Navbar = () => {
   const path = usePathname();
@@ -42,12 +42,13 @@ export const Navbar = () => {
       type="search"
       onKeyDown={(e) => {
         if (e.key === 'Enter') {
-          setMenuOpen(menuOpen ? false : menuOpen)
+          setMenuOpen(menuOpen ? false : menuOpen);
           router.push('/search?value=' + e.currentTarget.value);
         }
       }}
     />
   );
+
   return (
     <HeroUINavbar isMenuOpen={menuOpen} maxWidth="full" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -61,13 +62,13 @@ export const Navbar = () => {
         <ul className="hidden lg:flex gap-4 justify-start ml-10">
           {siteConfig.navItems.map((item) => (
             <NavbarItem
-              isActive={path === item.href}
               key={item.href}
               className={clsx(
                 linkStyles({ color: 'foreground' }),
                 'data-[active=true]:text-primary data-[active=true]:font-bold',
                 '!text-sm !text-foreground',
               )}
+              isActive={path === item.href}
             >
               <NextLink color={'foreground'} href={item.href}>
                 {item.label}
@@ -76,7 +77,7 @@ export const Navbar = () => {
           ))}
         </ul>
       </NavbarContent>
-      <NavbarItem className='hidden lg:block'>
+      <NavbarItem className="hidden lg:block">
         <WeeklyCalendar />
       </NavbarItem>
       <NavbarMenu>
@@ -86,12 +87,12 @@ export const Navbar = () => {
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem
               key={`${item}-${index}`}
-              isActive={path === item.href}
               className={clsx(
                 linkStyles({ color: 'foreground' }),
                 'data-[active=true]:!text-forground data-[active=true]:font-bold',
                 '!text-sm !text-foreground',
               )}
+              isActive={path === item.href}
             >
               <Link
                 color={'foreground'}
@@ -105,8 +106,17 @@ export const Navbar = () => {
           ))}
         </div>
       </NavbarMenu>
-      <NavbarItem className='hidden lg:block'>
-        <div className='text-xs flex flex-row gap-2 items-center !leading'>*<div> this is <b>not</b> an official sub sunday website</div> <NextLink href={"/info"}><InfoCircledIcon /></NextLink></div>
+      <NavbarItem className="hidden lg:block">
+        <div className="text-xs flex flex-row gap-2 items-center !leading">
+          *
+          <div>
+            {' '}
+            this is <b>not</b> an official sub sunday website
+          </div>{' '}
+          <NextLink href={'/info'}>
+            <InfoCircledIcon />
+          </NextLink>
+        </div>
       </NavbarItem>
       {/* <CurrentVotes className={'font-bold hidden gap-5 lg:flex text-tiny lowercase'} /> */}
 
@@ -116,7 +126,7 @@ export const Navbar = () => {
           <GithubIcon className="text-default-500" />
         </NextLink>
         <ThemeSwitch />
-        <NavbarMenuToggle onClick={() => setMenuOpen(!menuOpen)} className="flex lg:hidden" />
+        <NavbarMenuToggle className="flex lg:hidden" onClick={() => setMenuOpen(!menuOpen)} />
       </NavbarContent>
     </HeroUINavbar>
   );

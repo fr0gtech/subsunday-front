@@ -10,6 +10,7 @@ scripts/*
 .DS_Store
 node_modules
 coverage
+generated
 .next
 build
 !.commitlintrc.cjs

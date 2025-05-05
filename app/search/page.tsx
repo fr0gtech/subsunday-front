@@ -1,7 +1,8 @@
 'use client';
 
-import { Search } from '@/components/search';
 import { Suspense } from 'react';
+
+import { Search } from '@/components/search';
 
 export default function Home() {
   return (

@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/prisma';
 import { endOfDay, startOfDay } from 'date-fns';
 import { TZDate } from '@date-fns/tz';
+
+import { prisma } from '@/prisma';
 
 export async function GET(req: NextRequest) {
   const rangeStart = parseInt(req.nextUrl.searchParams.get('rangeStart') as string) || 1;

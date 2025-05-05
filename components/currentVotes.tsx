@@ -1,36 +1,34 @@
 'use client';
 
-import { Chip, Skeleton, Spinner, Tooltip } from '@heroui/react';
+import { Chip, Skeleton, Tooltip } from '@heroui/react';
 import useSWR from 'swr';
-import { fetcher } from '@/app/lib';
 import NumberFlow from '@number-flow/react';
+
+import { fetcher } from '@/app/lib';
 import { useAppStore } from '@/store/store';
 
 export const CurrentVotes = ({ className }: { className: string }) => {
-  const { selectedRange, wsMsg } = useAppStore()
-  const { data, isLoading } = useSWR(`/api/voteoverview?rangeStart=${selectedRange.currentPeriod.startDate.getTime()}&rangeEnd=${selectedRange.currentPeriod.endDate.getTime()}`, fetcher);
+  const { selectedRange, wsMsg } = useAppStore();
+  const { data, isLoading } = useSWR(
+    `/api/voteoverview?rangeStart=${selectedRange.currentPeriod.startDate.getTime()}&rangeEnd=${selectedRange.currentPeriod.endDate.getTime()}`,
+    fetcher,
+  );
 
   if (isLoading) {
     return (
       <div className={className}>
         <div className="flex justify-end gap-2 flex-col-reverse items-center">
           <span className="lowercase opacity-60">Votes this week</span>
-          <Skeleton className='rounded-full'>
-
-            <Chip
-              size="lg"
-              color="secondary"
-              variant="shadow"
-              className="cursor-default boldChip"
-            >
+          <Skeleton className="rounded-full">
+            <Chip className="cursor-default boldChip" color="secondary" size="lg" variant="shadow">
               dsfdd
             </Chip>
           </Skeleton>
         </div>
         <div className="flex justify-end gap-2 flex-col-reverse items-center">
           <span className="lowercase  opacity-60">Votes today</span>
-          <Skeleton className='rounded-full'>
-            <Chip size="lg" color="success" variant="shadow" className=" cursor-default boldChip">
+          <Skeleton className="rounded-full">
+            <Chip className=" cursor-default boldChip" color="success" size="lg" variant="shadow">
               cscdd
             </Chip>
           </Skeleton>
@@ -47,27 +45,19 @@ export const CurrentVotes = ({ className }: { className: string }) => {
             <span className="lowercase opacity-60">Votes this week*</span>
             <Tooltip content={`total votes: ${data && data.total + wsMsg.length}`}>
               <Chip
-                size="lg"
-                color="secondary"
-                variant="shadow"
                 className="cursor-default boldChip"
+                color="secondary"
+                size="lg"
+                variant="shadow"
               >
-                <NumberFlow
-                  isolate
-                  className="left-0 bottom-0"
-                  value={data.now + wsMsg.length}
-                />
+                <NumberFlow isolate className="left-0 bottom-0" value={data.now + wsMsg.length} />
               </Chip>
             </Tooltip>
           </div>
           <div className="flex justify-end gap-2 flex-col-reverse items-center">
             <span className="lowercase  opacity-60">Votes today*</span>
-            <Chip size="lg" color="success" variant="shadow" className=" cursor-default boldChip">
-              <NumberFlow
-                isolate
-                className="left-0 bottom-0"
-                value={data.today + wsMsg.length}
-              />
+            <Chip className=" cursor-default boldChip" color="success" size="lg" variant="shadow">
+              <NumberFlow isolate className="left-0 bottom-0" value={data.today + wsMsg.length} />
             </Chip>
           </div>
         </div>

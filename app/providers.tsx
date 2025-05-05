@@ -7,10 +7,12 @@ import { HeroUIProvider } from '@heroui/system';
 import { useRouter } from 'next/navigation';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { addToast, ToastProvider } from '@heroui/react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { TZDate } from '@date-fns/tz';
+
 import { socket } from './lib';
+
 import { useAppStore } from '@/store/store';
 import { VoteForFrom } from '@/slices/globals';
 
@@ -36,7 +38,7 @@ export type wsVote = {
 
 export function Providers({ children, themeProps }: ProvidersProps) {
   const router = useRouter();
-  const { addWsMsg, replaceOrAddWsMsg, wsMsg } = useAppStore()
+  const { addWsMsg, replaceOrAddWsMsg, wsMsg } = useAppStore();
 
   useEffect(() => {
     function vote(value: any, update?: boolean) {
@@ -46,8 +48,9 @@ export function Providers({ children, themeProps }: ProvidersProps) {
         id: uuidv4(),
         createdAt: new TZDate(new Date(), process.env.NEXT_PUBLIC_TZ as string),
       } as VoteForFrom;
+
       update ? replaceOrAddWsMsg(valWithCreatedAT) : addWsMsg(valWithCreatedAT);
-      toast(value, update)
+      toast(value, update);
     }
     socket.emit('join', 'main');
     socket.on('vote', vote);
@@ -59,14 +62,20 @@ export function Providers({ children, themeProps }: ProvidersProps) {
       socket.off('voteUpdate', vote);
     };
   }, []);
-  const toast = useCallback((value: { for: { name: any; }; from: { name: any; }; }, update?: boolean) => {
-    addToast({
-      variant: "solid",
-      timeout: 2500,
-      color: update ? "warning" : "primary",
-      title: update ? `${value.from.name} updated vote to ${value.for.name}` : `${value.from.name} voted for ${value.for.name}`,
-    });
-  }, [wsMsg])
+  const toast = useCallback(
+    (value: { for: { name: any }; from: { name: any } }, update?: boolean) => {
+      addToast({
+        variant: 'solid',
+        timeout: 2500,
+        color: update ? 'warning' : 'primary',
+        title: update
+          ? `${value.from.name} updated vote to ${value.for.name}`
+          : `${value.from.name} voted for ${value.for.name}`,
+      });
+    },
+    [wsMsg],
+  );
+
   return (
     <HeroUIProvider navigate={router.push}>
       <ToastProvider />

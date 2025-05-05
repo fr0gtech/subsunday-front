@@ -6,8 +6,8 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ["shared.akamai.steamstatic.com"],
- },
+    domains: ['shared.akamai.steamstatic.com'],
+  },
 };
 
 module.exports = nextConfig;

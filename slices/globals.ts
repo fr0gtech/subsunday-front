@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getDateRange } from '@/app/lib';
-import { Vote } from '@/generated/prisma';
 import { tz, TZDate } from '@date-fns/tz';
 import { previousSunday } from 'date-fns';
 import { StateCreator } from 'zustand';
+
+import { Vote } from '@/generated/prisma';
+import { getDateRange } from '@/app/lib';
 
 type SelectedRange = {
   currentPeriod: {
@@ -36,7 +37,7 @@ export interface GlobalSlice {
 const today = new TZDate(new Date(), process.env.NEXT_PUBLIC_TZ as string);
 const selectedWeek = previousSunday(today, { in: tz(process.env.NEXT_PUBLIC_TZ as string) });
 
-export const createGlobalSlice: StateCreator<GlobalSlice> = (set, get) => ({
+export const createGlobalSlice: StateCreator<GlobalSlice> = (set) => ({
   selectedWeek,
   selectedRange: getDateRange({ offset: selectedWeek }),
   currentRange: getDateRange(),

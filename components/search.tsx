@@ -1,18 +1,20 @@
-import { fetcher } from '@/app/lib';
-import { Game, User } from '@/generated/prisma';
 import { Card, CardBody, Image } from '@heroui/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
+
+import { Game, User } from '@/generated/prisma';
+import { fetcher } from '@/app/lib';
 
 export const Search = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const search = searchParams.get('value');
-  
+
   const { data } = useSWR(search && 'api/search?value=' + search, fetcher);
+
   return (
     <>
-      <h3 className="text-2xl p-2">Search results for "{search}"</h3>
+      <h3 className="text-2xl p-2">Search results for &quot;{search}&quot;</h3>
       <div className="flex gap-5 flex-row">
         <div className="w-1/2">
           <h4 className="text-xl p-3">Games</h4>
@@ -27,11 +29,11 @@ export const Search = () => {
                 return (
                   <Card
                     key={e.id}
+                    isPressable
                     className="w-full"
-                    onPress={(a) => {
+                    onPress={() => {
                       router.push('game/' + e.id);
                     }}
-                    isPressable
                   >
                     <CardBody className="flex flex-row gap-2 items-center">
                       <Image src={e.picture} width={200} />
@@ -57,11 +59,11 @@ export const Search = () => {
                 return (
                   <Card
                     key={e.id}
+                    isPressable
                     className="w-full"
-                    onPress={(a) => {
+                    onPress={() => {
                       router.push('user/' + e.id);
                     }}
-                    isPressable
                   >
                     <CardBody className="flex flex-row gap-2 items-center">
                       <div>{e.name}</div>

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+
 import { prisma } from '@/prisma';
 
 export async function GET(req: NextRequest) {
@@ -41,6 +42,7 @@ export async function GET(req: NextRequest) {
       },
     },
   });
+
   return NextResponse.json({
     games,
     users,

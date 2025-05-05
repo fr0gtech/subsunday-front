@@ -1,5 +1,6 @@
 'use client';
 import { Alert, Card, CardBody, CardHeader, Code, Link } from '@heroui/react';
+
 import { LiveVotes } from '@/components/liveVotes';
 import { Chart } from '@/components/chart';
 import { CurrentVotes } from '@/components/currentVotes';
@@ -9,29 +10,28 @@ export default function Home() {
     <section className=" overflow-hidden p-5 mx-auto gap-2 flex flex-col">
       <div className="flex gap-2 lg:flex-row max-w-screen-xl flex-col justify-center">
         <div className="gap-2 flex flex-col  lg:w-1/2">
-        <div>
-        <Alert variant="flat" hideIcon className="" color="danger">
-          <p>
-            The info below is unconfirmed and taken from{' '}
-            <Link color="foreground" href="https://lirikker.com/lirik/subday/">
-              here{' '}
-            </Link>
-          </p>
-        </Alert>
-        </div>
+          <div>
+            <Alert hideIcon className="" color="danger" variant="flat">
+              <p>
+                The info below is unconfirmed and taken from{' '}
+                <Link color="foreground" href="https://lirikker.com/lirik/subday/">
+                  here{' '}
+                </Link>
+              </p>
+            </Alert>
+          </div>
           <Card className="h-fit" shadow="md">
             <CardHeader>
               <h4 className=" text-2xl font-bold">Voting</h4>
-              <span className="text-tiny"></span>
+              <span className="text-tiny" />
             </CardHeader>
             <CardBody>
-              <p className='opacity-80'>
+              <p className="opacity-80">
                 Sub Sunday is a weekly event where subscribers to the channel can vote for games
-                they'd like to see Lirik play. Every week, 6 games are selected for the main list
-                and 4 as backups from the list of votes.
+                they&apos;d like to see Lirik play. Every week, 6 games are selected for the main
+                list and 4 as backups from the list of votes.
               </p>
             </CardBody>
-           
           </Card>
           <Card>
             <CardHeader>
@@ -47,7 +47,7 @@ export default function Home() {
                   being played.
                 </li>
                 <li>
-                  - Every vote counts, so there's still a chance a less popular game could be
+                  - Every vote counts, so there&apos;s still a chance a less popular game could be
                   picked.
                 </li>
               </ul>

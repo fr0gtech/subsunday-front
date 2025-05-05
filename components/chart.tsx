@@ -1,4 +1,3 @@
-import { fetcher } from '@/app/lib';
 import { TZDate } from '@date-fns/tz';
 import { format, subDays } from 'date-fns';
 import { useMemo } from 'react';
@@ -14,6 +13,8 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+
+import { fetcher } from '@/app/lib';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const dayNames: string[] = [];
@@ -21,6 +22,7 @@ const dayNames: string[] = [];
 for (let i = 6; i >= 0; i--) {
   const date = subDays(new TZDate(new Date(), process.env.NEXT_PUBLIC_TZ as string), i);
   const dayName = format(date, 'EEEE');
+
   dayNames.push(dayName);
 }
 export const Chart = () => {
@@ -28,6 +30,7 @@ export const Chart = () => {
 
   const dataChart = useMemo(() => {
     if (!data) return null;
+
     return {
       labels: dayNames,
       datasets: [
@@ -52,10 +55,12 @@ export const Chart = () => {
       ],
     };
   }, [data]);
+
   return (
     <div>
       {dataChart && (
         <Line
+          data={dataChart}
           options={{
             plugins: {
               legend: {
@@ -90,7 +95,6 @@ export const Chart = () => {
               },
             },
           }}
-          data={dataChart}
         />
       )}
     </div>

@@ -2,11 +2,12 @@ import { addToast, Button, Card, Chip, PressEvent } from '@heroui/react';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { Tooltip } from '@heroui/react';
-import { Logo, Steamicon } from './icons';
-import { gameNcount } from './mainItem';
 import NumberFlow from '@number-flow/react';
 import { ClipboardIcon } from '@radix-ui/react-icons';
 import NextImage from 'next/image';
+
+import { gameNcount } from './mainItem';
+import { Logo, Steamicon } from './icons';
 export const MainCard = ({
   e,
   i,
@@ -27,19 +28,24 @@ export const MainCard = ({
         : i === 2
           ? 'border-secondary'
           : 'border-default';
+
   return (
     <Card
       key={e.id}
-      onPress={onPress}
       isPressable
-      as={"div"}
-      // onPress={() => router.push(`game/${e.id}`)}
-      isHoverable
+      as={'div'}
       className={className}
+      isHoverable={true}
+      onPress={onPress}
     >
       <div className="relative flex h-full">
         {/* create "default image" if no pic for game that is just logo and bg */}
-        <div className={clsx(['scale-[1.033] w-full h-full relative rounded-[10px] border-4', borderColor])}>
+        <div
+          className={clsx([
+            'scale-[1.033] w-full h-full relative rounded-[10px] border-4',
+            borderColor,
+          ])}
+        >
           {e.picture === 'default' ? (
             <div
               className={clsx([
@@ -51,27 +57,26 @@ export const MainCard = ({
               <span className="!text-[10px] lowercase mt-1 font-bold">No Image </span>
             </div>
           ) : (
-            <div className=''>
-
+            <div className="">
               <NextImage
-                src={e.picture}
                 fill
-                loading="lazy"
-
+                alt={e.name}
                 className={clsx([
                   'rounded-[5px] transition-all duration-300 opacity-95 hover:opacity-100 z-0 w-full scale-[1.002] grow object-cover',
                   borderColor,
                 ])}
-                alt={e.name}
+                loading="lazy"
+                src={e.picture}
               />
             </div>
-
           )}
           <Tooltip content="Ranking & Votes">
             <Chip
-              className={clsx(['absolute rankingChiptl -top-[2px] -left-[2px] boldChip !w-[200px]'])}
-              variant="shadow"
+              className={clsx([
+                'absolute rankingChiptl -top-[2px] -left-[2px] boldChip !w-[200px]',
+              ])}
               color={color}
+              variant="shadow"
             >
               <div className="flex items-center">
                 <div className=" opacity-50 font-mono">#</div>
@@ -87,10 +92,10 @@ export const MainCard = ({
           {typeof e.price.final === 'string' && (
             <div className="absolute top-0 right-0">
               <Chip
+                className="!text-tiny rankingChiptr text-opacity-70 absolute -top-[2px] -right-[2px]"
                 color={color}
                 size="sm"
                 variant="shadow"
-                className="!text-tiny rankingChiptr text-opacity-70 absolute -top-[2px] -right-[2px]"
               >
                 {e.price.final}
               </Chip>
@@ -98,10 +103,10 @@ export const MainCard = ({
           )}
           {typeof e.price.final === 'number' && (
             <Chip
+              className="!text-tiny rankingChiptr text-opacity-70 absolute -top-[2px] -right-[2px]"
               color={color}
               size="sm"
               variant="shadow"
-              className="!text-tiny rankingChiptr text-opacity-70 absolute -top-[2px] -right-[2px]"
             >
               {(e.price.final as number) / 100}{' '}
               <span className="text-[10px] font-bold">{e.price.currency}</span>
@@ -113,8 +118,9 @@ export const MainCard = ({
           {e.categories &&
             Object.values(e.categories).map((e, i) => {
               if (i > 2) return;
+
               return (
-                <Chip variant="flat" className=" backdrop-blur" key={e.description} size="sm">
+                <Chip key={e.description} className=" backdrop-blur" size="sm" variant="flat">
                   {e.description}
                 </Chip>
               );
@@ -125,18 +131,25 @@ export const MainCard = ({
       <div className="flex p-1 items-center">
         <div className="flex flex-grow gap-2">
           <div className="flex gap-2 p-2 max-w-[300px]">
-            <Tooltip isDisabled={e.name.length < 27} content={e.name}>
+            <Tooltip content={e.name} isDisabled={e.name.length < 27}>
               <h4 className="font-bold text-left whitespace-pre-wrap">{e.name.substring(0, 27)}</h4>
             </Tooltip>
           </div>
         </div>
-        <div className='flex gap-2 mr-1'>
+        <div className="flex gap-2 mr-1">
           <Tooltip content={`Copy "!vote ${e.name}" to your clipboard`}>
-            <Button size='sm' variant='ghost' className='opacity-50 px-2 !border-none'
-              style={{ width: "30px", minWidth: "unset" }}
+            <Button
+              className="opacity-50 px-2 !border-none"
+              size="sm"
+              style={{ width: '30px', minWidth: 'unset' }}
+              variant="ghost"
               onPress={() => {
                 navigator.clipboard.writeText(`!vote ${e.name}`);
-                addToast({ timeout: 2300, color: 'success', title: `"!vote ${e.name}" copied to clipboard` })
+                addToast({
+                  timeout: 2300,
+                  color: 'success',
+                  title: `"!vote ${e.name}" copied to clipboard`,
+                });
               }}
             >
               <ClipboardIcon />
@@ -144,19 +157,21 @@ export const MainCard = ({
           </Tooltip>
           {e.link !== 'notOnSteam' && (
             <Tooltip content="Open Steam Page">
-              <Button size='sm' variant='ghost' className='opacity-50  !border-none'
-                style={{ width: "30px", minWidth: "unset" }}
+              <Button
+                className="opacity-50  !border-none"
+                size="sm"
+                style={{ width: '30px', minWidth: 'unset' }}
+                variant="ghost"
               >
                 <Link
-                  onClick={(e) => e.stopPropagation()}
                   className="px-5 z-10 relative"
                   href={`https://store.steampowered.com/app/${e.steamId}`}
                   target="_blank"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  <Steamicon size={20} className="opacity-70" />
+                  <Steamicon className="opacity-70" size={20} />
                 </Link>
               </Button>
-
             </Tooltip>
           )}
         </div>

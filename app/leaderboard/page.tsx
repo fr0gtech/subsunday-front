@@ -1,7 +1,6 @@
 'use client';
 import useSWR from 'swr';
 import {
-  Card,
   Chip,
   Link,
   Table,
@@ -11,8 +10,10 @@ import {
   TableHeader,
   TableRow,
 } from '@heroui/react';
-import { Game, User } from '@/generated/prisma';
+
 import { fetcher } from '../lib';
+
+import { Game, User } from '@/generated/prisma';
 
 export default function Home() {
   const { data } = useSWR(`/api/top`, fetcher);
@@ -36,7 +37,7 @@ export default function Home() {
                       <Chip className="z-10 font-bold"># {i + 1}</Chip>
                     </TableCell>
                     <TableCell className="relative">
-                      <Link href={`/user/${e.id}`} color="foreground" className=" cursor-pointer">
+                      <Link className=" cursor-pointer" color="foreground" href={`/user/${e.id}`}>
                         {e.name}
                       </Link>
                     </TableCell>
@@ -65,7 +66,7 @@ export default function Home() {
                       <Chip className="z-10 font-bold"># {i + 1}</Chip>
                     </TableCell>
                     <TableCell className="relative">
-                      <Link href={`/user/${e.id}`} color="foreground" className=" cursor-pointer">
+                      <Link className=" cursor-pointer" color="foreground" href={`/user/${e.id}`}>
                         {e.name.substring(0, 25)}
                       </Link>
                     </TableCell>
@@ -94,7 +95,7 @@ export default function Home() {
                       <Chip className="z-10 font-bold"># {i + 1}</Chip>
                     </TableCell>
                     <TableCell>
-                      <Link href={`/game/${e.id}`} color="foreground" className=" cursor-pointer">
+                      <Link className=" cursor-pointer" color="foreground" href={`/game/${e.id}`}>
                         {e.name.substring(0, 25)}
                       </Link>
                     </TableCell>

@@ -1,6 +1,5 @@
 export const fetcher = (url: RequestInfo | URL) => fetch(url).then((res) => res.json());
 import { io } from 'socket.io-client';
-
 import {
   setHours,
   setMinutes,
@@ -62,6 +61,7 @@ export function getDateRange(options?: DateRangeOptions) {
     setSeconds(setMinutes(setHours(nextStart, fromHour), fromMinute), 0),
     0,
   );
+
   // if its sunday we want to use the last Period to fetch items and display data?
   return {
     currentPeriod: {

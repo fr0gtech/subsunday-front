@@ -1,8 +1,9 @@
 // store.ts
 
-import { createGlobalSlice, GlobalSlice } from '@/slices/globals';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
+
+import { createGlobalSlice, GlobalSlice } from '@/slices/globals';
 
 type StoreState = GlobalSlice;
 

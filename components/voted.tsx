@@ -2,7 +2,7 @@ import { Card, CardBody, Chip } from '@heroui/react';
 import { formatDistance } from 'date-fns';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { wsVote } from '@/app/providers';
+
 import { VoteForFrom } from '@/slices/globals';
 
 export const Voted = ({
@@ -19,6 +19,7 @@ export const Voted = ({
   cardBodyClass?: string;
 }) => {
   const [time, setTime] = useState<Date>(new Date());
+
   // make relative dates update, this is probably not the best way to do this but should be fine if we only display a few items
   useEffect(() => {
     const interval = setInterval(() => {
@@ -29,17 +30,20 @@ export const Voted = ({
       clearInterval(interval);
     };
   }, []);
+
   return (
-    <Card shadow={bg ? "none" : "md"} style={{ background: bg ? '' : 'none', boxShadow: bg ? '' : 'none' }}>
+    <Card
+      shadow={bg ? 'none' : 'md'}
+      style={{ background: bg ? '' : 'none', boxShadow: bg ? '' : 'none' }}
+    >
       <CardBody className={cardBodyClass}>
         {onGame ? (
           <span className="text-tiny leading-8" style={{ textAlign: textRight ? 'right' : 'left' }}>
             <Link href={`/user/${vote.from.id}`}>
-              <Chip size="sm" color="primary" variant="flat" className="whitespace-pre-wrap">
+              <Chip className="whitespace-pre-wrap" color="primary" size="sm" variant="flat">
                 {vote.from.name}
               </Chip>
             </Link>{' '}
-
             <span>voted</span>{' '}
             <span className="text-tiny opacity-80">
               {time && formatDistance(new Date(vote.updatedAt), new Date(), { addSuffix: true })}{' '}
@@ -51,14 +55,13 @@ export const Voted = ({
               {time && formatDistance(new Date(vote.updatedAt), new Date(), { addSuffix: true })}{' '}
             </span>
             <Link href={`/user/${vote.from.id}`}>
-              <Chip size="sm" color="primary" variant="flat" className="whitespace-pre-wrap">
+              <Chip className="whitespace-pre-wrap" color="primary" size="sm" variant="flat">
                 {vote.from.name}
               </Chip>
             </Link>{' '}
-            {vote.updated ? <span>update vote to</span> : <span>voted for</span>}
-            {' '}
+            {vote.updated ? <span>update vote to</span> : <span>voted for</span>}{' '}
             <Link href={`/game/${vote.for.id}`}>
-              <Chip size="sm" color="secondary" variant="flat" className=" whitespace-pre-wrap">
+              <Chip className=" whitespace-pre-wrap" color="secondary" size="sm" variant="flat">
                 {vote.for.name}
               </Chip>
             </Link>

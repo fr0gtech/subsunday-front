@@ -1,34 +1,33 @@
 'use client';
 
 import { Alert, Card, CardBody, CardHeader, Link } from '@heroui/react';
+
 import { GithubIcon } from '@/components/icons';
 
 export default function Home() {
   return (
     <section className=" overflow-hidden p-5  mx-auto w-full gap-2 flex flex-col max-w-screen-xl">
       <div className="flex gap-2 w-full flex-col lg:flex-row">
-        
         <div className="gap-2 flex flex-col ">
-        <Alert color='danger' className='w-full mx-auto' hideIcon>
-            <p className="">This website was made for fun. This is <b>not</b> an Official sub sunday website</p>
-            </Alert>
+          <Alert hideIcon className="w-full mx-auto" color="danger">
+            <p className="">
+              This website was made for fun. This is <b>not</b> an Official sub sunday website
+            </p>
+          </Alert>
           <Card className="h-fit" shadow="md">
             <CardHeader>
               <h4 className=" text-2xl font-bold">About</h4>
-              <span className="text-tiny"></span>
+              <span className="text-tiny" />
             </CardHeader>
-          
 
             <CardBody>
               <p>
                 This project was made for fun and does not represet what happens to your vote.
-                <br/>
-                <br/>
-                
+                <br />
+                <br />
                 <b>Votes may be inaccurate</b>
                 <br />
                 <br />
-
                 open a github issue if you got any questions or want to contribute/share ideas.
               </p>
             </CardBody>
@@ -69,7 +68,7 @@ export default function Home() {
         <div className="flex gap-2 flex-col lg:w-5/6">
           <Card>
             <CardHeader>
-              <Link href="https://github.com/fr0gtech/subsunday-front" color="foreground">
+              <Link color="foreground" href="https://github.com/fr0gtech/subsunday-front">
                 <h5 className="text-xl">Frontend</h5>
                 <GithubIcon className="ml-2" />
               </Link>
@@ -89,7 +88,7 @@ export default function Home() {
           </Card>
           <Card>
             <CardHeader>
-              <Link href="https://github.com/fr0gtech/subsunday-back" color="foreground">
+              <Link color="foreground" href="https://github.com/fr0gtech/subsunday-back">
                 <h5 className="text-xl">Backend</h5>
                 <GithubIcon className="ml-2" />
               </Link>

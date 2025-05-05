@@ -1,18 +1,15 @@
 'use client';
-import { fetcher } from '@/app/lib';
-import {
-  Chip,
-  Divider,
-  Link,
-  Spinner,
-} from '@heroui/react';
+import { Chip, Divider, Link, Spinner } from '@heroui/react';
 import { ExternalLinkIcon } from '@radix-ui/react-icons';
 import useSWR from 'swr';
-import { Voted } from './voted';
 import { useMemo } from 'react';
 import clsx from 'clsx';
 import { v4 as uuidv4 } from 'uuid';
 import Image from 'next/image';
+
+import { Voted } from './voted';
+
+import { fetcher } from '@/app/lib';
 import { useAppStore } from '@/store/store';
 import { VoteForFrom } from '@/slices/globals';
 export const GameComp = ({
@@ -26,9 +23,11 @@ export const GameComp = ({
   cardBodyClass?: string;
   page?: boolean;
 }) => {
-  const { currentRange, wsMsg } = useAppStore()
-  const { data, isLoading } = useSWR(`/api/game?id=${id}&rangeStart=${currentRange.currentPeriod.startDate.getTime()}&rangeEnd=${currentRange.currentPeriod.endDate.getTime()}`, fetcher);
-
+  const { currentRange, wsMsg } = useAppStore();
+  const { data, isLoading } = useSWR(
+    `/api/game?id=${id}&rangeStart=${currentRange.currentPeriod.startDate.getTime()}&rangeEnd=${currentRange.currentPeriod.endDate.getTime()}`,
+    fetcher,
+  );
 
   const liveVotes = useMemo(() => {
     if (!data) return;
@@ -63,6 +62,7 @@ export const GameComp = ({
       </div>
     );
   }
+
   return (
     <div
       className={clsx([
@@ -78,11 +78,11 @@ export const GameComp = ({
       {data.game.picture !== 'default' && (
         <>
           {withImage && (
-            <div className=' relative h-[200px] lg:w-1/2 w-full lg:mx-auto rouned'>
+            <div className=" relative h-[200px] lg:w-1/2 w-full lg:mx-auto rouned">
               <Image
-                alt={'item.title'}
                 fill
-                className=' object-cover rounded-md'
+                alt={'item.title'}
+                className=" object-cover rounded-md"
                 src={data.game.picture}
               />
             </div>
@@ -91,14 +91,15 @@ export const GameComp = ({
             {data.game.categories &&
               Object.values(data.game.categories).map((e: any, i) => {
                 if (i > 2) return;
+
                 return (
-                  <Chip variant="shadow" key={e.id} size="sm">
+                  <Chip key={e.id} size="sm" variant="shadow">
                     {e.description}
                   </Chip>
                 );
               })}
             {data.game.price.final && (
-              <Chip size="sm" variant="shadow" color="primary">
+              <Chip color="primary" size="sm" variant="shadow">
                 {typeof data.game.price.final === 'string'
                   ? data.game.price.final
                   : `${data.game.price.final / 100} ${data.game.price.currency}`}
@@ -107,10 +108,10 @@ export const GameComp = ({
             <div className="flex gap-2 opacity-50 hover:opacity-100 transition-opacity">
               {data.game.website.length > 0 && (
                 <Link
-                  size="sm"
-                  color="foreground"
                   className=""
+                  color="foreground"
                   href={data.game.website}
+                  size="sm"
                   target="_blank"
                 >
                   Website
@@ -119,10 +120,10 @@ export const GameComp = ({
               )}
               {data.game.link !== 'notOnSteam' && (
                 <Link
-                  size="sm"
-                  color="foreground"
                   className=""
+                  color="foreground"
                   href={`https://store.steampowered.com/app/${data.game.steamId}`}
+                  size="sm"
                   target="_blank"
                 >
                   Open on steam <ExternalLinkIcon color="gray" />
@@ -140,7 +141,7 @@ export const GameComp = ({
       <div className="gap-2 flex flex-col">
         {liveVotes &&
           liveVotes.slice(0, 6).map((e: VoteForFrom, i) => {
-            return <Voted cardBodyClass={cardBodyClass} onGame bg={page} key={i} vote={e} />;
+            return <Voted key={i} bg={page} cardBodyClass={cardBodyClass} vote={e} onGame />;
           })}
       </div>
       <Divider />
