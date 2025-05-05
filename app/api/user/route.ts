@@ -11,6 +11,7 @@ export async function GET(req: NextRequest) {
     },
     select: {
       name: true,
+      streak: true,
       votes: {
         select: {
           createdAt: true,

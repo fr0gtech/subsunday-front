@@ -8,6 +8,7 @@ const getStreakStage = (streak: number) => {
   if (streak >= 10) return 'blazing';
   if (streak >= 5) return 'burning';
   if (streak >= 3) return 'kindled';
+  if (streak === 0) return 'none';
 
   return 'ember';
 };
@@ -45,6 +46,11 @@ const stageMap = {
     src: '/particles/Fire+Sparks.gif',
     picClass: 'brightness-[7] hue-rotate-200',
   },
+  none: {
+    label: '',
+    src: '',
+    picClass: '',
+  },
 };
 
 export default function StreakDisplay({
@@ -58,8 +64,6 @@ export default function StreakDisplay({
   const { label, src, picClass } = stageMap[stage];
 
   return (
-    <div className={className}>
-      <Image alt={label} className={picClass} src={src} />
-    </div>
+    <div className={className}>{src && <Image alt={label} className={picClass} src={src} />}</div>
   );
 }

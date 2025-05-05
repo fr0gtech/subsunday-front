@@ -127,7 +127,7 @@ export default function WeeklyCalendarPopover() {
               ))}
             </div>
 
-            <div className="space-y-1 max-h-72 overflow-y-auto">
+            <div className=" max-h-72 flex flex-col gap-2">
               {weeks.map((weekStart) => {
                 const isSel = selectedWeek && isSameDay(weekStart, selectedWeek);
                 const isFuture = isAfter(weekStart, TODAY);
@@ -137,7 +137,7 @@ export default function WeeklyCalendarPopover() {
                   <button
                     key={weekStart.toString()}
                     className={clsx(
-                      'grid grid-cols-7 gap-1 my-2 rounded-lg m-1 transition-colors',
+                      'grid grid-cols-7 gap-2 p-1 rounded transition-colors w-full ',
                       isFuture
                         ? 'cursor-not-allowed opacity-50'
                         : 'cursor-pointer hover:bg-neutral-200 hover:dark:bg-neutral-800',
@@ -156,7 +156,7 @@ export default function WeeklyCalendarPopover() {
                         <div
                           key={i}
                           className={clsx(
-                            'text-center text-tiny py-1 rounded',
+                            'text-center text-tiny py-1 rounded ',
                             today && 'bg-secondary-300',
                           )}
                         >

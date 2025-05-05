@@ -1,5 +1,5 @@
 'use client';
-import { Card, CardBody, CardHeader, Divider, Spinner } from '@heroui/react';
+import { Card, CardBody, CardHeader, Chip, Divider, Spinner } from '@heroui/react';
 import useSWR from 'swr';
 import { useMemo } from 'react';
 
@@ -9,6 +9,7 @@ import StreakDisplay from './streakDisplay';
 import { useAppStore } from '@/store/store';
 import { fetcher } from '@/app/lib';
 import { VoteForFrom } from '@/slices/globals';
+import clsx from 'clsx';
 
 export const UserComp = ({ id }: { id: string }) => {
   const { wsMsg } = useAppStore();
@@ -45,22 +46,38 @@ export const UserComp = ({ id }: { id: string }) => {
   }
 
   return (
-    <div className="w-full flex flex-wrap justify-center gap-5 p-5 text-center">
+    <div className="w-full flex flex-wrap justify-center gap-5 p-5">
       <Card>
-        <CardHeader className="flex gap-3">
-          <div className="uppercase relative w-10 h-10 p-0 m-0 flex justify-center items-center">
-            {/* <div>{data && data.user.name.charAt(0)}</div> */}
+        <CardHeader
+          className={clsx([
+            'flex justify-center items-start p-5 flex-row-reverse gap-10 h-[100px]',
+            data.user.streak > 0 && ' flex-row p-3',
+          ])}
+        >
+          <div
+            className={clsx([
+              'uppercase relative w-16 h-10 p-0 m-0 flex  justify-center items-center',
+            ])}
+          >
             <StreakDisplay
-              className="absolute w-[180px] h-[180px] -top-[3rem] -left-[2rem]"
-              streak={50}
+              className="absolute z-10 w-[180px] h-[180px] -top-[2rem] -left-[1rem]"
+              streak={data.user.streak}
             />
+            {data.user.streak > 0 && (
+              <Chip className="!text-tiny -top-3 absolute -left-3 rankingChiptl" size="sm">
+                Streak: {data.user.streak}
+              </Chip>
+            )}
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col justify-center items-start w-full h-full">
             <p className="text-md">{data.user.name}</p>
-            <p className="text-small text-left text-default-500">
-              {' '}
-              {data.user.streak && `Current Streak: ${data.user.streak}`}{' '}
-              {`votes: ${data.user.votes.length}`}
+            <p className="text-small text-left text-default-500 mt-2">
+              <Chip
+                className="boldChip"
+                color="secondary"
+                size="sm"
+                variant="shadow"
+              >{`votes: ${data.user.votes.length}`}</Chip>
             </p>
           </div>
         </CardHeader>
