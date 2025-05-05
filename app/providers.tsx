@@ -44,7 +44,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
         ...value,
         updated: true,
         id: uuidv4(),
-        createdAt: new TZDate(new Date(), 'America/New_York'),
+        createdAt: new TZDate(new Date(), process.env.NEXT_PUBLIC_TZ as string),
       } as VoteForFrom;
       update ? replaceOrAddWsMsg(valWithCreatedAT) : addWsMsg(valWithCreatedAT);
       toast(value, update)

@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
     };
   });
 
-  const today = new TZDate(Date.now(), 'America/New_York');
+  const today = new TZDate(Date.now(), process.env.NEXT_PUBLIC_TZ as string);
   const votesLast7Days = await getVotesBetween(subDays(today, 7), 7);
   const voteLastWeek = await getVotesBetween(subDays(today, 14), 7);
 

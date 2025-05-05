@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
       },
     },
   });
-  const today = new TZDate(new Date(), 'America/New_York');
+  const today = new TZDate(new Date(), process.env.NEXT_PUBLIC_TZ as string);
   const start_of_day = startOfDay(today);
   const end_of_day = endOfDay(today);
 

@@ -30,11 +30,11 @@ import { tz, TZDate } from '@date-fns/tz';
 import { getDateRange } from '@/app/lib';
 
 const START_DATE = new Date(2025, 3, 28);
-const TODAY = new TZDate(new Date(), 'America/New_York');
+const TODAY = new TZDate(new Date(), process.env.NEXT_PUBLIC_TZ as string);
 const WEEK_PAGE_SIZE = 4;
 
 const MIN_START = startOfWeek(START_DATE, {
-    in: tz('America/New_York'),
+    in: tz(process.env.NEXT_PUBLIC_TZ as string),
     weekStartsOn: 0,
 });
 
@@ -48,7 +48,7 @@ export default function WeeklyCalendarPopover() {
     const [currentStart, setCurrentStart] = useState<Date>(() => {
         const initial = startOfWeek(
             selectedWeek || TODAY,
-            { in: tz('America/New_York'), weekStartsOn: 0 }
+            { in: tz(process.env.NEXT_PUBLIC_TZ as string), weekStartsOn: 0 }
         );
         return dateMax([initial, MIN_START]);
     });
@@ -56,7 +56,7 @@ export default function WeeklyCalendarPopover() {
     useEffect(() => {
         if (selectedWeek) {
             const week = startOfWeek(selectedWeek, {
-                in: tz('America/New_York'),
+                in: tz(process.env.NEXT_PUBLIC_TZ as string),
                 weekStartsOn: 0,
             });
             setCurrentStart(dateMax([week, MIN_START]));
@@ -80,7 +80,7 @@ export default function WeeklyCalendarPopover() {
     const handleNext = () => {
         const candidate = addWeeks(currentStart, WEEK_PAGE_SIZE);
         const maxStart = startOfWeek(TODAY, {
-            in: tz('America/New_York'),
+            in: tz(process.env.NEXT_PUBLIC_TZ as string),
             weekStartsOn: 0,
         });
         setCurrentStart(dateMax([candidate, MIN_START]) <= maxStart ? candidate : maxStart);
@@ -90,7 +90,7 @@ export default function WeeklyCalendarPopover() {
     const nextDisabled = isSameDay(
         currentStart,
         startOfWeek(TODAY, {
-            in: tz('America/New_York'),
+            in: tz(process.env.NEXT_PUBLIC_TZ as string),
             weekStartsOn: 0,
         })
     );

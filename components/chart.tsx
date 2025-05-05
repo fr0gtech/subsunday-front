@@ -19,7 +19,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 const dayNames: string[] = [];
 
 for (let i = 6; i >= 0; i--) {
-  const date = subDays(new TZDate(new Date(), 'America/New_York'), i);
+  const date = subDays(new TZDate(new Date(), process.env.NEXT_PUBLIC_TZ as string), i);
   const dayName = format(date, 'EEEE');
   dayNames.push(dayName);
 }

@@ -2,7 +2,7 @@ import { useAppStore } from '@/store/store';
 import { TZDate } from '@date-fns/tz';
 import { formatDistance, formatISO, isAfter, isBefore } from 'date-fns';
 import { useEffect, useMemo, useState } from 'react';
-const today = new TZDate(Date.now(), 'America/New_York');
+const today = new TZDate(Date.now(), process.env.NEXT_PUBLIC_TZ as string);
 
 export const VotingPeriod = ({ className }: { className: string }) => {
   const [time, setTime] = useState<Date>(new Date());

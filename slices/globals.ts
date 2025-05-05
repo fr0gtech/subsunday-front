@@ -33,8 +33,8 @@ export interface GlobalSlice {
   setSelectedRange: (query: SelectedRange) => void;
   setCurrentRange: (query: SelectedRange) => void;
 }
-const today = new TZDate(new Date(), 'America/New_York');
-const selectedWeek = previousSunday(today, { in: tz('America/New_York') });
+const today = new TZDate(new Date(), process.env.NEXT_PUBLIC_TZ as string);
+const selectedWeek = previousSunday(today, { in: tz(process.env.NEXT_PUBLIC_TZ as string) });
 
 export const createGlobalSlice: StateCreator<GlobalSlice> = (set, get) => ({
   selectedWeek,
