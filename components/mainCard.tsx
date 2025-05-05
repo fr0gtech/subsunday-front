@@ -43,7 +43,7 @@ export const MainCard = ({
           {e.picture === 'default' ? (
             <div
               className={clsx([
-                'flex flex-col justify-center h-full bg-neutral-100 dark:bg-neutral-900 min-h-[100px] min-w-[294px] items-center z-0  object-cover shadow-lg  ',
+                'flex flex-col rounded-[5px] justify-center h-full bg-neutral-100 dark:bg-neutral-900 min-h-[100px] min-w-[294px] items-center z-0  object-cover shadow-lg  ',
                 borderColor,
               ])}
             >
@@ -57,8 +57,9 @@ export const MainCard = ({
                 src={e.picture}
                 fill
                 loading="lazy"
+                
                 className={clsx([
-                  'z-0 w-full grow object-cover',
+                  'rounded-[5px] z-0 w-full grow object-cover',
                   borderColor,
                 ])}
                 alt={e.name}
