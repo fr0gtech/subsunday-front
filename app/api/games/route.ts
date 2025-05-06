@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   const rangeStart = parseInt(req.nextUrl.searchParams.get('rangeStart') as string) || 1;
   const rangeEnd = parseInt(req.nextUrl.searchParams.get('rangeEnd') as string) || 1;
 
-  const itemsToLoad = 50;
+  const itemsToLoad = 25;
   const games = await prisma.game.findMany({
     where: {
       name: {
