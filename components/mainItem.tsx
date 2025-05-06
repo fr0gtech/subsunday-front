@@ -47,6 +47,7 @@ export const MainItem = () => {
   const { data, isLoading, setSize, size } = useSWRInfinite(
     (key, pre) => getKey(key, pre, selectedRange),
     fetcher,
+    { revalidateFirstPage: false }, // this makes it so i does not get page 0 on each req... not sure if we need it for good mutation
   );
 
   const { isIntersecting, ref } = useIntersectionObserver({
