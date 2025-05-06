@@ -34,7 +34,7 @@ const getKey = (
   selectedRange: SelectedRange,
 ) => {
   if (previousPageData && previousPageData.page.length < PAGE_SIZE) return null;
-
+  if (pageIndex >= 10) return null;
   const start = selectedRange.currentPeriod.startDate.getTime();
   const end = selectedRange.currentPeriod.endDate.getTime();
 
@@ -47,7 +47,7 @@ export const MainItem = () => {
   const { data, isLoading, setSize, size } = useSWRInfinite(
     (key, pre) => getKey(key, pre, selectedRange),
     fetcher,
-    { revalidateFirstPage: false }, // this makes it so i does not get page 0 on each req... not sure if we need it for good mutation
+    { revalidateFirstPage: false },
   );
 
   const { isIntersecting, ref } = useIntersectionObserver({
@@ -196,14 +196,15 @@ export const MainItem = () => {
                   </motion.div>
                 );
               })}
-            <Card ref={ref} className="w-full h-[170px]" />
-            {updateableGames && [
-              ...Array(50 - updateableGames.length)
-                .fill(0)
-                .map((e, i) => {
-                  return <Card key={i + 'aa'} className="w-full h-[170px]" />;
-                }),
-            ]}
+            {updateableGames.length != 50 && <Card ref={ref} className="w-full h-[170px]" />}
+            {updateableGames &&
+              50 - updateableGames.length > 1 && [
+                ...Array(50 - updateableGames.length)
+                  .fill(0)
+                  .map((e, i) => {
+                    return <Card key={i + 'aa'} className="w-full h-[170px]" />;
+                  }),
+              ]}
           </AnimatePresence>
           {!isLoading && data && allGames.length === 0 && (
             <div className="flex items-center justify-center h-full w-full">
