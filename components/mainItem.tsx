@@ -1,4 +1,7 @@
-import { Card, Divider, Modal, ModalContent, Skeleton, useDisclosure } from '@heroui/react';
+import { Card } from '@heroui/card';
+import { Divider } from '@heroui/divider';
+import { Skeleton } from '@heroui/skeleton';
+import { Modal, ModalContent, useDisclosure } from '@heroui/modal';
 import clsx from 'clsx';
 import { useState, useMemo } from 'react';
 import useSWR from 'swr';
@@ -26,7 +29,7 @@ export const MainItem = () => {
   const { selectedRange, wsMsg } = useAppStore();
   const { data, isLoading } = useSWR(
     selectedRange &&
-      `/api/games?rangeStart=${selectedRange.currentPeriod.startDate.getTime()}&rangeEnd=${selectedRange.currentPeriod.endDate.getTime()}`,
+    `/api/games?rangeStart=${selectedRange.currentPeriod.startDate.getTime()}&rangeEnd=${selectedRange.currentPeriod.endDate.getTime()}`,
     fetcher,
   );
 

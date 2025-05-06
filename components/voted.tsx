@@ -1,4 +1,5 @@
-import { Card, CardBody, Chip } from '@heroui/react';
+import { Card, CardBody } from '@heroui/card';
+import { Chip } from '@heroui/chip';
 import { formatDistance } from 'date-fns';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';

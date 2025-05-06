@@ -1,5 +1,8 @@
 'use client';
-import { Alert, Card, CardBody, CardHeader, Code, Link } from '@heroui/react';
+import { Alert } from '@heroui/alert';
+import { Card, CardBody, CardHeader } from '@heroui/card';
+import { Code } from '@heroui/code';
+import { Link } from '@heroui/link';
 
 import { LiveVotes } from '@/components/liveVotes';
 import { Chart } from '@/components/chart';

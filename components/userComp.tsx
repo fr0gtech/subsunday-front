@@ -1,5 +1,8 @@
 'use client';
-import { Card, CardBody, CardHeader, Chip, Divider, Spinner } from '@heroui/react';
+import { Card, CardBody, CardHeader } from '@heroui/card';
+import { Chip } from '@heroui/chip';
+import { Divider } from '@heroui/divider';
+import { Spinner } from '@heroui/spinner';
 import useSWR from 'swr';
 import { useMemo } from 'react';
 import clsx from 'clsx';

@@ -1,15 +1,8 @@
 'use client';
 import useSWR from 'swr';
-import {
-  Chip,
-  Link,
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
-} from '@heroui/react';
+import { Chip } from '@heroui/chip';
+import { Link } from '@heroui/link';
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/table';
 
 import { fetcher } from '../lib';
 

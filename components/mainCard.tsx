@@ -5,7 +5,7 @@ import { Chip } from '@heroui/chip';
 import { Divider } from '@heroui/divider';
 import clsx from 'clsx';
 import Link from 'next/link';
-import { Tooltip } from '@heroui/react';
+import { Tooltip } from '@heroui/tooltip';
 import NumberFlow from '@number-flow/react';
 import { ClipboardIcon } from '@radix-ui/react-icons';
 import NextImage from 'next/image';

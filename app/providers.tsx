@@ -6,7 +6,7 @@ import * as React from 'react';
 import { HeroUIProvider } from '@heroui/system';
 import { useRouter } from 'next/navigation';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
-import { addToast, ToastProvider } from '@heroui/react';
+import { addToast, ToastProvider } from '@heroui/toast';
 import { useCallback, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { TZDate } from '@date-fns/tz';

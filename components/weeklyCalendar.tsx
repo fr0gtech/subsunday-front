@@ -13,7 +13,8 @@ import {
 } from 'date-fns';
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { Button, Popover, PopoverContent, PopoverTrigger } from '@heroui/react';
+import { Button } from '@heroui/button';
+import { Popover, PopoverContent, PopoverTrigger } from '@heroui/popover';
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 import { tz, TZDate } from '@date-fns/tz';
 

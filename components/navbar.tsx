@@ -11,7 +11,8 @@ import {
 import NextLink from 'next/link';
 import clsx from 'clsx';
 import { link as linkStyles } from '@heroui/theme';
-import { Input, Link } from '@heroui/react';
+import { Input } from '@heroui/input';
+import { Link } from '@heroui/link';
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { InfoCircledIcon } from '@radix-ui/react-icons';

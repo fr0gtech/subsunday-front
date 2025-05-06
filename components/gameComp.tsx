@@ -1,5 +1,8 @@
 'use client';
-import { Chip, Divider, Link, Spinner } from '@heroui/react';
+import { Chip } from '@heroui/chip';
+import { Divider } from '@heroui/divider';
+import { Link } from '@heroui/link';
+import { Spinner } from '@heroui/spinner';
 import { ExternalLinkIcon } from '@radix-ui/react-icons';
 import useSWR from 'swr';
 import { useMemo } from 'react';

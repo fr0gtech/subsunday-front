@@ -1,6 +1,8 @@
 'use client';
 
-import { Chip, Skeleton, Tooltip } from '@heroui/react';
+import { Chip } from '@heroui/chip';
+import { Skeleton } from '@heroui/skeleton';
+import { Tooltip } from '@heroui/tooltip';
 import useSWR from 'swr';
 import NumberFlow, { NumberFlowGroup } from '@number-flow/react';
 

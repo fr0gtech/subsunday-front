@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import useSWR from 'swr';
-import { Skeleton } from '@heroui/react';
+import { Skeleton } from '@heroui/skeleton';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { Voted } from './voted';

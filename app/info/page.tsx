@@ -1,6 +1,8 @@
 'use client';
 
-import { Alert, Card, CardBody, CardHeader, Link } from '@heroui/react';
+import { Alert } from '@heroui/alert';
+import { Card, CardBody, CardHeader } from '@heroui/card';
+import { Link } from '@heroui/link';
 
 import { GithubIcon } from '@/components/icons';
 

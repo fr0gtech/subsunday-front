@@ -1,4 +1,5 @@
-import { Card, CardBody, Image } from '@heroui/react';
+import { Card, CardBody, } from '@heroui/card';
+import { Image } from '@heroui/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 

@@ -1,4 +1,4 @@
-import { Image } from '@heroui/react';
+import { Image } from '@heroui/image';
 
 const getStreakStage = (streak: number) => {
   if (streak >= 52) return 'blazing5';
