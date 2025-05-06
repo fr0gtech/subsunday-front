@@ -49,7 +49,7 @@ export const MainCard = ({
         {/* create "default image" if no pic for game that is just logo and bg */}
         <div
           className={clsx([
-            'scale-[1.033] w-full h-full relative rounded-[10px] border-4',
+            'scale-[1.033] w-full h-full relative rounded-[10px] border-4 overflow-hidden',
             borderColor,
           ])}
         >
@@ -95,7 +95,7 @@ export const MainCard = ({
             </Chip>
           </Tooltip>
           <Chip
-            className={clsx(['absolute rankingChiptl -bottom-[2px] -right-[2px] !w-[200px]'])}
+            className={clsx(['absolute z-10 rankingChiptl -bottom-[2px] -right-[2px] !w-[200px]'])}
             color={color}
             variant="shadow"
           >
@@ -128,18 +128,18 @@ export const MainCard = ({
           )}
           {Object.values(e.categories as JsonArray).length > 0 && (
             <Chip
-              className="w-full absolute bottom-0 -left-[1px] p-0 rankingChipbl lowercase text-tiny font-bold"
+              className="w-full absolute z-0 -bottom-[2px] -left-[1px] p-0 rankingChipbl lowercase text-tiny font-bold"
               color={color}
             >
               {/* {e.categories && JSON.stringify(e.categories)} */}
-              <div className="flex flex-row gap-2  items-center">
+              <div className="flex flex-row gap-2 items-center">
                 {e.categories &&
                   Object.values(e.categories).map((a, i) => {
                     const last = i === Object.values(e.categories as JsonArray).length - 1;
 
                     return (
                       <div key={a.description} className="flex flex-row items-center gap-1">
-                        <div>{a.description}</div>
+                        <div>{a.description} d adsda sdas</div>
                         {!last && <Divider className="h-4" orientation="vertical" />}
                       </div>
                     );
