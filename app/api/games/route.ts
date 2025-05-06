@@ -32,7 +32,13 @@ export async function GET(req: NextRequest) {
         id: 'desc',
       },
     ],
-    include: {
+    select: {
+      id: true,
+      steamId: true,
+      name: true,
+      picture: true,
+      categories: true,
+      price: true,
       _count: {
         select: {
           votes: {
