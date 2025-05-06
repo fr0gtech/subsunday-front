@@ -19,6 +19,7 @@ import { InfoCircledIcon } from '@radix-ui/react-icons';
 
 import { ThemeSwitch } from './theme-switch';
 import WeeklyCalendar from './weeklyCalendar';
+import WeeklyCalendarPopover from './weeklyCalendarPopover';
 
 import { siteConfig } from '@/config/site';
 import { GithubIcon, Logo, SearchIcon } from '@/components/icons';
@@ -79,10 +80,10 @@ export const Navbar = () => {
         </ul>
       </NavbarContent>
       <NavbarItem className="hidden lg:block">
-        <WeeklyCalendar />
+        <WeeklyCalendarPopover />
       </NavbarItem>
       <NavbarMenu>
-        <div className="mx-4 mt-2 flex flex-col gap-2">
+        <div className="mx-4 mt-2 flex flex-col gap-5">
           {searchBar}
 
           {siteConfig.navMenuItems.map((item, index) => (
@@ -105,6 +106,9 @@ export const Navbar = () => {
               </Link>
             </NavbarMenuItem>
           ))}
+          <div className="mt-10">
+            <WeeklyCalendar />
+          </div>
         </div>
       </NavbarMenu>
       <NavbarItem className="hidden lg:block">

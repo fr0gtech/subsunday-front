@@ -72,16 +72,11 @@ export const UserComp = ({ id }: { id: string }) => {
               </Chip>
             )}
           </div>
-          <div className="flex flex-col justify-center items-start w-full h-full">
+          <div className="flex flex-col justify-center items-start w-full h-full gap-2">
             <p className="text-md">{data.user.name}</p>
-            <p className="text-small text-left text-default-500 mt-2">
-              <Chip
-                className="boldChip"
-                color="secondary"
-                size="sm"
-                variant="shadow"
-              >{`votes: ${data.user.votes.length}`}</Chip>
-            </p>
+            <Chip className="boldChip" color="secondary" size="sm" variant="shadow">
+              votes: {data.user.votes.length}
+            </Chip>
           </div>
         </CardHeader>
         <Divider />

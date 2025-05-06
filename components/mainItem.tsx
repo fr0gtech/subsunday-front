@@ -7,15 +7,14 @@ import { useState, useMemo, useEffect } from 'react';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-import useSWRInfinite from 'swr/infinite'
-import { useIntersectionObserver } from 'usehooks-ts'
+import useSWRInfinite from 'swr/infinite';
+import { useIntersectionObserver } from 'usehooks-ts';
 
 import { LiveVotes } from './liveVotes';
 import { MainCard } from './mainCard';
 import { VotingPeriod } from './votingPeriod';
 import { CurrentVotes } from './currentVotes';
 import { GameComp } from './gameComp';
-import WeeklyCalendar from './weeklyCalendar';
 
 import { useAppStore } from '@/store/store';
 import { fetcher } from '@/app/lib';
@@ -160,8 +159,12 @@ export const MainItem = () => {
   return (
     <div className="flex w-full justify-center items-center">
       <div className="flex w-full p-4">
-        <Modal className="max-h-2/3" isOpen={isOpen} onOpenChange={onOpenChange}>
-          <ModalContent className="p-2">
+        <Modal
+          className="max-h-2/3 !bg-none !bg-transparent shadow-none"
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+        >
+          <ModalContent className="p-2 !bg-none">
             {() => <>{gameId && <GameComp cardBodyClass="py-1 px-0" id={gameId.toString()} />}</>}
           </ModalContent>
         </Modal>
@@ -209,10 +212,6 @@ export const MainItem = () => {
           <div className="fixed3 flex flex-col justify-evenly p-3 gap-5 ">
             <VotingPeriod className="text-xl w-full text-center" />
             <CurrentVotes className="gap-5 justify-center flex flex-row text-tiny" />
-            <div className="flex lg:hidden justify-center">
-              <WeeklyCalendar />
-            </div>
-
             <div className="mt-5 opacity-70 block lg:hidden">
               <div className=" text-center w-full text-xs flex flex-row justify-center mt-5 gap-2 items-center !leading">
                 *

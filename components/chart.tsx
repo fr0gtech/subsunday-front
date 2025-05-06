@@ -25,8 +25,9 @@ for (let i = 6; i >= 0; i--) {
 
   dayNames.push(dayName);
 }
-export const Chart = () => {
-  const { data } = useSWR(`/api/votes`, fetcher);
+export const Chart = ({ id }: { id?: number }) => {
+  // load graph data?
+  const { data } = useSWR(`/api/graph?game=${id || 0}`, fetcher);
 
   const dataChart = useMemo(() => {
     if (!data) return null;

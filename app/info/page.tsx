@@ -1,11 +1,14 @@
-'use client';
-
 import { Alert } from '@heroui/alert';
 import { Card, CardBody, CardHeader } from '@heroui/card';
 import { Link } from '@heroui/link';
+import { Metadata } from 'next';
 
 import { GithubIcon } from '@/components/icons';
-
+export const metadata: Metadata = {
+  title: 'Sub Sunday - Info',
+  description:
+    'This project was made for fun and does not represet what happens to your vote. Votes may be inaccurate open a github issue if you got any questions or want to contribute/share ideas.',
+};
 export default function Home() {
   return (
     <section className=" overflow-hidden p-5  mx-auto w-full gap-2 flex flex-col max-w-screen-xl">

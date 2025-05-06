@@ -2,7 +2,6 @@ import { addToast } from '@heroui/toast';
 import { Button, PressEvent } from '@heroui/button';
 import { Card } from '@heroui/card';
 import { Chip } from '@heroui/chip';
-import { Divider } from '@heroui/divider';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { Tooltip } from '@heroui/tooltip';
@@ -54,9 +53,9 @@ export const MainCard = ({
             borderColor,
           ])}
         >
-          <div className=" w-full h-1/2 absolute top-0 left-0 bg-gradient-to-t z-10 from-transparent  to-[#0000003b]" />
+          <div className=" w-full h-1/2 absolute top-0 left-0 bg-gradient-to-t z-10 from-transparent  to-[#0000000a]" />
 
-          <div className=" w-full h-1/2 absolute bottom-0 left-0 bg-gradient-to-t z-10 from-[#00000075]  to-transparent" />
+          <div className=" w-full h-1/2 absolute bottom-0 left-0 bg-gradient-to-t z-10 from-[#00000028]  to-transparent" />
           {e.picture === 'default' ? (
             <div
               className={clsx([
@@ -133,23 +132,21 @@ export const MainCard = ({
           {Object.values(e.categories as JsonArray).length > 0 && (
             <div className="w-full absolute -bottom-[1px] -left-[1px] p-0  ">
               <Chip
-                className="!text-foreground backdrop-blur z-50 rankingChipbl"
+                className="!text-white backdrop-blur z-50 rankingChipbl"
                 color={color}
                 size="sm"
                 variant="flat"
               >
                 <div className="flex gap-3 lowercase text-[11px] opacity-80">
                   {e.categories &&
-                    Object.values(e.categories).map((a, i) => {
+                    Object.values(e.categories).map((a) => {
                       return <div key={a.description}>{a.description}</div>;
                     })}
                 </div>
               </Chip>
-
             </div>
           )}
         </div>
-
       </div>
       {/* footer */}
       <div className="flex p-1 items-center">

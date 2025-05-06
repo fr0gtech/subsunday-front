@@ -13,9 +13,7 @@ import {
 } from 'date-fns';
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { Button } from '@heroui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@heroui/popover';
-import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
+import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 import { tz, TZDate } from '@date-fns/tz';
 
 import { useAppStore } from '@/store/store';
@@ -34,7 +32,7 @@ function generateWeeks(start: Date, count: number = WEEK_PAGE_SIZE) {
   return Array.from({ length: count }, (_, i) => addWeeks(start, i));
 }
 
-export default function WeeklyCalendarPopover() {
+export default function WeeklyCalendar() {
   const { setSelectedWeek, selectedWeek, setSelectedRange } = useAppStore();
 
   const [currentStart, setCurrentStart] = useState<Date>(() => {
@@ -91,87 +89,72 @@ export default function WeeklyCalendarPopover() {
   const middleWeek = weeks[Math.floor(weeks.length / 2)];
 
   return (
-    <div className="relative">
-      <Popover className="relative">
-        <PopoverTrigger className="inline-flex items-center">
-          <Button size="sm">
-            {selectedWeek
-              ? `${format(selectedWeek, 'MMM d')} – ${format(addDays(selectedWeek, 6), 'MMM d')}`
-              : 'Select a week'}
-            <ChevronDownIcon className="ml-2 h-5 w-5" />
-          </Button>
-        </PopoverTrigger>
+    <div className="p-2">
+      <div className="flex justify-between items-center mb-2">
+        <button
+          className="p-1 rounded disabled:opacity-30"
+          disabled={prevDisabled}
+          onClick={handlePrev}
+        >
+          <ChevronLeftIcon className="h-5 w-5" />
+        </button>
+        <span className="text-sm font-semibold">{format(middleWeek, 'MMM yyyy')}</span>
+        <button
+          className="p-1 rounded disabled:opacity-30"
+          disabled={nextDisabled}
+          onClick={handleNext}
+        >
+          <ChevronRightIcon className="h-5 w-5" />
+        </button>
+      </div>
 
-        <PopoverContent>
-          <div className="p-2">
-            <div className="flex justify-between items-center mb-2">
-              <button
-                className="p-1 rounded disabled:opacity-30"
-                disabled={prevDisabled}
-                onClick={handlePrev}
-              >
-                <ChevronLeftIcon className="h-5 w-5" />
-              </button>
-              <span className="text-sm font-semibold">{format(middleWeek, 'MMM yyyy')}</span>
-              <button
-                className="p-1 rounded disabled:opacity-30"
-                disabled={nextDisabled}
-                onClick={handleNext}
-              >
-                <ChevronRightIcon className="h-5 w-5" />
-              </button>
-            </div>
+      <div className="grid grid-cols-7 gap-2 text-center text-xs opacity-70 mb-1">
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
+          <div key={d}>{d}</div>
+        ))}
+      </div>
 
-            <div className="grid grid-cols-7 gap-2 text-center text-xs opacity-70 mb-1">
-              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
-                <div key={d}>{d}</div>
-              ))}
-            </div>
+      <div className=" max-h-72 flex flex-col gap-2">
+        {weeks.map((weekStart) => {
+          const isSel = selectedWeek && isSameDay(weekStart, selectedWeek);
+          const isFuture = isAfter(weekStart, TODAY);
+          const isNow = isSameDay(weekStart, TODAY);
 
-            <div className=" max-h-72 flex flex-col gap-2">
-              {weeks.map((weekStart) => {
-                const isSel = selectedWeek && isSameDay(weekStart, selectedWeek);
-                const isFuture = isAfter(weekStart, TODAY);
-                const isNow = isSameDay(weekStart, TODAY);
+          return (
+            <button
+              key={weekStart.toString()}
+              className={clsx(
+                'grid grid-cols-7 gap-2 p-1 rounded transition-colors w-full ',
+                isFuture
+                  ? 'cursor-not-allowed opacity-50'
+                  : 'cursor-pointer hover:bg-neutral-200 hover:dark:bg-neutral-800',
+                isSel && '!outline-primary-300 outline-2 outline ',
+                isNow && 'bg-primary-100',
+              )}
+              onClick={() => {
+                if (!isFuture) onSelect(weekStart);
+              }}
+            >
+              {[...Array(7)].map((_, i) => {
+                const day = addDays(weekStart, i);
+                const today = isSameDay(day, TODAY);
 
                 return (
-                  <button
-                    key={weekStart.toString()}
+                  <div
+                    key={i}
                     className={clsx(
-                      'grid grid-cols-7 gap-2 p-1 rounded transition-colors w-full ',
-                      isFuture
-                        ? 'cursor-not-allowed opacity-50'
-                        : 'cursor-pointer hover:bg-neutral-200 hover:dark:bg-neutral-800',
-                      isSel && '!outline-primary-300 outline-2 outline ',
-                      isNow && 'bg-primary-100',
+                      'text-center text-tiny py-1 rounded ',
+                      today && 'bg-secondary-300',
                     )}
-                    onClick={() => {
-                      if (!isFuture) onSelect(weekStart);
-                    }}
                   >
-                    {[...Array(7)].map((_, i) => {
-                      const day = addDays(weekStart, i);
-                      const today = isSameDay(day, TODAY);
-
-                      return (
-                        <div
-                          key={i}
-                          className={clsx(
-                            'text-center text-tiny py-1 rounded ',
-                            today && 'bg-secondary-300',
-                          )}
-                        >
-                          {format(day, 'd')}
-                        </div>
-                      );
-                    })}
-                  </button>
+                    {format(day, 'd')}
+                  </div>
                 );
               })}
-            </div>
-          </div>
-        </PopoverContent>
-      </Popover>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
