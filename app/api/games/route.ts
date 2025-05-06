@@ -8,30 +8,32 @@ export async function GET(req: NextRequest) {
   const page = parseInt(req.nextUrl.searchParams.get('page') as string);
   const pageSize = parseInt(req.nextUrl.searchParams.get('pageSize') as string);
 
-  const games = await prisma.game.findMany({
+  const voteCounts = await prisma.vote.groupBy({
+    by: ['gameName'],
     where: {
-      name: {
-        not: '',
-      },
-      votes: {
-        some: {
-          createdAt: {
-            gte: new Date(rangeStart),
-            lte: new Date(rangeEnd),
-          },
-        },
+      createdAt: {
+        gte: new Date(rangeStart),
+        lte: new Date(rangeEnd),
       },
     },
+    _count: true,
     orderBy: [
       {
-        votes: {
-          _count: 'desc',
+        _count: {
+          gameName: 'desc',
         },
       },
-      {
-        id: 'desc',
-      },
+      { gameName: 'desc' },
     ],
+    skip: page * pageSize,
+    take: pageSize,
+  });
+  const gameIds = voteCounts.map((v) => v.gameName);
+
+  const games = await prisma.game.findMany({
+    where: {
+      name: { in: gameIds },
+    },
     select: {
       id: true,
       steamId: true,
@@ -52,11 +54,12 @@ export async function GET(req: NextRequest) {
         },
       },
     },
-    skip: page * pageSize,
-    take: pageSize,
   });
 
+  const gameMap = new Map(games.map((g) => [g.name, g]));
+  const orderedGames = gameIds.map((id) => gameMap.get(id));
+
   return NextResponse.json({
-    page: games,
+    page: orderedGames,
   });
 }
