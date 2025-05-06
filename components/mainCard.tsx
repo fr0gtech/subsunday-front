@@ -47,12 +47,16 @@ export const MainCard = ({
     >
       <div className="relative flex h-full">
         {/* create "default image" if no pic for game that is just logo and bg */}
+
         <div
           className={clsx([
             'scale-[1.033] w-full h-full relative rounded-[10px] border-4 overflow-hidden',
             borderColor,
           ])}
         >
+          <div className=" w-full h-1/2 absolute top-0 left-0 bg-gradient-to-t z-10 from-transparent  to-[#0000003b]" />
+
+          <div className=" w-full h-1/2 absolute bottom-0 left-0 bg-gradient-to-t z-10 from-[#00000075]  to-transparent" />
           {e.picture === 'default' ? (
             <div
               className={clsx([
@@ -81,7 +85,7 @@ export const MainCard = ({
           <Tooltip content="Ranking & Votes">
             <Chip
               className={clsx([
-                'absolute rankingChiptl -top-[2px] -left-[2px] boldChip !w-[200px]',
+                'absolute rankingChiptl z-20 -top-[2px] -left-[2px] boldChip !w-[200px]',
               ])}
               color={color}
               variant="shadow"
@@ -95,7 +99,7 @@ export const MainCard = ({
             </Chip>
           </Tooltip>
           <Chip
-            className={clsx(['absolute z-10 rankingChiptl -bottom-[2px] -right-[2px] !w-[200px]'])}
+            className={clsx(['absolute z-20 rankingChiptl -bottom-[2px] -right-[2px] !w-[200px]'])}
             color={color}
             variant="shadow"
           >
@@ -104,7 +108,7 @@ export const MainCard = ({
             </div>
           </Chip>
           {typeof e.price.final === 'string' && (
-            <div className="absolute top-0 right-0">
+            <div className="absolute top-0 z-20 right-0">
               <Chip
                 className="!text-tiny rankingChiptr text-opacity-70 absolute -top-[2px] -right-[2px]"
                 color={color}
@@ -117,7 +121,7 @@ export const MainCard = ({
           )}
           {typeof e.price.final === 'number' && (
             <Chip
-              className="!text-tiny rankingChiptr text-opacity-70 absolute -top-[2px] -right-[2px]"
+              className="!text-tiny rankingChiptr z-20 text-opacity-70 absolute -top-[2px] -right-[2px]"
               color={color}
               size="sm"
               variant="shadow"
@@ -127,27 +131,25 @@ export const MainCard = ({
             </Chip>
           )}
           {Object.values(e.categories as JsonArray).length > 0 && (
-            <Chip
-              className="w-full absolute z-0 -bottom-[2px] -left-[1px] p-0 rankingChipbl lowercase text-tiny font-bold"
-              color={color}
-            >
-              {/* {e.categories && JSON.stringify(e.categories)} */}
-              <div className="flex flex-row gap-2 items-center">
-                {e.categories &&
-                  Object.values(e.categories).map((a, i) => {
-                    const last = i === Object.values(e.categories as JsonArray).length - 1;
+            <div className="w-full absolute -bottom-[1px] -left-[1px] p-0  ">
+              <Chip
+                className="!text-foreground backdrop-blur z-50 rankingChipbl"
+                color={color}
+                size="sm"
+                variant="flat"
+              >
+                <div className="flex gap-3 lowercase text-[11px] opacity-80">
+                  {e.categories &&
+                    Object.values(e.categories).map((a, i) => {
+                      return <div key={a.description}>{a.description}</div>;
+                    })}
+                </div>
+              </Chip>
 
-                    return (
-                      <div key={a.description} className="flex flex-row items-center gap-1">
-                        <div>{a.description}</div>
-                        {!last && <Divider className="h-4" orientation="vertical" />}
-                      </div>
-                    );
-                  })}
-              </div>
-            </Chip>
+            </div>
           )}
         </div>
+
       </div>
       {/* footer */}
       <div className="flex p-1 items-center">
