@@ -73,6 +73,7 @@ export const MainCard = ({
                   borderColor,
                 ])}
                 loading="lazy"
+                quality={75}
                 src={cleanUrl(e.picture)}
               />
             </div>
