@@ -42,11 +42,13 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 
   useEffect(() => {
     function vote(value: any, update?: boolean) {
+      const now = new TZDate(new Date(), process.env.NEXT_PUBLIC_TZ as string);
       const valWithCreatedAT = {
         ...value,
         updated: true,
         id: uuidv4(),
-        createdAt: new TZDate(new Date(), process.env.NEXT_PUBLIC_TZ as string),
+        updatedAt: now,
+        createdAt: now,
       } as VoteForFrom;
 
       update ? replaceOrAddWsMsg(valWithCreatedAT) : addWsMsg(valWithCreatedAT);
@@ -65,12 +67,19 @@ export function Providers({ children, themeProps }: ProvidersProps) {
   const toast = useCallback(
     (value: { for: { name: any }; from: { name: any } }, update?: boolean) => {
       addToast({
-        variant: 'solid',
+        variant: 'flat',
+        hideIcon: true,
         timeout: 2500,
         color: update ? 'warning' : 'primary',
-        title: update
-          ? `${value.from.name} updated vote to ${value.for.name}`
-          : `${value.from.name} voted for ${value.for.name}`,
+        title: update ? (
+          <div>
+            <b>{value.from.name}</b> updated vote to <b>{value.for.name}</b>
+          </div>
+        ) : (
+          <div>
+            <b>{value.from.name}</b> voted for <b>{value.for.name}</b>
+          </div>
+        ),
       });
     },
     [wsMsg],

@@ -1,10 +1,15 @@
-import { addToast, Button, Card, Chip, PressEvent } from '@heroui/react';
+import { addToast } from '@heroui/toast';
+import { Button, PressEvent } from '@heroui/button';
+import { Card } from '@heroui/card';
+import { Chip } from '@heroui/chip';
+import { Divider } from '@heroui/divider';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { Tooltip } from '@heroui/react';
 import NumberFlow from '@number-flow/react';
 import { ClipboardIcon } from '@radix-ui/react-icons';
 import NextImage from 'next/image';
+import { JsonArray } from '@prisma/client/runtime/library';
 
 import { gameNcount } from './mainItem';
 import { Logo, Steamicon } from './icons';
@@ -79,16 +84,22 @@ export const MainCard = ({
               variant="shadow"
             >
               <div className="flex items-center">
-                <div className=" opacity-50 font-mono">#</div>
-                <div className="text-2xl">
+                <div className=" opacity-50 font-mono ">#</div>
+                <div className="text-xl press-start-2p-regular px-1">
                   <NumberFlow isolate value={i + 1} />
-                </div>
-                <div className="top-0 right-0 opacity-50 !text-tiny h-full">
-                  (<NumberFlow isolate className="left-0 bottom-0" value={e._count.votes} />)
                 </div>
               </div>
             </Chip>
           </Tooltip>
+          <Chip
+            className={clsx(['absolute rankingChiptl -bottom-[2px] -right-[2px] !w-[200px]'])}
+            color={color}
+            variant="shadow"
+          >
+            <div className="flex flex-row gap-1 items-center text-xs">
+              <NumberFlow isolate willChange prefix="votes: " value={e._count.votes} />
+            </div>
+          </Chip>
           {typeof e.price.final === 'string' && (
             <div className="absolute top-0 right-0">
               <Chip
@@ -112,19 +123,27 @@ export const MainCard = ({
               <span className="text-[10px] font-bold">{e.price.currency}</span>
             </Chip>
           )}
-        </div>
-        <div className="flex flex-wrap gap-1 absolute bottom-3 left-2">
-          {/* {e.categories && JSON.stringify(e.categories)} */}
-          {e.categories &&
-            Object.values(e.categories).map((e, i) => {
-              if (i > 2) return;
+          {Object.values(e.categories as JsonArray).length > 0 && (
+            <Chip
+              className="w-full absolute bottom-0 -left-[1px] p-0 rankingChipbl lowercase text-tiny font-bold"
+              color={color}
+            >
+              {/* {e.categories && JSON.stringify(e.categories)} */}
+              <div className="flex flex-row gap-2  items-center">
+                {e.categories &&
+                  Object.values(e.categories).map((a, i) => {
+                    const last = i === Object.values(e.categories as JsonArray).length - 1;
 
-              return (
-                <Chip key={e.description} className=" backdrop-blur" size="sm" variant="flat">
-                  {e.description}
-                </Chip>
-              );
-            })}
+                    return (
+                      <div key={a.description} className="flex flex-row items-center gap-1">
+                        <div>{a.description}</div>
+                        {!last && <Divider className="h-4" orientation="vertical" />}
+                      </div>
+                    );
+                  })}
+              </div>
+            </Chip>
+          )}
         </div>
       </div>
       {/* footer */}
@@ -132,7 +151,9 @@ export const MainCard = ({
         <div className="flex flex-grow gap-2">
           <div className="flex gap-2 p-2 max-w-[300px]">
             <Tooltip content={e.name} isDisabled={e.name.length < 27}>
-              <h4 className="font-bold text-left whitespace-pre-wrap">{e.name.substring(0, 27)}</h4>
+              <h4 className="text-xl font-medium text-left whitespace-pre-wrap">
+                {e.name.substring(0, 23)}
+              </h4>
             </Tooltip>
           </div>
         </div>

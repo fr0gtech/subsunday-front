@@ -1,11 +1,11 @@
-import '@/styles/globals.css';
+import './globals.css';
 import clsx from 'clsx';
+import { Press_Start_2P, VT323 } from 'next/font/google';
 
 import { Providers } from './providers';
 
 import { fontSans } from '@/config/fonts';
 import { Navbar } from '@/components/navbar';
-
 export const metadata = {
   title: 'Sub Sunday',
   description:
@@ -17,13 +17,28 @@ export const metadata = {
     images: ['https://sub-sunday.com/og.png'],
   },
 };
+const ps2 = Press_Start_2P({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+});
+const vt = VT323({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+});
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html suppressHydrationWarning lang="en">
-      <head>
-        <link href="/favicon.ico?noCache=1" rel="icon" sizes="any" />
-      </head>
-      <body className={clsx('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
+      <body
+        className={clsx(
+          'min-h-screen bg-background font-sans antialiased',
+          fontSans.variable,
+          ps2,
+          vt,
+        )}
+      >
         <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
           <div className="relative flex flex-col">
             <Navbar />

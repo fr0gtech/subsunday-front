@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 .rankingChiptl {
   border-top-left-radius: 5px;
   border-top-right-radius: 0;
@@ -14,12 +13,28 @@
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 5px;
 }
+.rankingChipbl {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 5px;
+}
 .boldChip * {
   font-weight: 600 !important;
 }
 
 .overflow-hidden2 span {
   overflow: hidden !important;
+}
+.press-start-2p-regular {
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+.vt323-regular {
+  font-family: "VT323", monospace;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .grid-container {

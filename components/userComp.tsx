@@ -2,6 +2,7 @@
 import { Card, CardBody, CardHeader, Chip, Divider, Spinner } from '@heroui/react';
 import useSWR from 'swr';
 import { useMemo } from 'react';
+import clsx from 'clsx';
 
 import { Voted } from './voted';
 import StreakDisplay from './streakDisplay';
@@ -9,7 +10,6 @@ import StreakDisplay from './streakDisplay';
 import { useAppStore } from '@/store/store';
 import { fetcher } from '@/app/lib';
 import { VoteForFrom } from '@/slices/globals';
-import clsx from 'clsx';
 
 export const UserComp = ({ id }: { id: string }) => {
   const { wsMsg } = useAppStore();
