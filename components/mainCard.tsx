@@ -33,6 +33,14 @@ export const MainCard = ({
         : i === 2
           ? 'border-secondary'
           : 'border-default';
+  const cleanUrl = (url: string) => {
+    const originalUrl = url;
+    const newurl = new URL(originalUrl);
+
+    newurl.search = '';
+
+    return newurl.toString();
+  };
 
   return (
     <Card
@@ -71,7 +79,7 @@ export const MainCard = ({
                   borderColor,
                 ])}
                 loading="lazy"
-                src={e.picture}
+                src={cleanUrl(e.picture)}
               />
             </div>
           )}

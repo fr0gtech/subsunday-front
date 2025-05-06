@@ -6,7 +6,14 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ['shared.akamai.steamstatic.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.steamstatic.com',
+        port: '',
+        search: '',
+      },
+    ]
   },
 };
 
