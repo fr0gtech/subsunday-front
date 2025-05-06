@@ -139,7 +139,7 @@ export const MainCard = ({
 
                     return (
                       <div key={a.description} className="flex flex-row items-center gap-1">
-                        <div>{a.description} d adsda sdas</div>
+                        <div>{a.description}</div>
                         {!last && <Divider className="h-4" orientation="vertical" />}
                       </div>
                     );
