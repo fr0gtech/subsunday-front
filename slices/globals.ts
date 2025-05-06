@@ -6,7 +6,7 @@ import { StateCreator } from 'zustand';
 import { Vote } from '@/generated/prisma';
 import { getDateRange } from '@/app/lib';
 
-type SelectedRange = {
+export type SelectedRange = {
   currentPeriod: {
     startDate: Date;
     endDate: Date;
