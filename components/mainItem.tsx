@@ -29,7 +29,7 @@ export const MainItem = () => {
   const { selectedRange, wsMsg } = useAppStore();
   const { data, isLoading } = useSWR(
     selectedRange &&
-    `/api/games?rangeStart=${selectedRange.currentPeriod.startDate.getTime()}&rangeEnd=${selectedRange.currentPeriod.endDate.getTime()}`,
+      `/api/games?rangeStart=${selectedRange.currentPeriod.startDate.getTime()}&rangeEnd=${selectedRange.currentPeriod.endDate.getTime()}`,
     fetcher,
   );
 
