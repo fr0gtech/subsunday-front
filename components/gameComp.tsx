@@ -12,7 +12,7 @@ import Image from 'next/image';
 
 import { Voted } from './voted';
 
-import { fetcher } from '@/app/lib';
+import { cleanUrl, fetcher } from '@/app/lib';
 import { useAppStore } from '@/store/store';
 import { VoteForFrom } from '@/slices/globals';
 export const GameComp = ({
@@ -84,9 +84,10 @@ export const GameComp = ({
             <div className=" relative h-[200px] lg:w-1/2 w-full lg:mx-auto rouned">
               <Image
                 fill
+                loading='lazy'
                 alt={'item.title'}
                 className=" object-cover rounded-md"
-                src={data.game.picture}
+                src={cleanUrl(data.game.picture)}
               />
             </div>
           )}

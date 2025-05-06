@@ -77,5 +77,13 @@ export function getDateRange(options?: DateRangeOptions) {
     },
   };
 }
+export const cleanUrl = (url: string) => {
+  const originalUrl = url;
+  const newurl = new URL(originalUrl);
+
+  newurl.search = '';
+
+  return newurl.toString();
+};
 
 export const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL);

@@ -13,6 +13,7 @@ import { JsonArray } from '@prisma/client/runtime/library';
 
 import { gameNcount } from './mainItem';
 import { Logo, Steamicon } from './icons';
+import { cleanUrl } from '@/app/lib';
 export const MainCard = ({
   e,
   i,
@@ -33,14 +34,6 @@ export const MainCard = ({
         : i === 2
           ? 'border-secondary'
           : 'border-default';
-  const cleanUrl = (url: string) => {
-    const originalUrl = url;
-    const newurl = new URL(originalUrl);
-
-    newurl.search = '';
-
-    return newurl.toString();
-  };
 
   return (
     <Card
