@@ -39,6 +39,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           vt,
         )}
       >
+        <head>
+          <link href="/favicon.ico" rel="icon" sizes="any" />
+        </head>
         <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
           <div className="relative flex flex-col">
             <Navbar />
