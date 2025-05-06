@@ -83,7 +83,13 @@ export const MainItem = () => {
           },
         };
       })
-      .sort((a: any, b: any) => (a._count.votes > b._count.votes ? -1 : 1));
+      .sort((a: any, b: any) => {
+        if (wsVotes.length > 0) {
+          return a._count.votes > b._count.votes ? -1 : 1;
+        } else {
+          return 0;
+        }
+      });
   }, [wsMsg, data]);
 
   if (!allGames) {

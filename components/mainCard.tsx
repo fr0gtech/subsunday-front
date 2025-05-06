@@ -13,6 +13,7 @@ import { JsonArray } from '@prisma/client/runtime/library';
 
 import { gameNcount } from './mainItem';
 import { Logo, Steamicon } from './icons';
+
 import { cleanUrl } from '@/app/lib';
 export const MainCard = ({
   e,
