@@ -75,6 +75,7 @@ export const MainItem = () => {
       return acc;
     }, {});
 
+
     return allGames
       .map((e: Game & { _count: { votes: number } }) => {
         return {
@@ -85,7 +86,7 @@ export const MainItem = () => {
         };
       })
       .sort((a: any, b: any) => {
-        if (wsVotes.length > 0) {
+        if (Object.keys(wsVotes).length > 0) {
           return a._count.votes > b._count.votes ? -1 : 1;
         } else {
           return 0;
