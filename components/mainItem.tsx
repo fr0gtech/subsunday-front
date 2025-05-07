@@ -1,3 +1,4 @@
+'use client';
 import { Card } from '@heroui/card';
 import { Divider } from '@heroui/divider';
 import { Skeleton } from '@heroui/skeleton';
@@ -195,9 +196,9 @@ export const MainItem = () => {
                   </motion.div>
                 );
               })}
-              <div className='relative'>
-            {updateableGames.length != 50 && <div ref={ref} className="absolute w-full h-[100vh]" />}
-              </div>
+            <div className='relative'>
+              {updateableGames.length != 50 && <div ref={ref} className="absolute w-full h-[100vh]" />}
+            </div>
             {updateableGames &&
               50 - updateableGames.length > 1 && [
                 ...Array(50 - updateableGames.length)

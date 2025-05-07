@@ -1,4 +1,3 @@
-'use client';
 import { MainItem } from '@/components/mainItem';
 
 export default function Home() {

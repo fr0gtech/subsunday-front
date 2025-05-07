@@ -57,47 +57,71 @@ export const Chart = ({ id }: { id?: number }) => {
     };
   }, [data]);
 
+  if (!dataChart) {
+    return <div>loading</div>
+  }
+
   return (
-    <div>
-      {dataChart && (
-        <Line
-          data={dataChart}
-          options={{
-            plugins: {
-              legend: {
-                display: false,
-                labels: {
-                  usePointStyle: true,
-                },
-              },
+    <Line
+      data={dataChart}
+      options={{
+        scales: {
+          x: {
+            ticks: {
+              display: false,
             },
-            elements: {
-              line: {
-                tension: 0.33,
-              },
+            grid: {
+              display: false,
             },
-            responsive: true,
-            scales: {
-              x: {
-                border: {
-                  display: false,
-                },
-                grid: {
-                  display: false,
-                },
-              },
-              y: {
-                border: {
-                  display: false,
-                },
-                grid: {
-                  display: false,
-                },
-              },
+            border: {
+              display: false,
             },
-          }}
-        />
-      )}
-    </div>
+          },
+          y: {
+            ticks: {
+              display: false,
+            },
+            grid: {
+              display: false,
+            },
+            border: {
+              display: false,
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            display: false,
+            labels: {
+              usePointStyle: true,
+            },
+          },
+        },
+        elements: {
+          line: {
+            tension: 0.33,
+          },
+        },
+        responsive: true,
+        // scales: {
+        //   x: {
+        //     border: {
+        //       display: false,
+        //     },
+        //     grid: {
+        //       display: false,
+        //     },
+        //   },
+        //   y: {
+        //     border: {
+        //       display: false,
+        //     },
+        //     grid: {
+        //       display: false,
+        //     },
+        //   },
+        // },
+      }}
+    />
   );
 };

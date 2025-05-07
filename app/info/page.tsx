@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <section className=" overflow-hidden p-5  mx-auto w-full gap-2 flex flex-col max-w-screen-xl">
-      <div className="flex gap-2 w-full flex-col lg:flex-row">
-        <div className="gap-2 flex flex-col ">
+      <div className="flex gap-5 w-full flex-col lg:flex-row">
+        <div className="gap-5 flex flex-col ">
           <Alert hideIcon className="w-full mx-auto" color="danger">
             <p className="">
               This website was made for fun. This is <b>not</b> an Official sub sunday website
@@ -70,7 +70,7 @@ export default function Home() {
             </CardBody>
           </Card>
         </div>
-        <div className="flex gap-2 flex-col lg:w-5/6">
+        <div className="flex gap-5 flex-col lg:w-5/6">
           <Card>
             <CardHeader>
               <Link color="foreground" href="https://github.com/fr0gtech/subsunday-front">

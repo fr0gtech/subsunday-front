@@ -61,16 +61,16 @@ export const LiveVotes = ({
 
   if (isLoading) {
     return (
-      <div className=" flex flex-col gap-8 justify-evenly pb-7 pt-3 grow h-full px-3">
-        {[...Array(3).fill(0)].map((e, i) => (
-          <Skeleton key={i} className="w-full h-[20px] rounded-full" />
+      <div className=" flex flex-col gap-2 grow h-full">
+        {[...Array(amount).fill(0)].map((e, i) => (
+          <Skeleton key={i} className="w-full h-[56px] rounded-xl" />
         ))}
       </div>
     );
   }
 
   return (
-    <div className="space-y-2 grow ">
+    <div className="space-y-2 grow whitespace-nowrap overflow-scroll">
       <AnimatePresence initial={false}>
         {liveVotes &&
           liveVotes.slice(0, amount).map((e) => {

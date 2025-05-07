@@ -9,13 +9,13 @@ export const siteConfig = {
       href: '/',
     },
     {
-      label: 'Votes',
-      href: '/votes',
+      label: 'How to vote',
+      href: '/about',
     },
-    {
-      label: 'Leaderboard',
-      href: '/leaderboard',
-    },
+    // {
+    //   label: 'Leaderboard',
+    //   href: '/leaderboard',
+    // },
   ],
   navMenuItems: [
     {
@@ -23,12 +23,12 @@ export const siteConfig = {
       href: '/',
     },
     {
-      label: 'Votes',
-      href: '/votes',
+      label: 'How to vote',
+      href: '/about',
     },
-    {
-      label: 'Leaderboard',
-      href: '/leaderboard',
-    },
+    // {
+    //   label: 'Leaderboard',
+    //   href: '/leaderboard',
+    // },
   ],
 };

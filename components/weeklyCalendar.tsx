@@ -32,7 +32,7 @@ function generateWeeks(start: Date, count: number = WEEK_PAGE_SIZE) {
   return Array.from({ length: count }, (_, i) => addWeeks(start, i));
 }
 
-export default function WeeklyCalendar() {
+export default function WeeklyCalendar({ useless = false }: { useless?: boolean }) {
   const { setSelectedWeek, selectedWeek, setSelectedRange } = useAppStore();
 
   const [currentStart, setCurrentStart] = useState<Date>(() => {
@@ -56,7 +56,9 @@ export default function WeeklyCalendar() {
   }, [selectedWeek]);
 
   const onSelect = (weekStart: Date) => {
-    setSelectedRange(getDateRange({ offset: weekStart }));
+    if (!useless) {
+      setSelectedRange(getDateRange({ offset: weekStart }));
+    }
     setSelectedWeek(weekStart);
   };
 
