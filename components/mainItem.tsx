@@ -2,7 +2,6 @@
 import { Card } from '@heroui/card';
 import { Divider } from '@heroui/divider';
 import { Skeleton } from '@heroui/skeleton';
-import { Modal, ModalContent, useDisclosure } from '@heroui/modal';
 import clsx from 'clsx';
 import { useState, useMemo, useEffect } from 'react';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
@@ -10,12 +9,12 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import useSWRInfinite from 'swr/infinite';
 import { useIntersectionObserver } from 'usehooks-ts';
+import { useRouter } from 'next/navigation';
 
 import { LiveVotes } from './liveVotes';
 import { MainCard } from './mainCard';
 import { VotingPeriod } from './votingPeriod';
 import { CurrentVotes } from './currentVotes';
-import { GameComp } from './gameComp';
 
 import { useAppStore } from '@/store/store';
 import { fetcher } from '@/app/lib';
@@ -43,7 +42,7 @@ const getKey = (
 
 export const MainItem = () => {
   const { selectedRange, wsMsg } = useAppStore();
-
+  const router = useRouter()
   const { data, isLoading, setSize, size } = useSWRInfinite(
     (key, pre) => getKey(key, pre, selectedRange),
     fetcher,
@@ -64,7 +63,10 @@ export const MainItem = () => {
   }, [data]);
 
   const [gameId, setGameId] = useState<number | null>(null);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  useEffect(() => {
+    gameId && router.push(`/game/${gameId}`);
+  }, [gameId]);
 
   const updateableGames = useMemo<gameNcount[]>(() => {
     if (!allGames) return;
@@ -161,16 +163,6 @@ export const MainItem = () => {
   return (
     <div className="flex w-full justify-center items-center">
       <div className="flex w-full p-4">
-        <Modal
-          className="max-h-2/3 !bg-none !bg-transparent shadow-none"
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-        >
-          <ModalContent className="p-2 !bg-none">
-            {() => <>{gameId && <GameComp cardBodyClass="py-1 px-0" id={gameId.toString()} />}</>}
-          </ModalContent>
-        </Modal>
-
         <div className="grid-container">
           <AnimatePresence initial={false}>
             {!isLoading &&
@@ -188,16 +180,15 @@ export const MainItem = () => {
                       className="grid-item overflow-visible h-[200px]"
                       e={e}
                       i={i}
-                      onPress={() => {
-                        onOpen();
-                        setGameId(e.id);
-                      }}
+                      onPress={() => setGameId(e.id)}
                     />
                   </motion.div>
                 );
               })}
             <div className='relative'>
-              {updateableGames.length != 50 && <div ref={ref} className="absolute w-full h-[100vh]" />}
+              {updateableGames.length != 50 && (
+                <div ref={ref} className="absolute w-full h-[100vh]" />
+              )}
             </div>
             {updateableGames &&
               50 - updateableGames.length > 1 && [

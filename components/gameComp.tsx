@@ -75,96 +75,92 @@ export const GameComp = ({
         page && 'p-3 flex gap-5 justify-center w-full max-w-screen-xl flex-col lg:flex-row',
       ])}
     >
-      <Card className={clsx([page && 'flex flex-col gap-5 lg:w-3/6', 'p-2 gap-3'])}>
-        <CardHeader>
-          <div
-            className={clsx(
-              ['flex '],
-              !page && ['flex-col items-start'],
-              page && ['items-center gap-5 flex-wrap'],
-            )}
-          >
-            <Link color="foreground" href={`/game/${data.game.id}`}>
-              <h4 className="text-3xl font-bold">{data.game.name} </h4>
-            </Link>
-            <div>
-              {data.game.dev[0].length > 0 && <span className="text-tiny">by {data.game.dev}</span>}
-            </div>
-          </div>
-        </CardHeader>
-        <CardBody className="flex flex-col gap-5">
-          {data.game.picture !== 'default' && (
-            <>
-              {withImage && (
-                <div className=" relative h-[200px] w-full lg:mx-auto rouned">
-                  <Image
-                    fill
-                    alt={'item.title'}
-                    className=" object-cover rounded-md"
-                    loading="lazy"
-                    src={cleanUrl(data.game.picture)}
-                  />
-                </div>
+      <div className="lg:w-1/2 space-y-5">
+        <Card className={clsx([page && 'lg:w-full', 'p-2 gap-3'])}>
+          <CardHeader>
+            <div
+              className={clsx(
+                ['flex '],
+                !page && ['flex-col items-start'],
+                page && ['items-center gap-5 flex-wrap'],
               )}
-              <div className="flex gap-3 flex-wrap">
-                {data.game.categories &&
-                  Object.values(data.game.categories).map((e: any, i) => {
-                    if (i > 2) return;
-
-                    return (
-                      <Chip key={e.id} size="sm" variant="shadow">
-                        {e.description}
-                      </Chip>
-                    );
-                  })}
-                {data.game.price.final && (
-                  <Chip color="primary" size="sm" variant="shadow">
-                    {typeof data.game.price.final === 'string'
-                      ? data.game.price.final
-                      : `${data.game.price.final / 100} ${data.game.price.currency}`}
-                  </Chip>
+            >
+              <Link color="foreground" href={`/game/${data.game.id}`}>
+                <h4 className="text-3xl font-bold">{data.game.name} </h4>
+              </Link>
+              <div>
+                {data.game.dev[0].length > 0 && (
+                  <span className="text-tiny">by {data.game.dev}</span>
                 )}
-                <div className="flex gap-2 opacity-50 hover:opacity-100 transition-opacity">
-                  {data.game.website.length > 0 && (
-                    <Link
-                      className=""
-                      color="foreground"
-                      href={data.game.website}
-                      size="sm"
-                      target="_blank"
-                    >
-                      Website
-                      <ExternalLinkIcon color="gray" />
-                    </Link>
+              </div>
+            </div>
+          </CardHeader>
+          <CardBody className="flex flex-col gap-5">
+            {data.game.picture !== 'default' && (
+              <>
+                {withImage && (
+                  <div className=" relative h-[200px] w-full lg:mx-auto rouned">
+                    <Image
+                      fill
+                      alt={'item.title'}
+                      className=" object-cover rounded-md"
+                      loading="lazy"
+                      src={cleanUrl(data.game.picture)}
+                    />
+                  </div>
+                )}
+                <div className="flex gap-3 flex-wrap">
+                  {data.game.categories &&
+                    Object.values(data.game.categories).map((e: any, i) => {
+                      if (i > 2) return;
+
+                      return (
+                        <Chip key={e.id} size="sm" variant="shadow">
+                          {e.description}
+                        </Chip>
+                      );
+                    })}
+                  {data.game.price.final && (
+                    <Chip color="primary" size="sm" variant="shadow">
+                      {typeof data.game.price.final === 'string'
+                        ? data.game.price.final
+                        : `${data.game.price.final / 100} ${data.game.price.currency}`}
+                    </Chip>
                   )}
-                  {data.game.link !== 'notOnSteam' && (
-                    <Link
-                      className=""
-                      color="foreground"
-                      href={`https://store.steampowered.com/app/${data.game.steamId}`}
-                      size="sm"
-                      target="_blank"
-                    >
-                      <Steamicon />
-                    </Link>
-                  )}
+                  <div className="flex gap-2 opacity-50 hover:opacity-100 transition-opacity">
+                    {data.game.website.length > 0 && (
+                      <Link
+                        className=""
+                        color="foreground"
+                        href={data.game.website}
+                        size="sm"
+                        target="_blank"
+                      >
+                        Website
+                        <ExternalLinkIcon color="gray" />
+                      </Link>
+                    )}
+                    {data.game.link !== 'notOnSteam' && (
+                      <Link
+                        className=""
+                        color="foreground"
+                        href={`https://store.steampowered.com/app/${data.game.steamId}`}
+                        size="sm"
+                        target="_blank"
+                      >
+                        <Steamicon />
+                      </Link>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="flex-col gap-3">
-                <p className=" whitespace-pre-wrap opacity-80 ">{data.game.description}</p>
-              </div>
-              <div className=" w-full -pl-5 pr-10 mt-10">
-                <Chart id={data.game.id} />
-              </div>
-            </>
-          )}
-        </CardBody>
-      </Card>
-      <Card className={clsx([page && 'lg:w-2/6 ', ' p-2 '])}>
-        <CardHeader>
-          <h4 className=" text-2xl">Votes</h4>
-        </CardHeader>
-        <CardBody>
+                <div className="flex-col gap-3">
+                  <p className=" whitespace-pre-wrap opacity-80 ">{data.game.description}</p>
+                </div>
+              </>
+            )}
+          </CardBody>
+        </Card>
+        <Card className="p-5">
           <div className="flex gap-5 mb-5 p-3">
             <div className="text-tiny text-default-500 flex items-center flex-row-reverse gap-2">
               <span>votes this week</span>
@@ -177,6 +173,14 @@ export const GameComp = ({
               <Chip variant="shadow">{data.game._count.votes}</Chip>
             </div>
           </div>
+          <Chart id={data.game.id} />
+        </Card>
+      </div>
+      <Card className={clsx([page && 'lg:w-2/6 ', ' p-2 '])}>
+        <CardHeader>
+          <h4 className=" text-2xl">Votes</h4>
+        </CardHeader>
+        <CardBody>
           <div className="gap-2 flex flex-col ">
             {liveVotes &&
               (!page ? liveVotes.slice(0, 3) : liveVotes).map((e: VoteForFrom, i) => {
