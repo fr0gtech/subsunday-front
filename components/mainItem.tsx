@@ -50,7 +50,8 @@ export const MainItem = () => {
   );
 
   const { isIntersecting, ref } = useIntersectionObserver({
-    threshold: 0.5,
+    initialIsIntersecting: true,
+    threshold: 0.1,
   });
 
   useEffect(() => {
@@ -194,7 +195,9 @@ export const MainItem = () => {
                   </motion.div>
                 );
               })}
-            {updateableGames.length != 50 && <Card ref={ref} className="w-full h-[170px]" />}
+              <div className='relative'>
+            {updateableGames.length != 50 && <div ref={ref} className="absolute w-full h-[100vh]" />}
+              </div>
             {updateableGames &&
               50 - updateableGames.length > 1 && [
                 ...Array(50 - updateableGames.length)
