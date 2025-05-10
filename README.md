@@ -2,11 +2,12 @@
 
 This is the frontend of [sub-sunday.com](http://sub-sunday.com) written with [next.js](https://nextjs.org) with [heroUi](http://heroui.com) and tailwindcss.
 
-![image](/public/og.png)
+![image](/public/home.png)
+![image](/public/about.png)
 
 ## ToDo/Open questions
 
-1. Exact vote cutoff time and date
+1. ~~Exact vote cutoff time and date~~
 2. Banned games
    1. what to do when a user votes for a banned game?
       1. can user vote again or no?
@@ -19,13 +20,12 @@ The backend can be found [here](https://github.com/fr0gtech/subsunday-back)
 
 - Realtime updates with socket.io
 - Home
-  - List of top 30 most voted games for this sub sunday
-- Votes
-  - List of last 10 votes
-- Leaderboard (overall)
-  - Top chatter by vote amount
-  - Top chatter by streak
-  - Top Game by vote
+  - List of top ~~30~~ 50 most voted games for this sub sunday
+- ~~Leaderboard (overall)~~
+  - ~~Top chatter by vote amount~~
+  - ~~Top chatter by streak~~
+  - ~~Top Game by vote~~
+    - Leaderboards are useless rn like everyone has same amount of votes
 - Light/Dark theme
 
 ## Development
