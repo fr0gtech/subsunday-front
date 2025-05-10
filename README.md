@@ -2,8 +2,8 @@
 
 This is the frontend of [sub-sunday.com](http://sub-sunday.com) written with [next.js](https://nextjs.org) with [heroUi](http://heroui.com) and tailwindcss.
 
-![image](/public/home.png)
-![image](/public/about.png)
+![image](/public/screenshots/home.png)
+![image](/public/screenshots/about.png)
 
 ## ToDo/Open questions
 
