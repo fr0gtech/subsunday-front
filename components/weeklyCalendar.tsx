@@ -126,17 +126,18 @@ export default function WeeklyCalendar({ useless = false }: { useless?: boolean 
             <button
               key={weekStart.toString()}
               className={clsx(
-                'grid grid-cols-7 gap-2 p-1 rounded transition-colors w-full ',
+                'relative grid grid-cols-7 gap-2 p-1 rounded transition-colors w-full ',
                 isFuture
                   ? 'cursor-not-allowed opacity-50'
                   : 'cursor-pointer hover:bg-neutral-200 hover:dark:bg-neutral-800',
-                isSel && '!outline-primary-300 outline-2 outline ',
+                isSel && ' ',
                 isNow && 'bg-primary-100',
               )}
               onClick={() => {
                 if (!isFuture) onSelect(weekStart);
               }}
             >
+              {isSel && <div className="absolute z-0 top-[9px] w-[90%] bg-primary/20 h-[15px]" />}
               {[...Array(7)].map((_, i) => {
                 const day = addDays(weekStart, i);
                 const today = isSameDay(day, TODAY);
@@ -145,8 +146,10 @@ export default function WeeklyCalendar({ useless = false }: { useless?: boolean 
                   <div
                     key={i}
                     className={clsx(
-                      'text-center text-tiny py-1 rounded ',
-                      today && 'bg-secondary-300',
+                      'z-20 text-center text-tiny py-1 rounded ',
+                      today && 'bg-primary-100',
+                      i === 0 && isSel && 'bg-primary rounded-full',
+                      i === 6 && isSel && 'bg-primary rounded-full'
                     )}
                   >
                     {format(day, 'd')}
