@@ -3,13 +3,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma';
 
 export async function GET(req: NextRequest) {
-  const gameId = req.nextUrl.searchParams.get('id') as string;
+  const steamId = req.nextUrl.searchParams.get('id') as string;
   const rangeStart = parseInt(req.nextUrl.searchParams.get('rangeStart') as string) || 1;
   const rangeEnd = parseInt(req.nextUrl.searchParams.get('rangeEnd') as string) || 1;
 
   const game = await prisma.game.findFirst({
     where: {
-      id: parseInt(gameId),
+      OR: [{ steamId: parseInt(steamId) }, { id: parseInt(steamId) }],
     },
     include: {
       _count: {
@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
 
   const votesSubSunday = await prisma.game.findFirst({
     where: {
-      id: parseInt(gameId),
+      OR: [{ steamId: parseInt(steamId) }, { id: parseInt(steamId) }],
     },
     select: {
       _count: {

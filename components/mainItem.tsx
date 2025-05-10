@@ -20,7 +20,10 @@ import { useAppStore } from '@/store/store';
 import { fetcher } from '@/app/lib';
 import { Game } from '@/generated/prisma';
 import { SelectedRange } from '@/slices/globals';
-
+type SetGame = {
+  id: number,
+  steam: boolean
+}
 export type gameNcount = Game & {
   _count: { votes: number };
   price: { final: number | string; currency: string };
@@ -62,10 +65,10 @@ export const MainItem = () => {
     return data?.reduce((acc, page) => [...acc, ...page.page], []);
   }, [data]);
 
-  const [gameId, setGameId] = useState<number | null>(null);
+  const [gameId, setGameId] = useState<SetGame>();
 
   useEffect(() => {
-    gameId && router.push(`/game/${gameId}`);
+    gameId && router.push(`/game/${gameId.id}?steam=${gameId.steam}`);
   }, [gameId]);
 
   const updateableGames = useMemo<gameNcount[]>(() => {
@@ -180,7 +183,7 @@ export const MainItem = () => {
                       className="grid-item overflow-visible h-[200px]"
                       e={e}
                       i={i}
-                      onPress={() => setGameId(e.id)}
+                      onPress={() => setGameId({ id: e.steamId > 0 ? e.steamId : e.id, steam: e.steamId > 0 })}
                     />
                   </motion.div>
                 );

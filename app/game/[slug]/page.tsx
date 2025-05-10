@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+
 import { GameComp } from '@/components/gameComp';
 import { prisma } from '@/prisma';
 
@@ -13,8 +14,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const game = await prisma.game.findFirst({
     where: {
-      id: parseInt(slug),
+      OR: [
+        {
+          id: parseInt(slug),
+        },
+        {
+          steamId: parseInt(slug)
+        }
+      ]
     },
+    select: {
+      name: true,
+      description: true
+    }
   });
 
   return {
@@ -23,12 +35,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function Home({ params }: { params: Promise<{ slug: string }> }) {
+export default async function Home({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const { slug } = await params;
+  const { steam } = await searchParams;
 
   return (
     <section className="mx-auto">
-      <GameComp page withImage id={slug} />
+      <GameComp steam={steam === 'true' ? true : false} withImage id={slug} />
     </section>
   );
 }
