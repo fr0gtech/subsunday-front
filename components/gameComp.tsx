@@ -172,10 +172,10 @@ export const GameComp = ({
                       {steamData.game.price_overview.currency}
                     </Chip>
                   )}
-                  <div className="flex gap-2 opacity-50 hover:opacity-100 transition-opacity">
+                  <div className="flex gap-2  ">
                     {data.game.website.length > 0 && (
                       <Link
-                        className=""
+                        className="hover:opacity-100 transition-opacity opacity-50"
                         color="foreground"
                         href={data.game.website}
                         size="sm"
@@ -187,7 +187,7 @@ export const GameComp = ({
                     )}
                     {data.game.link !== 'notOnSteam' && (
                       <Link
-                        className=""
+                        className="hover:opacity-100 transition-opacity opacity-50"
                         color="foreground"
                         href={`https://store.steampowered.com/app/${data.game.steamId}`}
                         size="sm"

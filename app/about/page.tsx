@@ -26,7 +26,7 @@ export default function Home() {
         <div className="col-span-4 row-span-2">
           <Card className="h-full" shadow="md">
             <CardHeader>
-              <h4 className=" text-2xl ">Sub Sunday</h4>
+              <h1 className=" text-2xl ">Sub Sunday</h1>
               <span className="text-tiny" />
             </CardHeader>
             <CardBody>
@@ -46,7 +46,7 @@ export default function Home() {
         <div className="col-span-3 row-span-3 col-start-5 row-start-3">
           <Card>
             <CardHeader>
-              <h5 className="text-xl">Voting Schedule</h5>
+              <h2 className="text-xl">Voting Schedule</h2>
             </CardHeader>
             <CardBody>
               <p className="flex gap-2 !te">
@@ -82,7 +82,7 @@ export default function Home() {
         <div className="col-span-8 row-span-2 col-start-5 row-start-1">
           <Card className="h-full">
             <CardHeader>
-              <h5 className="text-xl">How to Vote</h5>
+              <h2 className="text-xl">How to Vote</h2>
             </CardHeader>
             <CardBody>
               <p>

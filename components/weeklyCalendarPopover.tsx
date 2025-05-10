@@ -17,7 +17,7 @@ export default function WeeklyCalendarPopover() {
     <div className="relative">
       <Popover className="relative">
         <PopoverTrigger className="inline-flex items-center">
-          <Button size="sm">
+          <Button size="sm" variant="flat">
             {selectedWeek
               ? `${format(selectedWeek, 'MMM d')} – ${format(addDays(selectedWeek, 6), 'MMM d')}`
               : 'Select a week'}

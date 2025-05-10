@@ -5,9 +5,9 @@ import { Metadata } from 'next';
 
 import { GithubIcon } from '@/components/icons';
 export const metadata: Metadata = {
-  title: 'Sub Sunday - Info',
+  title: 'Sub Sunday - Info, Supported Games, Github links',
   description:
-    'This project was made for fun and does not represet what happens to your vote. Votes may be inaccurate open a github issue if you got any questions or want to contribute/share ideas.',
+    'This project was made for fun and does not represet what happens to your vote.',
 };
 export default function Home() {
   return (
@@ -21,7 +21,7 @@ export default function Home() {
           </Alert>
           <Card className="h-fit" shadow="md">
             <CardHeader>
-              <h4 className=" text-2xl font-bold">About</h4>
+              <h1 className=" text-2xl font-bold">About</h1>
               <span className="text-tiny" />
             </CardHeader>
 
@@ -40,7 +40,7 @@ export default function Home() {
 
           <Card>
             <CardHeader>
-              <h5 className="text-xl">Supported Games</h5>
+              <h2 className="text-xl">Supported Games</h2>
             </CardHeader>
             <CardBody>
               <p className="opacity-80">
@@ -53,12 +53,15 @@ export default function Home() {
 
           <Card>
             <CardHeader>
-              <h5 className="text-xl">Credit</h5>
+              <h2 className="text-xl">Credit</h2>
             </CardHeader>
             <CardBody>
               <p className="opacity-80">Here some sources used to create this website:</p>
               <p className="mt-2">Sources:</p>
               <ul className="opacity-80">
+                <li>
+                  <Link href="https://ragnapixel.itch.io/particle-fx">ragnapixel</Link>: images
+                </li>
                 <li>
                   <Link href="https://steam.com">Steam</Link>: images, Prices, Descriptions
                 </li>
@@ -74,7 +77,7 @@ export default function Home() {
           <Card>
             <CardHeader>
               <Link color="foreground" href="https://github.com/fr0gtech/subsunday-front">
-                <h5 className="text-xl">Frontend</h5>
+                <h2 className="text-xl">Frontend</h2>
                 <GithubIcon className="ml-2" />
               </Link>
             </CardHeader>
@@ -94,7 +97,7 @@ export default function Home() {
           <Card>
             <CardHeader>
               <Link color="foreground" href="https://github.com/fr0gtech/subsunday-back">
-                <h5 className="text-xl">Backend</h5>
+                <h2 className="text-xl">Backend</h2>
                 <GithubIcon className="ml-2" />
               </Link>
             </CardHeader>

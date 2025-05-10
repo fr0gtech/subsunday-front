@@ -7,13 +7,13 @@ import { Providers } from './providers';
 import { fontSans } from '@/config/fonts';
 import { Navbar } from '@/components/navbar';
 export const metadata = {
-  title: 'Sub Sunday',
+  title: "Sub Sunday - Tracking votes for lirik's sub sunday.",
   description:
-    "A website to track lirik's sub sunday votes. With leaderboards, game info, direct link to steam and more.",
+    "A website to track lirik's sub sunday votes. With game info, direct link to steam and more.",
   openGraph: {
     title: 'Sub Sunday',
     description:
-      "A website to track lirik's sub sunday votes. With leaderboards, game info, direct link to steam and more.",
+      "A website to track lirik's sub sunday votes. With game info, direct link to steam and more.",
     images: ['https://sub-sunday.com/og.png'],
   },
 };
@@ -33,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html suppressHydrationWarning lang="en">
       <head>
         <link href="/favicon.ico" rel="icon" sizes="any" />
+        <link href="https://sub-sunday.com/" rel="canonical" />
       </head>
       <body
         className={clsx(
