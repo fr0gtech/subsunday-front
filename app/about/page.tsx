@@ -69,11 +69,13 @@ export default function Home() {
               <Input label="Search" size="sm" type="text" onValueChange={debounced} />
             </div>
           </Card>
-          {search.length > 0 ? <SearchVotes amount={6} query={search} /> : <LiveVotes amount={6} />}
+          <div>
+            {search.length > 0 ? <SearchVotes amount={6} query={search} /> : <LiveVotes amount={6} />}
+          </div>
         </div>
         <div className="col-span-5 row-span-3 col-start-8 row-start-3">
           <Card className="p-5 h-full" shadow="md">
-            <CurrentVotes className={'text-xs flex mb-10  gap-5 p-0 justify-center'} />
+            <CurrentVotes className={'text-xs flex mb-10 p-0 justify-center'} />
             <div className="p-5 h-full">
               <Chart />
             </div>

@@ -70,7 +70,7 @@ export const LiveVotes = ({
   }
 
   return (
-    <div className=" grow whitespace-nowrap overflow-scroll">
+    <div className=" grow whitespace-nowrap overflow-scroll flex flex-col gap-2 text-tiny">
 
       <AnimatePresence initial={false}>
         {liveVotes &&

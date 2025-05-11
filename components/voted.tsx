@@ -39,7 +39,7 @@ export const Voted = ({
     >
       <CardBody className={cardBodyClass}>
         {onGame ? (
-          <span className=" leading-8" style={{ textAlign: textRight ? 'right' : 'left' }}>
+          <span className=" leading-8 text-tiny" style={{ textAlign: textRight ? 'right' : 'left' }}>
             <Link href={`/user/${vote.from.id}`}>
               <Chip className="whitespace-pre-wrap" color="primary" size="sm" variant="flat">
                 {vote.from.name}

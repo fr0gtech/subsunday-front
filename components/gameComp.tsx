@@ -123,7 +123,7 @@ export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass
           </CardHeader>
           <CardBody className="flex flex-col gap-5 overflow-hidden ">
             {/* <div className=' bg-red-700 h-[20px]'></div> */}
-            <div className="flex gap-5 flex-col lg:flex-row my-10">
+            <div className="flex gap-5 flex-col lg:flex-row mb-10">
               {data.game.picture !== 'default' && data.game.picture.length > 0 && (
                 <div className=" relative rounded w-full h-[100px] p-5 pt-0">
                   <Image
@@ -190,7 +190,7 @@ export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass
             </div>
 
             {selectedMedia.url.length > 0 && selectedMedia.type === 0 && (
-              <button className="mx-auto relative my-10" onClick={() => onOpen()}>
+              <button className="mx-auto relative " onClick={() => onOpen()}>
                 <Image
                   alt="idl"
                   className=" rounded object-contain h-full"
