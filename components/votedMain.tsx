@@ -64,7 +64,7 @@ export const VotedMain = ({
               </Chip>
             </Link>{' '}
             <br />
-            {vote.updated ? <span>update vote to</span> : <span>voted for</span>}{' '}
+            {vote.updated ? <span>updated vote to</span> : <span>voted for</span>}{' '}
             <Link href={`/game/${vote.for.id}`}>
               <Chip className=" whitespace-pre-wrap" color="secondary" size="sm" variant="flat">
                 <span>
