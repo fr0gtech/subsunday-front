@@ -33,7 +33,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html suppressHydrationWarning lang="en">
       <head>
         <meta name="apple-mobile-web-app-title" content="sub-sunday" />
-        <link href="https://sub-sunday.com/" rel="canonical" />
       </head>
       <body
         className={clsx(
