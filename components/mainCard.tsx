@@ -178,7 +178,6 @@ export const MainCard = ({
             <div className="z-1 absolute -bottom-0 -left-0 p-0  w-1/2 overflow-hidden">
               <Chip
                 className="!text-white backdrop-blur z-50 rankingChipbl"
-                // color={color}
                 size="sm"
                 variant="flat"
               >

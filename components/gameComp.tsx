@@ -359,7 +359,9 @@ export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass
             </div>
             <div className="text-tiny text-default-500 flex items-center flex-row-reverse gap-2">
               <span>total votes</span>
-              <Chip variant="shadow">{data.game._count.votes}</Chip>
+              <Chip color="primary" variant="shadow">
+                {data.game._count.votes}
+              </Chip>
             </div>
           </div>
           <Chart id={data.game.id} />

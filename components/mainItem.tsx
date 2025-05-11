@@ -11,6 +11,7 @@ import useSWRInfinite from 'swr/infinite';
 import { useIntersectionObserver } from 'usehooks-ts';
 import { useRouter } from 'next/navigation';
 import { isBefore } from 'date-fns';
+import { TZDate } from '@date-fns/tz';
 
 import { MainCard } from './mainCard';
 import { VotingPeriod } from './votingPeriod';
@@ -21,7 +22,6 @@ import { useAppStore } from '@/store/store';
 import { fetcher } from '@/app/lib';
 import { Game } from '@/generated/prisma';
 import { SelectedRange } from '@/slices/globals';
-import { TZDate } from '@date-fns/tz';
 
 export type gameNcount = Game & {
   _count: { votes: number };
@@ -212,11 +212,14 @@ export const MainItem = () => {
               </div>
             </div>
           </div>
-          {isBefore(new TZDate(new Date(), process.env.NEXT_PUBLIC_TZ), selectedRange.currentPeriod.endDate) && (
-            <div className="fixed2 relative">
-              <LiveVotesMain amount={3} bg={false} />
-            </div>
-          )}
+          {isBefore(
+            new TZDate(new Date(), process.env.NEXT_PUBLIC_TZ),
+            selectedRange.currentPeriod.endDate,
+          ) && (
+              <div className="fixed2 relative">
+                <LiveVotesMain amount={3} bg={false} />
+              </div>
+            )}
         </div>
         <Divider className="hidden lg:visible" />
       </div>
