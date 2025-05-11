@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html suppressHydrationWarning lang="en">
       <head>
-        <link href="/favicon.ico" rel="icon" sizes="any" />
+        <meta name="apple-mobile-web-app-title" content="sub-sunday" />
         <link href="https://sub-sunday.com/" rel="canonical" />
       </head>
       <body

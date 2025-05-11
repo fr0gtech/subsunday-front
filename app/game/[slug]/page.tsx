@@ -35,19 +35,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function Home({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ slug: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
+export default async function Home({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const { steam } = await searchParams;
 
   return (
     <section className="mx-auto">
-      <GameComp steam={steam === 'true' ? true : false} withImage id={slug} />
+      <GameComp id={slug} />
     </section>
   );
 }

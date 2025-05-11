@@ -36,6 +36,7 @@ export const Navbar = () => {
         inputWrapper: 'bg-default-100',
         input: 'text-sm',
       }}
+      size='sm'
       labelPlacement="outside"
       placeholder="Search..."
       startContent={

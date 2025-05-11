@@ -12,7 +12,7 @@ import {
 import useSWR from 'swr';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Image from 'next/image';
+import { Image } from '@heroui/image';
 import { Button } from '@heroui/button';
 import { Modal, ModalBody, ModalContent, useDisclosure } from '@heroui/modal';
 import { Skeleton } from '@heroui/skeleton';
@@ -30,30 +30,21 @@ type SelectedMedia = {
   url: string;
   type: number;
 };
-export const GameComp = ({
-  id,
-  steam,
-  withImage = false,
-  cardBodyClass = '',
-}: {
-  id: string;
-  steam: boolean;
-  withImage?: boolean;
-  cardBodyClass?: string;
-}) => {
+export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass?: string }) => {
   const { currentRange, wsMsg } = useAppStore();
   const { data, isLoading } = useSWR(
     `/api/game?id=${id}&rangeStart=${currentRange.currentPeriod.startDate.getTime()}&rangeEnd=${currentRange.currentPeriod.endDate.getTime()}`,
     fetcher,
   );
-  const { data: steamData, isLoading: steamisLoading } = useSWR(
-    data && steam && `/api/game/steam?id=${id}`,
-    fetcher,
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-    },
-  );
+  // const { data: steamData, isLoading: steamisLoading } = useSWR(
+  //   data && steam && `/api/game/steam?id=${id}`,
+  //   fetcher,
+  //   {
+  //     revalidateIfStale: false,
+  //     revalidateOnFocus: false,
+  //   },
+  // );
+  const isSteam = data && data.game.steamId > 0;
   const [loadMoreDetails, setLoadmoreDetails] = useState(false);
   const mediaScroller = useRef<HTMLDivElement>(null);
   const [selectedMedia, setSelectedMedia] = useState<SelectedMedia>({
@@ -66,14 +57,14 @@ export const GameComp = ({
   // we fetch game data from steam?
 
   useEffect(() => {
-    steam &&
-      steamData &&
+    data &&
+      data.game.screenshots[0] &&
       setSelectedMedia({
         index: 0,
-        url: steamData.game.screenshots[0].path_full,
+        url: data.game.screenshots[0].path_full,
         type: 0,
       });
-  }, [steamData]);
+  }, [data]);
 
   const liveVotes = useMemo(() => {
     if (!data) return;
@@ -115,10 +106,7 @@ export const GameComp = ({
         <Card className={'p-2 gap-3 '}>
           <CardHeader>
             <div className={'items-center gap-5 flex-wrap'}>
-              <Link
-                color="foreground"
-                href={`/game/${steam ? data.game.steamId + '?steam=true' : data.game.id}`}
-              >
+              <Link color="foreground" href={`/game/${data.game.steamId || data.game.id}`}>
                 <h4 className="text-3xl font-bold">{data.game.name} </h4>
               </Link>
               <div>
@@ -126,20 +114,20 @@ export const GameComp = ({
                   <span className="text-tiny">by {data.game.dev}</span>
                 )}{' '}
                 <span className="ml-2 text-tiny lowercase">
-                  {steamData &&
-                    steamData.game.recommendations &&
-                    `- ${steamData.game.recommendations.total} reviews`}
+                  {data &&
+                    data.game.recommendations > 0 &&
+                    `- ${data.game.recommendations} reviews`}
                 </span>
               </div>
             </div>
           </CardHeader>
           <CardBody className="flex flex-col gap-5 overflow-hidden ">
             {/* <div className=' bg-red-700 h-[20px]'></div> */}
-            <div className="flex gap-5 flex-col lg:flex-row">
+            <div className="flex gap-5 flex-col lg:flex-row my-10">
               {data.game.picture !== 'default' && data.game.picture.length > 0 && (
-                <div className=" relative rounded w-full h-[100px]">
+                <div className=" relative rounded w-full h-[100px] p-5 pt-0">
                   <Image
-                    fill
+                    isBlurred
                     alt={'item.title'}
                     className=" object-cover rounded-md"
                     loading="lazy"
@@ -148,13 +136,13 @@ export const GameComp = ({
                 </div>
               )}
               <div className="space-y-2">
-                {steam && steamisLoading && (
+                {isLoading && (
                   <Skeleton>
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur pariatur
                     numquam consectetur, inventore id quis ipsam vel facilis perferendis archite
                   </Skeleton>
                 )}
-                <p className="">{steamData && steamData.game.short_description}</p>
+                <p className="">{data && data.game.description}</p>
                 <div className="flex gap-3 flex-wrap">
                   {data.game.categories &&
                     Object.values(data.game.categories).map((e: any, i) => {
@@ -166,10 +154,10 @@ export const GameComp = ({
                         </Chip>
                       );
                     })}
-                  {steam && steamData && steamData.game.price_overview.final && (
+                  {data && data.game.price.final && (
                     <Chip color="primary" size="sm" variant="shadow">
-                      {steamData.game.price_overview.final / 100}{' '}
-                      {steamData.game.price_overview.currency}
+                      {data.game.price.final / 100}
+                      {data.game.price.currency}
                     </Chip>
                   )}
                   <div className="flex gap-2  ">
@@ -202,16 +190,15 @@ export const GameComp = ({
             </div>
 
             {selectedMedia.url.length > 0 && selectedMedia.type === 0 && (
-              <button className="!h-[300px] relative" onClick={() => onOpen()}>
+              <button className="mx-auto relative my-10" onClick={() => onOpen()}>
                 <Image
-                  fill
                   alt="idl"
-                  className="object-cover rounded"
+                  className=" rounded object-contain h-full"
                   src={cleanUrl(selectedMedia.url)}
                 />
               </button>
             )}
-            {steam && (steamisLoading || !steamData) && (
+            {isLoading && (
               <Skeleton>
                 <button className="!h-[300px] !w-[728px] relative" onClick={() => onOpen()}>
                   <div className="object-cover rounded" />
@@ -226,12 +213,12 @@ export const GameComp = ({
             ) : (
               <Skeleton className=" rounded-lg" />
             )}
-            {steam && (
+            {isSteam &&
               <div className="relative rounded-lg overflow-clip bg-content2 p-2">
                 <div ref={mediaScroller} className="overflow-scroll relative px-3">
                   <div className=" flex gap-3 w-fit">
-                    {steamData &&
-                      steamData.game.movies.map(
+                    {isSteam &&
+                      data.game.movies.map(
                         (
                           e: {
                             id: string;
@@ -259,8 +246,8 @@ export const GameComp = ({
                                   </span>
                                 </div>
                                 <Image
-                                  fill
-                                  alt={steamData.game.name}
+                                  isBlurred
+                                  alt={data.game.name}
                                   className=" object-contain"
                                   src={cleanUrl(e.thumbnail)}
                                 />
@@ -269,8 +256,9 @@ export const GameComp = ({
                           );
                         },
                       )}
-                    {steamData &&
-                      steamData.game.screenshots.map(
+                    {data &&
+                      Object.keys(data.game.screenshots).length > 0 &&
+                      data.game.screenshots.map(
                         (e: { id: number; path_thumbnail: string; path_full: string }) => {
                           return (
                             <button
@@ -284,7 +272,7 @@ export const GameComp = ({
                                 })
                               }
                             >
-                              <Image fill alt={steamData.game.name} src={cleanUrl(e.path_full)} />
+                              <Image isBlurred alt={data.game.name} src={cleanUrl(e.path_full)} />
                             </button>
                           );
                         },
@@ -308,22 +296,22 @@ export const GameComp = ({
                   <ChevronLeftIcon height={20} width={20} />
                 </button>
               </div>
-            )}
+            }
           </CardBody>
         </Card>
-        {steam && (
+        {isSteam &&
           <Card>
             <CardHeader>
               <h4 className="text-xl">Details</h4>
             </CardHeader>
-            {!loadMoreDetails ? (
+            {!loadMoreDetails && isSteam && (
               <>
                 <CardBody className="relative overflow-clip">
                   <div className="flex-col gap-3 max-h-[500px] overflow-clip">
                     <div
-                      dangerouslySetInnerHTML={
-                        steamData && { __html: steamData.game.detailed_description as any }
-                      }
+                      dangerouslySetInnerHTML={{
+                        __html: JSON.parse(data.game.detailedDescription).html,
+                      }}
                       className=" whitespace-pre-wrap opacity-80 "
                     />
                   </div>
@@ -337,13 +325,14 @@ export const GameComp = ({
                 </CardBody>
                 <div className="absolute h-1/2 bottom-0 w-full  bg-gradient-to-t from-background/90 to-transparent" />
               </>
-            ) : (
+            )}
+            {loadMoreDetails && isSteam && (
               <CardBody className="relative overflow-clip">
                 <div className="flex-col gap-3 overflow-scroll max-h-[90vh]">
                   <div
-                    dangerouslySetInnerHTML={
-                      steamData && { __html: steamData.game.detailed_description as any }
-                    }
+                    dangerouslySetInnerHTML={{
+                      __html: JSON.parse(data.game.detailedDescription).html,
+                    }}
                     className=" whitespace-pre-wrap opacity-80 "
                   />
                 </div>
@@ -357,9 +346,9 @@ export const GameComp = ({
               </CardBody>
             )}
           </Card>
-        )}
+        }
       </div>
-      <div className={clsx(['lg:w-4/12 space-y-5', !steam && '!'])}>
+      <div className={clsx(['lg:w-4/12 space-y-5'])}>
         <Card className="p-5 ">
           <div className="flex gap-5 mb-5 p-3">
             <div className="text-tiny text-default-500 flex items-center flex-row-reverse gap-2">
@@ -393,14 +382,14 @@ export const GameComp = ({
         <ModalContent>
           {() => (
             <ModalBody>
-              {selectedMedia.index !== steamData.game.screenshots.length - 1 && (
+              {selectedMedia.index !== data.game.screenshots.length - 1 && (
                 <button
                   className="absolute flex justify-center items-center w-[50px] right-0 top-0 bg-neutral-800 h-full shadow"
                   onClick={() => {
                     setSelectedMedia((prev) => {
                       return {
                         index: prev.index + 1,
-                        url: steamData.game.screenshots[prev.index].path_full,
+                        url: data.screenshots[prev.index].path_full,
                         type: 0,
                       };
                     });
@@ -411,10 +400,10 @@ export const GameComp = ({
               )}
 
               <Image
-                fill
+                isBlurred
                 alt="idl"
                 className="object-contain -z-10"
-                src={cleanUrl(steamData.game.screenshots[selectedMedia.index].path_full)}
+                src={cleanUrl(data.game.screenshots[selectedMedia.index].path_full)}
               />
               {selectedMedia.index !== 0 && (
                 <button
@@ -423,7 +412,7 @@ export const GameComp = ({
                     setSelectedMedia((prev) => {
                       return {
                         index: prev.index - 1,
-                        url: steamData.game.screenshots[prev.index].path_full,
+                        url: data.game.screenshots[prev.index].path_full,
                         type: 0,
                       };
                     });
@@ -436,6 +425,6 @@ export const GameComp = ({
           )}
         </ModalContent>
       </Modal>
-    </div>
+    </div >
   );
 };

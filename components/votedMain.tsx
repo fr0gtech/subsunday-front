@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 import { VoteForFrom } from '@/slices/globals';
 
-export const Voted = ({
+export const VotedMain = ({
   vote,
   bg = true,
   textRight = false,
@@ -37,7 +37,7 @@ export const Voted = ({
       shadow={bg ? 'none' : 'md'}
       style={{ background: bg ? '' : 'none', boxShadow: bg ? '' : 'none' }}
     >
-      <CardBody className={cardBodyClass}>
+      <CardBody>
         {onGame ? (
           <span className=" leading-8" style={{ textAlign: textRight ? 'right' : 'left' }}>
             <Link href={`/user/${vote.from.id}`}>
@@ -52,21 +52,22 @@ export const Voted = ({
           </span>
         ) : (
           <span
-            className=" leading-8"
+            className="!text-tiny !leading-[2.8]"
             style={{ textAlign: textRight ? 'right' : 'left' }}
           >
-            <span className=" opacity-80">
+            <span>
               {time && formatDistance(new Date(vote.updatedAt), new Date(), { addSuffix: true })}{' '}
             </span>
-            <Link href={`/user/${vote.from.id}`} >
+            <Link href={`/user/${vote.from.id}`}>
               <Chip className="whitespace-pre-wrap" color="primary" size="sm" variant="flat">
                 <span className="">{vote.from.name}</span>
               </Chip>
             </Link>{' '}
+            <br />
             {vote.updated ? <span>update vote to</span> : <span>voted for</span>}{' '}
             <Link href={`/game/${vote.for.id}`}>
               <Chip className=" whitespace-pre-wrap" color="secondary" size="sm" variant="flat">
-                <span className="">
+                <span>
                   {vote.for.name}
                 </span>
               </Chip>
@@ -74,6 +75,6 @@ export const Voted = ({
           </span>
         )}
       </CardBody>
-    </Card>
+    </Card >
   );
 };

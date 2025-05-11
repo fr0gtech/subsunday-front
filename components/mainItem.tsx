@@ -11,19 +11,16 @@ import useSWRInfinite from 'swr/infinite';
 import { useIntersectionObserver } from 'usehooks-ts';
 import { useRouter } from 'next/navigation';
 
-import { LiveVotes } from './liveVotes';
 import { MainCard } from './mainCard';
 import { VotingPeriod } from './votingPeriod';
 import { CurrentVotes } from './currentVotes';
+import { LiveVotesMain } from './liveVotesMain';
 
 import { useAppStore } from '@/store/store';
 import { fetcher } from '@/app/lib';
 import { Game } from '@/generated/prisma';
 import { SelectedRange } from '@/slices/globals';
-type SetGame = {
-  id: number,
-  steam: boolean
-}
+
 export type gameNcount = Game & {
   _count: { votes: number };
   price: { final: number | string; currency: string };
@@ -45,7 +42,7 @@ const getKey = (
 
 export const MainItem = () => {
   const { selectedRange, wsMsg } = useAppStore();
-  const router = useRouter()
+  const router = useRouter();
   const { data, isLoading, setSize, size } = useSWRInfinite(
     (key, pre) => getKey(key, pre, selectedRange),
     fetcher,
@@ -65,10 +62,10 @@ export const MainItem = () => {
     return data?.reduce((acc, page) => [...acc, ...page.page], []);
   }, [data]);
 
-  const [gameId, setGameId] = useState<SetGame>();
+  const [gameId, setGameId] = useState<number>();
 
   useEffect(() => {
-    gameId && router.push(`/game/${gameId.id}?steam=${gameId.steam}`);
+    gameId && router.push(`/game/${gameId}`);
   }, [gameId]);
 
   const updateableGames = useMemo<gameNcount[]>(() => {
@@ -98,14 +95,14 @@ export const MainItem = () => {
   if (!allGames) {
     return (
       <div className="flex w-full justify-center items-center">
-        <div className="flex w-full p-4">
+        <div className="flex w-full p-10">
           <div className="grid-container">
             {isLoading &&
               [...Array(25).fill(0)].map((e, i: number) => {
                 return (
                   <Card
                     key={i}
-                    className="overflow-visible w-full grow min-h-[200px] cursor-pointer"
+                    className="overflow-visible w-full grow min-h-[160px] cursor-pointer"
                   >
                     <div className="relative flex flex-col h-full">
                       <Skeleton
@@ -115,16 +112,6 @@ export const MainItem = () => {
                         ])}
                         isLoaded={data && allGames.length === 0}
                       />
-                      <div className="flex p-1">
-                        <div className="flex flex-grow gap-2">
-                          <div className="flex gap-2 p-2 max-w-[300px]">
-                            <Skeleton
-                              className="font-bold text-left whitespace-pre-wrap rounded-lg !w-20 !h-6"
-                              isLoaded={data && allGames.length === 0}
-                            />
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </Card>
                 );
@@ -136,7 +123,7 @@ export const MainItem = () => {
           </div> */}
             <div className="fixed2 relative w-full h-full overflow-hidden">
               <div className="absolute w-full h-full top-0 left-0 whitespace-nowrap overflow-hidden2">
-                <LiveVotes amount={3} bg={false} />
+                <LiveVotesMain amount={3} bg={false} />
               </div>
             </div>
             <div className="fixed3 flex flex-col justify-evenly p-3 gap-5 ">
@@ -165,7 +152,7 @@ export const MainItem = () => {
 
   return (
     <div className="flex w-full justify-center items-center">
-      <div className="flex w-full p-4">
+      <div className="flex w-full p-10">
         <div className="grid-container">
           <AnimatePresence initial={false}>
             {!isLoading &&
@@ -180,22 +167,22 @@ export const MainItem = () => {
                   >
                     <MainCard
                       key={e.id}
-                      className="grid-item overflow-visible h-[200px]"
+                      className="grid-item overflow-visible h-full w-full !bg-transparent !shadow-none group"
                       e={e}
                       i={i}
-                      onPress={() => setGameId({ id: e.steamId > 0 ? e.steamId : e.id, steam: e.steamId > 0 })}
+                      onPress={() => setGameId(e.id)}
                     />
                   </motion.div>
                 );
               })}
-            <div className='relative'>
-              {updateableGames.length != 50 && (
+            {updateableGames.length != 50 && (
+              <Card className="relative">
                 <div ref={ref} className="absolute w-full h-[100vh]" />
-              )}
-            </div>
+              </Card>
+            )}
             {updateableGames &&
               50 - updateableGames.length > 1 && [
-                ...Array(50 - updateableGames.length)
+                ...Array(1 + (50 - updateableGames.length))
                   .fill(0)
                   .map((e, i) => {
                     return <Card key={i + 'aa'} className="w-full h-[170px]" />;
@@ -223,11 +210,8 @@ export const MainItem = () => {
               </div>
             </div>
           </div>
-          <div className="fixed2 relative w-full h-full overflow-hidden">
-            <div />
-            <div className="absolute w-full h-full top-0 left-0 whitespace-nowrap overflow-hidden2">
-              <LiveVotes amount={3} bg={false} />
-            </div>
+          <div className="fixed2 relative">
+            <LiveVotesMain amount={3} bg={false} />
           </div>
         </div>
         <Divider className="hidden lg:visible" />

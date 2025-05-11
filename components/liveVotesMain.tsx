@@ -8,8 +8,9 @@ import { Voted } from './voted';
 import { fetcher } from '@/app/lib';
 import { useAppStore } from '@/store/store';
 import { VoteForFrom } from '@/slices/globals';
+import { VotedMain } from './votedMain';
 
-export const LiveVotes = ({
+export const LiveVotesMain = ({
   amount,
   bg = true,
   textRight = false,
@@ -61,17 +62,16 @@ export const LiveVotes = ({
 
   if (isLoading) {
     return (
-      <div className=" flex flex-col gap-2 grow h-full">
+      <div className="flex items-center justify-center w-full h-full gap-4">
         {[...Array(amount).fill(0)].map((e, i) => (
-          <Skeleton key={i} className="w-full h-[56px] rounded-xl" />
+          <Skeleton key={i} className="w-full h-[91px] rounded-xl" />
         ))}
       </div>
     );
   }
 
   return (
-    <div className=" grow whitespace-nowrap overflow-scroll">
-
+    <div className="grid grid-cols-3 grid-rows-1 gap-4 h-full items-center">
       <AnimatePresence initial={false}>
         {liveVotes &&
           liveVotes.slice(0, amount).map((e) => {
@@ -84,7 +84,7 @@ export const LiveVotes = ({
                 initial={{ opacity: 0, y: -20 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               >
-                <Voted key={e.id} bg={bg} textRight={textRight} vote={e} />
+                <VotedMain key={e.id} textRight={textRight} vote={e} />
               </motion.div>
             );
           })}

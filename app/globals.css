@@ -42,20 +42,21 @@
   width: 100vw;
   height: 100vh;
   gap: 2em;
-  grid-template-columns: repeat(auto-fit, minmax(clamp(330px, 100%, 390px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(clamp(330px, 100%, 330px), 1fr));
 }
 
 .grid-item {
   display: flex;
   justify-content: center;
 }
-.fixed2 {
-  grid-column-end: -1;
-  grid-row: 2;
-}
 .fixed3 {
   grid-column-end: -1;
   grid-row: 1;
+}
+.fixed2 {
+    grid-column-end: -1;
+    grid-column-start: span 2;
+    grid-row-start: 2;
 }
 
 @keyframes glow {

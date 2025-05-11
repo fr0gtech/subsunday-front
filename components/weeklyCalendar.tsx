@@ -131,7 +131,6 @@ export default function WeeklyCalendar({ useless = false }: { useless?: boolean 
                   ? 'cursor-not-allowed opacity-50'
                   : 'cursor-pointer hover:bg-neutral-200 hover:dark:bg-neutral-800',
                 isSel && ' ',
-                isNow && 'bg-primary-100',
               )}
               onClick={() => {
                 if (!isFuture) onSelect(weekStart);
