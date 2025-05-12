@@ -25,6 +25,7 @@ import { CurrentVotes } from './currentVotes';
 
 import { siteConfig } from '@/config/site';
 import { GithubIcon, Logo, SearchIcon } from '@/components/icons';
+import { Button } from '@heroui/button';
 
 export const Navbar = () => {
   const path = usePathname();
@@ -69,7 +70,10 @@ export const Navbar = () => {
           </div>
         </NavbarBrand>
 
-        {/* <ul className="hidden lg:flex gap-4 justify-start ml-10">
+        <NavbarItem className="lg:block hidden">
+          <VotingPeriod className="!text-tiny" />
+        </NavbarItem>
+        <ul className="hidden lg:flex gap-4 justify-start ml-10">
           {siteConfig.navItems.map((item) => (
             <NavbarItem
               key={item.href}
@@ -81,14 +85,13 @@ export const Navbar = () => {
               isActive={path === item.href}
             >
               <NextLink color={'foreground'} href={item.href}>
-                {item.label}
+                <Button size='sm'>
+                  {item.label}
+                </Button>
               </NextLink>
             </NavbarItem>
           ))}
-        </ul> */}
-        <NavbarItem className='lg:block hidden'>
-          <VotingPeriod className="!text-tiny" />
-        </NavbarItem>
+        </ul>
       </NavbarContent>
 
       <NavbarContent>

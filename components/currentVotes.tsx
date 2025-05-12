@@ -19,19 +19,19 @@ export const CurrentVotes = ({ className }: { className: string }) => {
   if (isLoading) {
     return (
       <div className={className}>
-        <div className="flex justify-end gap-2 flex-row-reverse items-center">
+        <div className="flex justify-end gap-2 flex-row items-center">
           <span className="lowercase opacity-60">Votes this week</span>
           <Skeleton className="rounded-full">
-            <Chip className="cursor-default boldChip" color="secondary" size="lg" variant="shadow">
-              dsfdd
+            <Chip className="cursor-default boldChip" color="secondary" size="sm" variant="shadow">
+              ds
             </Chip>
           </Skeleton>
         </div>
-        <div className="flex justify-end gap-2 flex-row-reverse items-center">
+        <div className="flex justify-end gap-2 flex-row items-center">
           <span className="lowercase  opacity-60">Votes today</span>
           <Skeleton className="rounded-full">
-            <Chip className=" cursor-default boldChip" color="success" size="lg" variant="shadow">
-              cscdd
+            <Chip className=" cursor-default boldChip" color="success" size="sm" variant="shadow">
+              cs
             </Chip>
           </Skeleton>
         </div>

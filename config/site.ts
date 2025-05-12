@@ -5,10 +5,6 @@ export const siteConfig = {
   description: 'Tracking liriks sub sunday votes',
   navItems: [
     {
-      label: 'Home',
-      href: '/',
-    },
-    {
       label: 'How to vote',
       href: '/about',
     },

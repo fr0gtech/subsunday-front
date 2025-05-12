@@ -123,28 +123,6 @@ export const MainItem = () => {
               {JSON.stringify(selectedRange, null, 2)}
             </pre>
           </div> */}
-            <div className="fixed2 relative w-full h-full overflow-hidden">
-              <div className="absolute w-full h-full top-0 left-0 whitespace-nowrap overflow-hidden2">
-                <LiveVotesMain amount={3} bg={false} />
-              </div>
-            </div>
-            <div className="fixed3 flex flex-col justify-evenly p-3 gap-5 ">
-              <VotingPeriod className="text-xl w-full text-center" />
-              <CurrentVotes className="gap-5 justify-center flex flex-row text-tiny" />
-
-              <div className="mt-5 opacity-70 block lg:hidden">
-                <div className=" text-center w-full text-xs flex flex-row justify-center mt-5 gap-2 items-center !leading">
-                  *
-                  <div>
-                    {' '}
-                    this is <b>not</b> an official sub sunday website
-                  </div>{' '}
-                  <Link href={'/info'}>
-                    <InfoCircledIcon />
-                  </Link>
-                </div>
-              </div>
-            </div>
           </div>
           <Divider className="hidden lg:visible" />
         </div>
