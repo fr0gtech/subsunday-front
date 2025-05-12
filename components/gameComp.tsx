@@ -217,7 +217,7 @@ export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass
               <div className="relative rounded-lg overflow-clip bg-content2 p-2">
                 <div ref={mediaScroller} className="overflow-scroll relative px-3">
                   <div className=" flex gap-3 w-fit">
-                    {isSteam && data.game.movies &&
+                    {isSteam && Object.keys(data.game.movies).length > 0 &&
                       data.game.movies.map(
                         (
                           e: {
