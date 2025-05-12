@@ -25,7 +25,7 @@ export default async function Home({ params }: { params: Promise<{ slug: string 
   const { slug } = await params;
 
   return (
-    <section className="flex w-full h-full flex-col items-start justify-start gap-4">
+    <section className="flex w-full h-full flex-col items-start justify-start gap-4 mt-20 ">
       <UserComp id={slug} />
     </section>
   );

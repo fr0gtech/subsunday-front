@@ -67,7 +67,7 @@ export const UserComp = ({ id }: { id: string }) => {
               streak={data.user.streak}
             />
             {data.user.streak > 0 && (
-              <Chip className="!text-tiny -top-3 absolute -left-3 rankingChiptl" size="sm">
+              <Chip color='secondary' className="!text-tiny -top-3 absolute -left-3 rankingChiptl" size="sm">
                 Streak: {data.user.streak}
               </Chip>
             )}

@@ -39,7 +39,7 @@ export default async function Home({ params }: { params: Promise<{ slug: string 
   const { slug } = await params;
 
   return (
-    <section className="mx-auto">
+    <section className="mx-auto mt-20">
       <GameComp id={slug} />
     </section>
   );
