@@ -20,6 +20,8 @@ import { InfoCircledIcon } from '@radix-ui/react-icons';
 import { ThemeSwitch } from './theme-switch';
 import WeeklyCalendar from './weeklyCalendar';
 import WeeklyCalendarPopover from './weeklyCalendarPopover';
+import { VotingPeriod } from './votingPeriod';
+import { CurrentVotes } from './currentVotes';
 
 import { siteConfig } from '@/config/site';
 import { GithubIcon, Logo, SearchIcon } from '@/components/icons';
@@ -36,9 +38,9 @@ export const Navbar = () => {
         inputWrapper: 'bg-default-100',
         input: 'text-sm',
       }}
-      size='sm'
       labelPlacement="outside"
       placeholder="Search..."
+      size="sm"
       startContent={
         <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
       }
@@ -54,15 +56,20 @@ export const Navbar = () => {
 
   return (
     <HeroUINavbar isMenuOpen={menuOpen} maxWidth="full" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="max-w-fit gap-3">
+      <NavbarContent className="  justify-between w-full" justify="start">
+        <NavbarBrand as="li" className="max-w-fit gap-2">
+          <Logo size={25} />
           <NextLink className="flex items-center justify-start gap-1" href="/">
-            <Logo size={25} />
             <h1 className="font-bold text-inherit">Sub Sunday</h1>
           </NextLink>
+          <div className="absolute ml-7 bottom-2">
+            <div className="flex gap-1 text-tiny opacity-50 ">
+              *<div> unofficial</div>{' '}
+            </div>
+          </div>
         </NavbarBrand>
 
-        <ul className="hidden lg:flex gap-4 justify-start ml-10">
+        {/* <ul className="hidden lg:flex gap-4 justify-start ml-10">
           {siteConfig.navItems.map((item) => (
             <NavbarItem
               key={item.href}
@@ -78,11 +85,28 @@ export const Navbar = () => {
               </NextLink>
             </NavbarItem>
           ))}
-        </ul>
+        </ul> */}
+        <NavbarItem className='lg:block hidden'>
+          <VotingPeriod className="!text-tiny" />
+        </NavbarItem>
       </NavbarContent>
-      <NavbarItem className="hidden lg:block">
-        <WeeklyCalendarPopover />
-      </NavbarItem>
+
+      <NavbarContent>
+        <NavbarItem className="hidden lg:block">
+          <WeeklyCalendarPopover />
+        </NavbarItem>
+        <NavbarItem>
+          <CurrentVotes className="hidden lg:flex text-tiny gap-7" />
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarContent justify="end">
+        <NavbarItem className="hidden lg:block">{searchBar}</NavbarItem>
+        <NextLink href="/info">
+          <GithubIcon className="text-default-500" />
+        </NextLink>
+        <ThemeSwitch />
+        <NavbarMenuToggle className="flex lg:hidden" onClick={() => setMenuOpen(!menuOpen)} />
+      </NavbarContent>
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-5">
           {searchBar}
@@ -112,7 +136,7 @@ export const Navbar = () => {
           </div>
         </div>
       </NavbarMenu>
-      <NavbarItem className="hidden lg:block">
+      {/* <NavbarItem className="hidden lg:block">
         <div className="text-xs flex flex-row gap-2 items-center !leading">
           *
           <div>
@@ -123,17 +147,8 @@ export const Navbar = () => {
             <InfoCircledIcon />
           </NextLink>
         </div>
-      </NavbarItem>
+      </NavbarItem> */}
       {/* <CurrentVotes className={'font-bold hidden gap-5 lg:flex text-tiny lowercase'} /> */}
-
-      <NavbarContent className=" basis-1 pl-4" justify="end">
-        <NavbarItem className="hidden lg:block">{searchBar}</NavbarItem>
-        <NextLink href="/info">
-          <GithubIcon className="text-default-500" />
-        </NextLink>
-        <ThemeSwitch />
-        <NavbarMenuToggle className="flex lg:hidden" onClick={() => setMenuOpen(!menuOpen)} />
-      </NavbarContent>
     </HeroUINavbar>
   );
 };

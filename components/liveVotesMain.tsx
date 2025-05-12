@@ -71,7 +71,7 @@ export const LiveVotesMain = ({
   }
 
   return (
-    <div className="grid grid-cols-3 grid-rows-1 gap-4 h-full items-center">
+    <div className="w-full">
       <AnimatePresence initial={false}>
         {liveVotes &&
           liveVotes.slice(0, amount).map((e) => {
@@ -84,7 +84,7 @@ export const LiveVotesMain = ({
                 initial={{ opacity: 0, y: -20 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               >
-                <VotedMain key={e.id} textRight={textRight} vote={e} />
+                <VotedMain bg={bg} key={e.id} textRight={textRight} vote={e} />
               </motion.div>
             );
           })}

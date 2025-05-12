@@ -9,6 +9,7 @@ import NumberFlow from '@number-flow/react';
 import { ClipboardIcon } from '@radix-ui/react-icons';
 import { JsonArray } from '@prisma/client/runtime/library';
 import { Image } from '@heroui/image';
+
 import { gameNcount } from './mainItem';
 import { Logo, Steamicon } from './icons';
 
@@ -47,7 +48,7 @@ export const MainCard = ({
         {/* create "default image" if no pic for game that is just logo and bg */}
 
         <div
-          className=' w-full relative'
+          className=" w-full relative"
         // className={clsx([
         //   'scale-[1.033] w-full h-[150px] relative rounded-[10px] border-4 ',
         //   borderColor,
@@ -58,7 +59,7 @@ export const MainCard = ({
           {e.picture === 'default' ? (
             <div
               className={clsx([
-                'flex h-full justify-center items-center flex-col bg-content4 rounded-[10px] border-0',
+                'flex h-full min-h-[150px] justify-center items-center flex-col bg-content4 rounded-[10px] border-0',
                 borderColor,
               ])}
             >
@@ -69,15 +70,18 @@ export const MainCard = ({
             <Image
               isBlurred
               alt={e.name}
-              className={clsx([
-                borderColor,
-                'border-0 object-contain',
-              ])}
+              classNames={{
+                wrapper: '!max-w-full',
+              }}
+              src={cleanUrl(e.picture)}
+              className={clsx([borderColor, 'border-0 w-full !max-w-full'])}
               // className={clsx([
               //   'rounded-[5px] transition-all duration-300 opacity-95 hover:opacity-100 z-0 w-full scale-[1.002] grow object-cover',
               //   borderColor,
               // ])}
-              src={cleanUrl(e.picture)}
+              style={{
+                maxWidth: "100%"
+              }}
             />
           )}
           <Tooltip content={e.name}>
@@ -96,10 +100,8 @@ export const MainCard = ({
               </div>
             </Chip>
           </Tooltip>
-          <div className={'absolute z-20 flex items-end justify-between gap-2 -bottom-0 -right-0'}
-          >
+          <div className={'absolute z-20 flex items-end justify-between gap-2 -bottom-0 -right-0'}>
             <div>
-
               <Tooltip content={`Copy "!vote ${e.name}" to your clipboard`}>
                 <Button
                   className="opacity-80 px-2 !border-none"
@@ -140,11 +142,10 @@ export const MainCard = ({
             </div>
             <Chip
               // color={color}
-              className='rankingChiptl'
+              className="rankingChiptl"
               variant="shadow"
             >
               <div className="flex gap-1">
-
                 <div className="flex flex-row gap-1 items-center text-xs">
                   <NumberFlow isolate willChange suffix={' votes'} value={e._count.votes} />
                 </div>
@@ -177,15 +178,17 @@ export const MainCard = ({
           {Object.values(e.categories as JsonArray).length > 0 && (
             <div className="z-1 absolute -bottom-0 -left-0 p-0  w-1/2 overflow-hidden">
               <Chip
-                className="!text-white backdrop-blur z-50 rankingChipbl"
+                className="!text-white backdrop-blur z-10 rankingChipbl"
                 size="sm"
                 variant="flat"
               >
                 <div className="flex gap-3 z-0 lowercase text-[11px] opacity-80">
                   {e.categories &&
-                    Object.values(e.categories).slice(0, 3).map((a) => {
-                      return <div key={a.description}>{a.description}</div>;
-                    })}
+                    Object.values(e.categories)
+                      .slice(0, 3)
+                      .map((a) => {
+                        return <div key={a.description}>{a.description}</div>;
+                      })}
                 </div>
               </Chip>
             </div>

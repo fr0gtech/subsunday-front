@@ -125,7 +125,7 @@ export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass
             {/* <div className=' bg-red-700 h-[20px]'></div> */}
             <div className="flex gap-5 flex-col lg:flex-row mb-10">
               {data.game.picture !== 'default' && data.game.picture.length > 0 && (
-                <div className=" relative rounded w-full h-[100px] p-5 pt-0">
+                <div className=" relative rounded mt-5 w-full p-5 pt-0">
                   <Image
                     isBlurred
                     alt={'item.title'}
@@ -142,14 +142,14 @@ export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass
                     numquam consectetur, inventore id quis ipsam vel facilis perferendis archite
                   </Skeleton>
                 )}
-                <p className="">{data && data.game.description}</p>
+                <p className="lg:mt-5">{data && data.game.description}</p>
                 <div className="flex gap-3 flex-wrap">
                   {data.game.categories &&
                     Object.values(data.game.categories).map((e: any, i) => {
                       if (i > 2) return;
 
                       return (
-                        <Chip key={e.id} size="sm" variant="shadow">
+                        <Chip key={e.id} size="sm" color='secondary' variant="shadow">
                           {e.description}
                         </Chip>
                       );

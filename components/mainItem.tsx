@@ -153,7 +153,11 @@ export const MainItem = () => {
   }
 
   return (
-    <div className="flex w-full justify-center items-center">
+    <div className="w-full justify-center items-center">
+      <div className="fixed3 flex flex-col justify-evenly p-3 gap-5 lg:hidden">
+        <VotingPeriod className="text-xl w-full text-center" />
+        <CurrentVotes className="gap-5 justify-center flex flex-row text-tiny" />
+      </div>
       <div className="flex w-full lg:p-10 p-3">
         <div className="grid-container">
           <AnimatePresence initial={false}>
@@ -196,30 +200,7 @@ export const MainItem = () => {
               <h4 className="text-xl font-bold">No data available</h4>
             </div>
           )}
-          <div className="fixed3 flex flex-col justify-evenly p-3 gap-5 ">
-            <VotingPeriod className="text-xl w-full text-center" />
-            <CurrentVotes className="gap-5 justify-center flex flex-row text-tiny" />
-            <div className="mt-5 opacity-70 block lg:hidden">
-              <div className=" text-center w-full text-xs flex flex-row justify-center mt-5 gap-2 items-center !leading">
-                *
-                <div>
-                  {' '}
-                  this is <b>not</b> an official sub sunday website
-                </div>{' '}
-                <Link href={'/info'}>
-                  <InfoCircledIcon />
-                </Link>
-              </div>
-            </div>
-          </div>
-          {isBefore(
-            new TZDate(new Date(), process.env.NEXT_PUBLIC_TZ),
-            selectedRange.currentPeriod.endDate,
-          ) && (
-              <div className="fixed2 relative">
-                <LiveVotesMain amount={3} bg={false} />
-              </div>
-            )}
+
         </div>
         <Divider className="hidden lg:visible" />
       </div>
