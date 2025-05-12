@@ -96,7 +96,7 @@ export const MainItem = () => {
 
   if (!allGames) {
     return (
-      <div className="flex w-full justify-center items-center">
+      <div className="flex w-full justify-center items-cente p-3">
         <div className="flex w-full">
           <div className="grid-container">
             {isLoading &&
