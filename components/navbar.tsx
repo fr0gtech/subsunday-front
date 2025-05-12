@@ -56,7 +56,7 @@ export const Navbar = () => {
   );
 
   return (
-    <HeroUINavbar isMenuOpen={menuOpen} maxWidth="full" position="sticky">
+    <HeroUINavbar isMenuOpen={menuOpen} maxWidth="full" position="sticky" className='fixed'>
       <NavbarContent className="  justify-between w-full" justify="start">
         <NavbarBrand as="li" className="max-w-fit gap-2">
           <Logo size={25} />

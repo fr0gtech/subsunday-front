@@ -97,7 +97,7 @@ export const MainItem = () => {
   if (!allGames) {
     return (
       <div className="flex w-full justify-center items-center">
-        <div className="flex w-full lg:p-10 p-3">
+        <div className="flex w-full">
           <div className="grid-container">
             {isLoading &&
               [...Array(25).fill(0)].map((e, i: number) => {
@@ -136,7 +136,7 @@ export const MainItem = () => {
         <VotingPeriod className="text-xl w-full text-center" />
         <CurrentVotes className="gap-5 justify-center flex flex-row text-tiny" />
       </div>
-      <div className="flex w-full lg:p-10 p-3">
+      <div className="flex w-full pt p-3">
         <div className="grid-container">
           <AnimatePresence initial={false}>
             {!isLoading &&

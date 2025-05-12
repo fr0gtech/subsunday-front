@@ -21,7 +21,7 @@ export default function Home() {
   const debounced = useDebounceCallback(setSearch, 500);
 
   return (
-    <section className=" overflow-hidden p-5 mx-auto gap-2 flex flex-col">
+    <section className=" overflow-hidden p-5 mx-auto gap-2 flex flex-col mt-16">
       <div className="lg:grid lg:grid-cols-12 lg:grid-rows-6 lg:gap-4 lg:max-w-screen-2xl flex flex-col gap-5">
         <div className="col-span-4 row-span-2">
           <Card className="h-full" shadow="md">

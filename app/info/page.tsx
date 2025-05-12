@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 export default function Home() {
   return (
-    <section className=" overflow-hidden p-5  mx-auto w-full gap-2 flex flex-col max-w-screen-xl">
+    <section className=" overflow-hidden p-5  mx-auto w-full gap-2 flex flex-col max-w-screen-xl mt-16">
       <div className="flex gap-5 w-full flex-col lg:flex-row">
         <div className="gap-5 flex flex-col ">
           <Alert hideIcon className="w-full mx-auto" color="danger">
