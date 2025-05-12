@@ -1,6 +1,6 @@
 {
-  "name": "subsunday",
-  "short_name": "subsunday",
+  "name": "Sub Sunday",
+  "short_name": "sub-sunday.com",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -15,7 +15,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#272727",
-  "background_color": "#1e1e1e",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "display": "standalone"
 }
