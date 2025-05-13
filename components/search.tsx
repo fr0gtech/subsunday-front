@@ -33,7 +33,7 @@ export const Search = () => {
                     isPressable
                     className="w-full"
                     onPress={() => {
-                      router.push('game/' + e.id);
+                      router.push('game/' + (e.steamId > 0 ? e.steamId : e.id));
                     }}
                   >
                     <CardBody className="flex flex-row gap-2 items-center">
