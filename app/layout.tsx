@@ -6,6 +6,7 @@ import { Providers } from './providers';
 
 import { fontSans } from '@/config/fonts';
 import { Navbar } from '@/components/navbar';
+import { Link } from '@heroui/link';
 export const metadata = {
   title: "Sub Sunday - Tracking votes for lirik's sub sunday.",
   description:
@@ -46,6 +47,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="relative flex flex-col">
             <Navbar />
             <main className="mx-auto w-full grow flex">{children}</main>
+            <footer className='p-5 w-full flex justify-center mt-5'>
+              <Link color='foreground' href='https://frogtech.dev'>
+                <span className=' text-center w-full opacity-75 text-tiny'>by frogtech.dev</span>
+              </Link>
+            </footer>
           </div>
         </Providers>
       </body>
