@@ -34,6 +34,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html suppressHydrationWarning lang="en">
       <head>
         <meta name="apple-mobile-web-app-title" content="sub-sunday" />
+        <script
+          src="https://app.rybbit.io/api/script.js"
+          data-site-id="551"
+          defer
+        ></script>
       </head>
       <body
         className={clsx(
