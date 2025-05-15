@@ -149,7 +149,7 @@ export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass
                       if (i > 2) return;
 
                       return (
-                        <Chip key={e.id} size="sm" color='secondary' variant="shadow">
+                        <Chip key={e.id} color="secondary" size="sm" variant="shadow">
                           {e.description}
                         </Chip>
                       );
@@ -214,92 +214,101 @@ export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass
               <Skeleton className=" rounded-lg" />
             )}
             {isSteam &&
-              <div className="relative rounded-lg overflow-clip bg-content2 p-2">
-                <div ref={mediaScroller} className="overflow-scroll relative px-3">
-                  <div className=" flex gap-3 w-fit">
-                    {isSteam && Object.keys(data.game.movies).length > 0 &&
-                      data.game.movies.map(
-                        (
-                          e: {
-                            id: string;
-                            thumbnail: string;
-                            webm: { max: string };
-                            name: string;
-                          },
-                          i: number,
-                        ) => {
-                          return (
-                            <button
-                              key={e.id}
-                              className="rounded-xl relative w-[150px] h-[90px] overflow-clip"
-                              onClick={() =>
-                                setSelectedMedia({ index: i, url: e.webm.max, type: 1 })
-                              }
-                            >
-                              <div className="relative  h-full">
-                                <div className="absolute flex-col gap-2 left-0 top-0 w-full z-20 h-full flex items-center justify-center">
-                                  <div className="bg-primary p-2 rounded">
-                                    <PlayIcon height={15} width={15} />
+              Object.keys(data.game.movies).length > 0 &&
+              Object.keys(data.game.screenshots).length > 0 && (
+                <div className="relative rounded-lg overflow-clip bg-content2 p-2">
+                  <>
+                    <div ref={mediaScroller} className="overflow-scroll relative px-3">
+                      <div className=" flex gap-3 w-fit">
+                        {isSteam &&
+                          Object.keys(data.game.movies).length > 0 &&
+                          data.game.movies.map(
+                            (
+                              e: {
+                                id: string;
+                                thumbnail: string;
+                                webm: { max: string };
+                                name: string;
+                              },
+                              i: number,
+                            ) => {
+                              return (
+                                <button
+                                  key={e.id}
+                                  className="rounded-xl relative w-[150px] h-[90px] overflow-clip"
+                                  onClick={() =>
+                                    setSelectedMedia({ index: i, url: e.webm.max, type: 1 })
+                                  }
+                                >
+                                  <div className="relative  h-full">
+                                    <div className="absolute flex-col gap-2 left-0 top-0 w-full z-20 h-full flex items-center justify-center">
+                                      <div className="bg-primary p-2 rounded">
+                                        <PlayIcon height={15} width={15} />
+                                      </div>
+                                      <span className="px-3 p-2 rounded bg-content1 text-tiny">
+                                        {e.name}
+                                      </span>
+                                    </div>
+                                    <Image
+                                      isBlurred
+                                      alt={data.game.name}
+                                      className=" object-contain"
+                                      src={cleanUrl(e.thumbnail)}
+                                    />
                                   </div>
-                                  <span className="px-3 p-2 rounded bg-content1 text-tiny">
-                                    {e.name}
-                                  </span>
-                                </div>
-                                <Image
-                                  isBlurred
-                                  alt={data.game.name}
-                                  className=" object-contain"
-                                  src={cleanUrl(e.thumbnail)}
-                                />
-                              </div>
-                            </button>
-                          );
-                        },
-                      )}
-                    {data &&
-                      Object.keys(data.game.screenshots).length > 0 &&
-                      data.game.screenshots.map(
-                        (e: { id: number; path_thumbnail: string; path_full: string }) => {
-                          return (
-                            <button
-                              key={e.id}
-                              className="rounded-xl relative w-[150px] h-[90px] overflow-clip"
-                              onClick={() =>
-                                setSelectedMedia({
-                                  index: e.id,
-                                  url: e.path_full,
-                                  type: 0,
-                                })
-                              }
-                            >
-                              <Image isBlurred alt={data.game.name} src={cleanUrl(e.path_full)} />
-                            </button>
-                          );
-                        },
-                      )}
-                  </div>
+                                </button>
+                              );
+                            },
+                          )}
+                        {data &&
+                          Object.keys(data.game.screenshots).length > 0 &&
+                          data.game.screenshots.map(
+                            (e: { id: number; path_thumbnail: string; path_full: string }) => {
+                              return (
+                                <button
+                                  key={e.id}
+                                  className="rounded-xl relative w-[150px] h-[90px] overflow-clip"
+                                  onClick={() =>
+                                    setSelectedMedia({
+                                      index: e.id,
+                                      url: e.path_full,
+                                      type: 0,
+                                    })
+                                  }
+                                >
+                                  <Image
+                                    isBlurred
+                                    alt={data.game.name}
+                                    src={cleanUrl(e.path_full)}
+                                  />
+                                </button>
+                              );
+                            },
+                          )}
+                      </div>
+                    </div>
+                    <button
+                      className="absolute right-0 top-0 bg-content2 h-full shadow z-50"
+                      onClick={() => {
+                        mediaScroller.current?.scrollBy({ left: 200, behavior: 'smooth' });
+                      }}
+                    >
+                      <ChevronRightIcon height={20} width={20} />
+                    </button>
+                    <button
+                      className="absolute left-0 top-0 bg-content2 h-full shadow z-50"
+                      onClick={() => {
+                        mediaScroller.current?.scrollBy({ left: -200, behavior: 'smooth' });
+                      }}
+                    >
+                      <ChevronLeftIcon height={20} width={20} />
+                    </button>
+                  </>
                 </div>
-                <button
-                  className="absolute right-0 top-0 bg-content2 h-full shadow z-50"
-                  onClick={() => {
-                    mediaScroller.current?.scrollBy({ left: 200, behavior: 'smooth' });
-                  }}
-                >
-                  <ChevronRightIcon height={20} width={20} />
-                </button>
-                <button
-                  className="absolute left-0 top-0 bg-content2 h-full shadow z-50"
-                  onClick={() => {
-                    mediaScroller.current?.scrollBy({ left: -200, behavior: 'smooth' });
-                  }}
-                >
-                  <ChevronLeftIcon height={20} width={20} />
-                </button>
-              </div>
-            }
+              )}
           </CardBody>
         </Card>
-        {isSteam &&
+        {isSteam && (
           <Card>
             <CardHeader>
               <h4 className="text-xl">Details</h4>
@@ -308,12 +317,14 @@ export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass
               <>
                 <CardBody className="relative overflow-clip">
                   <div className="flex-col gap-3 max-h-[500px] overflow-clip">
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: JSON.parse(data.game.detailedDescription).html,
-                      }}
-                      className=" whitespace-pre-wrap opacity-80 "
-                    />
+                    {data.game.detailedDescription.html && (
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: JSON.parse(data.game.detailedDescription).html,
+                        }}
+                        className=" whitespace-pre-wrap opacity-80 "
+                      />
+                    )}
                   </div>
                   <Button
                     className="z-20 -mt-20 w-fit mx-auto"
@@ -346,7 +357,7 @@ export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass
               </CardBody>
             )}
           </Card>
-        }
+        )}
       </div>
       <div className={clsx(['lg:w-4/12 space-y-5'])}>
         <Card className="p-5 ">
@@ -427,6 +438,6 @@ export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass
           )}
         </ModalContent>
       </Modal>
-    </div >
+    </div>
   );
 };
