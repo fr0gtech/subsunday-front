@@ -107,19 +107,19 @@ export const MainItem = () => {
 
   if (!allGames) {
     return (
-      <div className="w-full justify-center items-center mt-10 ">
+      <div className="w-full justify-center items-center mt-5 ">
         <div className="fixed3 flex flex-col justify-evenly p-3 gap-5 lg:hidden">
           <VotingPeriod className="text-xl w-full text-center" />
           <CurrentVotes className="gap-5 justify-center flex flex-row text-tiny" />
         </div>
-        <div className="flex w-full pt px-10">
+        <div className="flex w-full pt px-5">
           <div className="grid-container">
             {isLoading &&
               [...Array(25).fill(0)].map((e, i: number) => {
                 return (
                   <Card
                     key={i}
-                    className="overflow-visible w-full grow min-h-[200px] cursor-pointer"
+                    className="overflow-visible w-full grow min-h-[157px] cursor-pointer"
                   >
                     <div className="relative flex flex-col h-full">
                       <Skeleton

@@ -27,6 +27,7 @@
     "@heroui/navbar": "2.2.15",
     "@heroui/popover": "^2.3.19",
     "@heroui/radio": "^2.3.18",
+    "@heroui/react": "^2.7.8",
     "@heroui/select": "^2.4.19",
     "@heroui/skeleton": "^2.2.12",
     "@heroui/snippet": "2.2.18",
