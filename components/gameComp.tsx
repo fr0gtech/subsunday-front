@@ -317,7 +317,7 @@ export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass
               <>
                 <CardBody className="relative overflow-clip">
                   <div className="flex-col gap-3 max-h-[500px] overflow-clip">
-                    {data.game.detailedDescription.html && (
+                    {data.game.detailedDescription.length > 3 && (
                       <div
                         dangerouslySetInnerHTML={{
                           __html: JSON.parse(data.game.detailedDescription).html,
