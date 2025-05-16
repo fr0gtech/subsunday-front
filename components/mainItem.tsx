@@ -154,7 +154,7 @@ export const MainItem = () => {
           <WeeklyCalendarPopover />
           <Dropdown>
             <DropdownTrigger>
-              <Button size="sm">{selectedValue === 'icon' ? <GridIcon /> : <LayoutIcon />}</Button>
+              <div className='p-2 bg-content1 rounded-lg' >{selectedValue === 'icon' ? <GridIcon /> : <LayoutIcon />}</div>
             </DropdownTrigger>
             <DropdownMenu
               disallowEmptySelection
