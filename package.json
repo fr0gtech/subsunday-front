@@ -9,6 +9,9 @@
     "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
     "pm2": "git pull && pnpx prisma generate && pnpm install && pnpm build && pm2 restart front"
   },
+  "overrides": {
+    "@react-aria/interactions": "3.0.0-nightly.2390"
+  },
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
     "@heroui/alert": "^2.2.19",
