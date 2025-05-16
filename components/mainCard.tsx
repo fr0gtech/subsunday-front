@@ -74,7 +74,7 @@ export const MainCard = ({
                 wrapper: '!max-w-full',
               }}
               src={cleanUrl(e.picture)}
-              className={clsx([borderColor, 'border-0 w-full !max-w-full'])}
+              className={clsx([borderColor, 'border-0 w-full !max-w-full '])}
               // className={clsx([
               //   'rounded-[5px] transition-all duration-300 opacity-95 hover:opacity-100 z-0 w-full scale-[1.002] grow object-cover',
               //   borderColor,
@@ -87,7 +87,7 @@ export const MainCard = ({
           <Tooltip content={e.name}>
             <Chip
               className={
-                'absolute rankingChiptl z-20 top-0 left-0 boldChip !w-[70%] overflow-hidden'
+                'absolute rankingChiptl h-[35px] z-20 top-0 left-0 boldChip overflow-hidden'
               }
               variant="shadow"
             >
@@ -96,7 +96,7 @@ export const MainCard = ({
                 <div className=" press-start-2p-regular px-1">
                   <NumberFlow isolate value={i + 1} />
                 </div>
-                <div className="text-wrap w-full grow">{e.name.slice(0, 18)}</div>
+                <div className="text-wrap w-full grow text-base">{e.name.slice(0, 22)}</div>
               </div>
             </Chip>
           </Tooltip>
@@ -142,7 +142,7 @@ export const MainCard = ({
             </div>
             <Chip
               // color={color}
-              className="rankingChiptl"
+              className="rankingChiptl text-opacity-80"
               variant="shadow"
             >
               <div className="flex gap-1">
@@ -155,24 +155,24 @@ export const MainCard = ({
           {typeof e.price.final === 'string' && (
             <div className="absolute top-0 z-20 right-0">
               <Chip
-                className="!text-tiny rankingChiptr text-opacity-70 absolute -top-0 -right-0"
+                className=" rankingChiptr text-opacity-70 absolute -top-0 -right-0"
                 // color={color}
                 size="sm"
                 variant="shadow"
               >
-                {e.price.final}
+                {e.price.final.toUpperCase()}
               </Chip>
             </div>
           )}
           {typeof e.price.final === 'number' && (
             <Chip
-              className="!text-tiny rankingChiptr z-20 text-opacity-70 absolute -top-0 -right-0"
+              className="p-2 h-[35px] text-sm rankingChiptr z-20 text-opacity-70 absolute -top-0 -right-0"
               // color={color}
               size="sm"
               variant="shadow"
             >
-              {(e.price.final as number) / 100}{' '}
-              <span className="text-[10px] font-bold">{e.price.currency}</span>
+              <span className="font-bold">{(e.price.final as number) / 100} </span>
+              <span className="text-[10px] ">{e.price.currency}</span>
             </Chip>
           )}
           {Object.values(e.categories as JsonArray).length > 0 && (

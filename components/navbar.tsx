@@ -13,25 +13,35 @@ import clsx from 'clsx';
 import { link as linkStyles } from '@heroui/theme';
 import { Input } from '@heroui/input';
 import { Link } from '@heroui/link';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { InfoCircledIcon } from '@radix-ui/react-icons';
+import { GridIcon, LayoutIcon } from '@radix-ui/react-icons';
+import { Button } from '@heroui/button';
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@heroui/dropdown';
 
 import { ThemeSwitch } from './theme-switch';
 import WeeklyCalendar from './weeklyCalendar';
 import WeeklyCalendarPopover from './weeklyCalendarPopover';
-import { VotingPeriod } from './votingPeriod';
 import { CurrentVotes } from './currentVotes';
+import { VotingPeriod } from './votingPeriod';
 
 import { siteConfig } from '@/config/site';
 import { GithubIcon, Logo, SearchIcon } from '@/components/icons';
-import { Button } from '@heroui/button';
-
+import { useAppStore } from '@/store/store';
 export const Navbar = () => {
   const path = usePathname();
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const router = useRouter();
+  const [selectedKeys, setSelectedKeys] = useState<any>(new Set(['icon']));
+  const { setListlayout } = useAppStore();
+  const selectedValue = useMemo(
+    () => Array.from(selectedKeys).join(', ').replace(/_/g, ''),
+    [selectedKeys],
+  );
 
+  useEffect(() => {
+    setListlayout(selectedValue);
+  }, [selectedValue]);
   const searchBar = (
     <Input
       aria-label="Search"
@@ -56,7 +66,7 @@ export const Navbar = () => {
   );
 
   return (
-    <HeroUINavbar isMenuOpen={menuOpen} maxWidth="full" position="sticky" className='fixed'>
+    <HeroUINavbar className="fixed" isMenuOpen={menuOpen} maxWidth="full" position="sticky">
       <NavbarContent className="  justify-between w-full" justify="start">
         <NavbarBrand as="li" className="max-w-fit gap-2">
           <Logo size={25} />
@@ -69,9 +79,8 @@ export const Navbar = () => {
             </div>
           </div>
         </NavbarBrand>
-
-        <NavbarItem className="lg:block hidden">
-          <VotingPeriod className="!text-tiny" />
+        <NavbarItem className="hidden lg:block">
+          <VotingPeriod className="text-sm h-full" />
         </NavbarItem>
         <ul className="hidden lg:flex gap-4 justify-start ml-10">
           {siteConfig.navItems.map((item) => (
@@ -85,24 +94,47 @@ export const Navbar = () => {
               isActive={path === item.href}
             >
               <NextLink color={'foreground'} href={item.href}>
-                <Button size='sm'>
-                  {item.label}
-                </Button>
+                <Button size="sm">{item.label}</Button>
               </NextLink>
             </NavbarItem>
           ))}
         </ul>
-      </NavbarContent>
-
-      <NavbarContent>
         <NavbarItem className="hidden lg:block">
           <WeeklyCalendarPopover />
         </NavbarItem>
-        <NavbarItem>
-          <CurrentVotes className="hidden lg:flex text-tiny gap-7" />
+        <NavbarItem className="hidden lg:block">
+          <Dropdown>
+            <DropdownTrigger>
+              <Button size="sm">{selectedValue === 'icon' ? <GridIcon /> : <LayoutIcon />}</Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              disallowEmptySelection
+              aria-label="Single selection example"
+              selectedKeys={selectedKeys}
+              selectionMode="single"
+              variant="flat"
+              onSelectionChange={setSelectedKeys}
+            >
+              <DropdownItem key={'icon'}>
+                <span>
+                  <GridIcon className="inline mr-2" />
+                  Icon View
+                </span>
+              </DropdownItem>
+              <DropdownItem key={'list'}>
+                <span>
+                  <LayoutIcon className="inline mr-2" />
+                  List View
+                </span>
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
+        <NavbarItem className="hidden xl:block">
+          <CurrentVotes className="flex gap-2 items-center justify-center text-xs px-2 h-10 rounded-xl opacity-85" />
+        </NavbarItem>
         <NavbarItem className="hidden lg:block">{searchBar}</NavbarItem>
         <NextLink href="/info">
           <GithubIcon className="text-default-500" />

@@ -41,7 +41,7 @@
   display: grid;
   width: 100vw;
   height: 100%;
-  gap: 2em;
+  gap: 3em;
   grid-template-columns: repeat(auto-fit, minmax(clamp(330px, 100%, 330px), 1fr));
 }
 

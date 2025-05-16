@@ -27,6 +27,8 @@ export interface GlobalSlice {
   selectedRange: SelectedRange;
   currentRange: SelectedRange;
   wsMsg: VoteForFrom[];
+  listLayout: string;
+  setListlayout: (query: string) => void;
   replaceOrAddWsMsg: (query: VoteForFrom) => void;
   addWsMsg: (query: VoteForFrom) => void;
   setWsMsg: (query: VoteForFrom[]) => void;
@@ -42,6 +44,10 @@ export const createGlobalSlice: StateCreator<GlobalSlice> = (set) => ({
   selectedRange: getDateRange({ offset: selectedWeek }),
   currentRange: getDateRange(),
   wsMsg: [],
+  listLayout: 'icon',
+  setListlayout: (query: string) => {
+    set({ listLayout: query });
+  },
   replaceOrAddWsMsg: (query: VoteForFrom) => {
     set((state) => ({ wsMsg: [query, ...state.wsMsg.filter((e) => e.from.id !== query.from.id)] }));
   },

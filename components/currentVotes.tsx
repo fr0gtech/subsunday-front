@@ -22,7 +22,7 @@ export const CurrentVotes = ({ className }: { className: string }) => {
         <div className="flex justify-end gap-2 flex-row items-center">
           <span className="lowercase opacity-60">Votes this week</span>
           <Skeleton className="rounded-full">
-            <Chip className="cursor-default boldChip" color="secondary" size="sm" variant="shadow">
+            <Chip className="cursor-default boldChip" color="secondary" size="sm" variant="light">
               ds
             </Chip>
           </Skeleton>
@@ -48,10 +48,11 @@ export const CurrentVotes = ({ className }: { className: string }) => {
               <span className="lowercase whitespace-nowrap">Votes this week</span>
               <Tooltip content={`total votes: ${data && data.total + wsMsg.length}`}>
                 <Chip
+                  radius='sm'
                   className="cursor-default boldChip"
                   color="secondary"
                   size="sm"
-                  variant="shadow"
+                  variant="flat"
                 >
                   <NumberFlow isolate className="left-0 bottom-0" value={data.now + wsMsg.length} />
                 </Chip>
@@ -59,7 +60,9 @@ export const CurrentVotes = ({ className }: { className: string }) => {
             </div>
             <div className="flex justify-end gap-2 flex-row items-center">
               <span className="lowercase whitespace-nowrap">Votes today</span>
-              <Chip className=" cursor-default boldChip" color="success" size="sm" variant="shadow">
+              <Chip
+                radius='sm'
+                className=" cursor-default boldChip" color="success" size="sm" variant="flat">
                 <NumberFlow isolate className="left-0 bottom-0" value={data.today + wsMsg.length} />
               </Chip>
             </div>

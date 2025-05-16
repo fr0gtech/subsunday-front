@@ -17,14 +17,13 @@ export default function WeeklyCalendarPopover() {
     <div className="relative">
       <Popover className="relative">
         <PopoverTrigger className="inline-flex items-center">
-          <Button size="sm" >
+          <Button size='sm' >
             {selectedWeek
               ? `${format(selectedWeek, 'MMM d')} – ${format(addDays(selectedWeek, 6), 'MMM d')}`
               : 'Select a week'}
             <ChevronDownIcon className="ml-2 h-5 w-5" />
           </Button>
         </PopoverTrigger>
-
         <PopoverContent>
           <WeeklyCalendar />
         </PopoverContent>
