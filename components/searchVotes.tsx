@@ -14,7 +14,7 @@ export const SearchVotes = ({
   textRight = false,
 }: {
   amount: number;
-  query: string,
+  query: string;
   bg?: boolean;
   textRight?: boolean;
 }) => {

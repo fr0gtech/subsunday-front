@@ -6,8 +6,7 @@ import { Metadata } from 'next';
 import { GithubIcon } from '@/components/icons';
 export const metadata: Metadata = {
   title: 'Sub Sunday - Info, Supported Games, Github links',
-  description:
-    'This project was made for fun and does not represet what happens to your vote.',
+  description: 'This project was made for fun and does not represet what happens to your vote.',
 };
 export default function Home() {
   return (

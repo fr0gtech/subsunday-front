@@ -1,8 +1,8 @@
-import { prisma } from "@/prisma"
-import { getDateRange } from "./lib";
+import { prisma } from '@/prisma';
+import { getDateRange } from './lib';
 
 export default async function sitemap() {
-  const range = getDateRange()
+  const range = getDateRange();
   const voteCounts = await prisma.vote.groupBy({
     by: ['gameName'],
     where: {
@@ -30,12 +30,12 @@ export default async function sitemap() {
     select: {
       id: true,
       updatedAt: true,
-      name: true
+      name: true,
     },
   });
 
   return games.map((product) => ({
     url: `${process.env.NEXT_PUBLIC_BASE_URL}/game/${product.id}`,
     lastModified: product.updatedAt,
-  }))
+  }));
 }

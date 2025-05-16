@@ -148,7 +148,7 @@ export default function WeeklyCalendar({ useless = false }: { useless?: boolean 
                       'z-20 text-center text-tiny py-1 rounded ',
                       today && 'bg-primary-100',
                       i === 0 && isSel && 'bg-primary rounded-full',
-                      i === 6 && isSel && 'bg-primary rounded-full'
+                      i === 6 && isSel && 'bg-primary rounded-full',
                     )}
                   >
                     {format(day, 'd')}

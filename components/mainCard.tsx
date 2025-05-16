@@ -49,10 +49,10 @@ export const MainCard = ({
 
         <div
           className=" w-full relative"
-        // className={clsx([
-        //   'scale-[1.033] w-full h-[150px] relative rounded-[10px] border-4 ',
-        //   borderColor,
-        // ])}
+          // className={clsx([
+          //   'scale-[1.033] w-full h-[150px] relative rounded-[10px] border-4 ',
+          //   borderColor,
+          // ])}
         >
           {/* <div className=" w-full h-1/2 absolute top-0 left-0 bg-gradient-to-t z-10 from-transparent  to-[#0000000a]" />
           <div className=" w-full h-1/2 absolute bottom-0 left-0 bg-gradient-to-t z-10 from-[#00000028]  to-transparent" /> */}
@@ -80,7 +80,7 @@ export const MainCard = ({
               //   borderColor,
               // ])}
               style={{
-                maxWidth: "100%"
+                maxWidth: '100%',
               }}
             />
           )}

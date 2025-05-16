@@ -16,21 +16,20 @@ const config = {
     },
   },
   darkMode: 'class',
-  plugins: [heroui(
-    {
+  plugins: [
+    heroui({
       themes: {
         dark: {
           colors: {
             default: {
-              foreground: "#FFFFFF",
-              DEFAULT: "#18181B"
+              foreground: '#FFFFFF',
+              DEFAULT: '#18181B',
             },
-            
           },
         },
-      }
-    }
-  )],
+      },
+    }),
+  ],
 };
 
 module.exports = config;

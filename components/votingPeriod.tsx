@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { TZDate } from '@date-fns/tz';
 import { formatDistance, isAfter, isBefore } from 'date-fns';
 import { useEffect, useMemo, useState } from 'react';

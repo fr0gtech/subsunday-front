@@ -66,9 +66,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="relative flex flex-col">
             <Navbar />
             <main className="mx-auto w-full grow flex">{children}</main>
-            <footer className='p-5 w-full flex justify-center mt-5'>
-              <Link color='foreground' href='https://frogtech.dev'>
-                <span className=' text-center w-full opacity-75 text-tiny'>by frogtech.dev</span>
+            <footer className="p-5 w-full flex justify-center mt-5">
+              <Link color="foreground" href="https://frogtech.dev">
+                <span className=" text-center w-full opacity-75 text-tiny">by frogtech.dev</span>
               </Link>
             </footer>
           </div>

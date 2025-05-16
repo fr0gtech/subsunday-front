@@ -39,7 +39,10 @@ export const Voted = ({
     >
       <CardBody className={cardBodyClass}>
         {onGame ? (
-          <span className=" leading-8 text-tiny" style={{ textAlign: textRight ? 'right' : 'left' }}>
+          <span
+            className=" leading-8 text-tiny"
+            style={{ textAlign: textRight ? 'right' : 'left' }}
+          >
             <Link href={`/user/${vote.from.id}`}>
               <Chip className="whitespace-pre-wrap" color="primary" size="sm" variant="flat">
                 {vote.from.name}
@@ -51,14 +54,11 @@ export const Voted = ({
             </span>
           </span>
         ) : (
-          <span
-            className=" leading-8"
-            style={{ textAlign: textRight ? 'right' : 'left' }}
-          >
+          <span className=" leading-8" style={{ textAlign: textRight ? 'right' : 'left' }}>
             <span className=" opacity-80">
               {time && formatDistance(new Date(vote.updatedAt), new Date(), { addSuffix: true })}{' '}
             </span>
-            <Link href={`/user/${vote.from.id}`} >
+            <Link href={`/user/${vote.from.id}`}>
               <Chip className="whitespace-pre-wrap" color="primary" size="sm" variant="flat">
                 <span className="">{vote.from.name}</span>
               </Chip>
@@ -66,9 +66,7 @@ export const Voted = ({
             {vote.updated ? <span>updated vote to</span> : <span>voted for</span>}{' '}
             <Link href={`/game/${vote.for.id}`}>
               <Chip className=" whitespace-pre-wrap" color="secondary" size="sm" variant="flat">
-                <span className="">
-                  {vote.for.name}
-                </span>
+                <span className="">{vote.for.name}</span>
               </Chip>
             </Link>
           </span>

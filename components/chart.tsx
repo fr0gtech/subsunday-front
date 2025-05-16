@@ -58,7 +58,7 @@ export const Chart = ({ id }: { id?: number }) => {
   }, [data]);
 
   if (!dataChart) {
-    return <div>loading</div>
+    return <div>loading</div>;
   }
 
   return (

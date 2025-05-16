@@ -48,7 +48,7 @@ export const CurrentVotes = ({ className }: { className: string }) => {
               <span className="lowercase whitespace-nowrap">Votes this week</span>
               <Tooltip content={`total votes: ${data && data.total + wsMsg.length}`}>
                 <Chip
-                  radius='sm'
+                  radius="sm"
                   className="cursor-default boldChip"
                   color="secondary"
                   size="sm"
@@ -61,8 +61,12 @@ export const CurrentVotes = ({ className }: { className: string }) => {
             <div className="flex justify-end gap-2 flex-row items-center">
               <span className="lowercase whitespace-nowrap">Votes today</span>
               <Chip
-                radius='sm'
-                className=" cursor-default boldChip" color="success" size="sm" variant="flat">
+                radius="sm"
+                className=" cursor-default boldChip"
+                color="success"
+                size="sm"
+                variant="flat"
+              >
                 <NumberFlow isolate className="left-0 bottom-0" value={data.today + wsMsg.length} />
               </Chip>
             </div>

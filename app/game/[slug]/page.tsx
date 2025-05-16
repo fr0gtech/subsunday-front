@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 
-
 import { GameComp } from '@/components/gameComp';
 import { prisma } from '@/prisma';
 
@@ -19,14 +18,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           id: parseInt(slug),
         },
         {
-          steamId: parseInt(slug)
-        }
-      ]
+          steamId: parseInt(slug),
+        },
+      ],
     },
     select: {
       name: true,
-      description: true
-    }
+      description: true,
+    },
   });
 
   return {

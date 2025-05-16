@@ -66,14 +66,12 @@ export const VotedMain = ({
             {vote.updated ? <span>updated vote to</span> : <span>voted for</span>}{' '}
             <Link href={`/game/${vote.for.id}`}>
               <Chip color="secondary" size="sm" variant="flat">
-                <span>
-                  {vote.for.name}
-                </span>
+                <span>{vote.for.name}</span>
               </Chip>
             </Link>
           </span>
         )}
       </CardBody>
-    </Card >
+    </Card>
   );
 };

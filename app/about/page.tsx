@@ -70,7 +70,11 @@ export default function Home() {
             </div>
           </Card>
           <div>
-            {search.length > 0 ? <SearchVotes amount={6} query={search} /> : <LiveVotes amount={6} />}
+            {search.length > 0 ? (
+              <SearchVotes amount={6} query={search} />
+            ) : (
+              <LiveVotes amount={6} />
+            )}
           </div>
         </div>
         <div className="col-span-5 row-span-3 col-start-8 row-start-3">
