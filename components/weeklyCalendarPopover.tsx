@@ -2,7 +2,6 @@
 'use client';
 
 import { format, addDays } from 'date-fns';
-import { Button } from '@heroui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@heroui/popover';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 
@@ -17,7 +16,7 @@ export default function WeeklyCalendarPopover() {
     <div className="relative">
       <Popover className="relative">
         <PopoverTrigger>
-          <div className='text-xs flex gap-2 bg-content1 p-1 h-[32px] rounded-lg items-center justify-center px-3'>
+          <div className="text-xs flex gap-2 bg-content1 p-1 h-[32px] rounded-lg items-center justify-center px-3">
             {selectedWeek
               ? `${format(selectedWeek, 'MMM d')} – ${format(addDays(selectedWeek, 6), 'MMM d')}`
               : 'Select a week'}
