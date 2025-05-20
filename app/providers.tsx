@@ -5,7 +5,6 @@ import type { ThemeProviderProps } from 'next-themes';
 import * as React from 'react';
 import { HeroUIProvider } from '@heroui/system';
 import { useRouter } from 'next/navigation';
-import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { addToast, ToastProvider } from '@heroui/toast';
 import { useCallback, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -88,9 +87,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
   return (
     <HeroUIProvider navigate={router.push}>
       <ToastProvider />
-      <NextThemesProvider enableSystem attribute={'class'} defaultTheme="dark" {...themeProps}>
         {children}
-      </NextThemesProvider>
     </HeroUIProvider>
   );
 }

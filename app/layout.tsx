@@ -1,8 +1,10 @@
 import './globals.css';
 import clsx from 'clsx';
 import { Press_Start_2P, VT323 } from 'next/font/google';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
 
 import { Providers } from './providers';
+import type { ThemeProviderProps } from 'next-themes';
 
 import { fontSans } from '@/config/fonts';
 import { Navbar } from '@/components/navbar';
@@ -44,7 +46,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           vt,
         )}
       >
-        <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
+          <NextThemesProvider enableSystem attribute={'class'} defaultTheme="dark">
+        <Providers>
           <div className="relative flex flex-col">
             <Navbar />
             <main className="mx-auto w-full grow flex">{children}</main>
@@ -55,7 +58,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </footer>
           </div>
         </Providers>
+    </NextThemesProvider>
       </body>
-    </html>
+    </html> 
   );
 }
