@@ -105,7 +105,7 @@ export const MainItem = () => {
       );
   }, [wsMsg, data]);
 
-  if (!allGames) {
+  if (isLoading || !updateableGames) {
     return (
       <div className="w-full justify-center items-center mt-5 ">
         <div className="fixed3 flex flex-col justify-evenly p-3 gap-5 lg:hidden">
@@ -114,17 +114,17 @@ export const MainItem = () => {
         </div>
         <div className="flex w-full pt px-5">
           <div className="grid-container">
-            {isLoading &&
-              [...Array(25).fill(0)].map((e, i: number) => {
+            {
+              [...Array(50).fill(0)].map((e, i: number) => {
                 return (
                   <Card
                     key={i}
-                    className="overflow-visible w-full grow min-h-[157px] cursor-pointer"
+                    className="overflow-visible w-full grow min-h-[177px] cursor-pointer"
                   >
                     <div className="relative flex flex-col h-full">
                       <Skeleton
                         className={clsx([
-                          'flex flex-col justify-center grow min-h-[100px] min-w-[200px]  items-center z-0 w-full object-cover scale-[1.02] shadow-lg  border-4 rounded-[1em]',
+                          'flex flex-col justify-center grow min-w-[200px]  items-center z-0 w-full object-cover scale-[1.02] shadow-lg  border-4 rounded-[1em]',
                           'dark:border-default light:border-neutral-200',
                         ])}
                         isLoaded={data && allGames.length === 0}
