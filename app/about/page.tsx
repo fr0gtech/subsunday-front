@@ -79,7 +79,7 @@ export default function Home() {
         </div>
         <div className="col-span-5 row-span-3 col-start-8 row-start-3">
           <Card className="p-5 h-full" shadow="md">
-            <CurrentVotes className={'text-xs flex mb-10 p-0 justify-center'} />
+            <CurrentVotes className={'text-xs gap-5 flex mb-10 p-0 justify-center'} />
             <div className="p-5 h-full">
               <Chart />
             </div>
