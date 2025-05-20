@@ -69,6 +69,7 @@ export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass
   const liveVotes = useMemo(() => {
     if (!data) return;
     const wsVotes2Votes = wsMsg.map((e) => {
+      if (e.for.id !== parseInt(id)) return null
       return {
         updated: e.updated,
         createdAt: e.createdAt,
@@ -81,9 +82,9 @@ export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass
           name: e.from.name,
           id: e.from.id,
         },
-        id: uuidv4(),
+        id: e.id,
       };
-    });
+    }).filter((e)=>e)
 
     return [...wsVotes2Votes, ...data.game.votes]
       .filter((e) => e)

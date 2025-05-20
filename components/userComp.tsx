@@ -21,6 +21,7 @@ export const UserComp = ({ id }: { id: string }) => {
   const liveVotes = useMemo(() => {
     if (!data) return;
     const wsVotes2Votes = wsMsg.map((e) => {
+      if (e.from.id !== parseInt(id)) return null
       return {
         updated: e.updated,
         createdAt: e.createdAt,
@@ -35,7 +36,7 @@ export const UserComp = ({ id }: { id: string }) => {
         },
         id: e.id,
       };
-    });
+    }).filter((e)=>e)
 
     return [...wsVotes2Votes, ...data.user.votes];
   }, [wsMsg, data]);
