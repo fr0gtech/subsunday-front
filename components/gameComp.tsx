@@ -131,7 +131,6 @@ export const GameComp = ({ id, cardBodyClass = '' }: { id: string; cardBodyClass
                     isBlurred
                     alt={'item.title'}
                     className=" object-cover rounded-md"
-                    loading="lazy"
                     src={cleanUrl(data.game.picture)}
                   />
                 </div>
