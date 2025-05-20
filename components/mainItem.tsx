@@ -90,19 +90,22 @@ export const MainItem = () => {
 
       return acc;
     }, {});
-
-    return allGames
-      .map((e: Game & { _count: { votes: number } }) => {
-        return {
-          ...e,
-          _count: {
-            votes: e._count.votes + (wsVotes[e.name] || 0),
-          },
-        };
-      })
-      .sort((a: any, b: any) =>
-        Object.keys(wsVotes).length > 0 ? (a._count.votes > b._count.votes ? -1 : 1) : 0,
-      );
+    const merged = allGames
+    .map((e: Game & { _count: { votes: number } }) => {
+      return {
+        ...e,
+        _count: {
+          votes: e._count.votes + (wsVotes[e.name] || 0),
+        },
+      };
+    })
+    .sort((a: any, b: any) =>
+      Object.keys(wsVotes).length > 0 ? (a._count.votes > b._count.votes ? -1 : 1) : 0,
+  );
+      // hiding some stuff just to make website prettier
+    const commands = ['ban', 'slap']; // we look for {item} @username (hope they dont know how to read code or use github search)
+    const commandPattern = new RegExp(`^\\s*(${commands.join('|')})\\s+@\\w+`, 'i');
+    return merged.filter((item: { name: string; }) => !commandPattern.test(item.name.trim().toLowerCase()));
   }, [wsMsg, data]);
 
   if (isLoading || !updateableGames) {
