@@ -32,7 +32,7 @@ const vt = VT323({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html suppressHydrationWarning lang="en">
+    <html suppressHydrationWarning lang="en" className='dark'>
       <head>
         <meta name="apple-mobile-web-app-title" content="sub-sunday" />
       </head>
