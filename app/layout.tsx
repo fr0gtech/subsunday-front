@@ -2,7 +2,7 @@ import './globals.css';
 import clsx from 'clsx';
 import { Press_Start_2P, VT323 } from 'next/font/google';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
-
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { Providers } from './providers';
 import type { ThemeProviderProps } from 'next-themes';
 
@@ -60,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Providers>
     </NextThemesProvider>
       </body>
+      <GoogleAnalytics gaId="G-KQXTZDJW2F" />
     </html> 
   );
 }
