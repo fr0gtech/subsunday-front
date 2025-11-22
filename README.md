@@ -1,5 +1,7 @@
 # Sub Sunday Frontend
 
+This was replaced with [fr0gtech/subsunday-front-svelte](https://github.com/fr0gtech/subsunday-front-svelte)
+
 This is the frontend of [sub-sunday.com](http://sub-sunday.com) written with [next.js](https://nextjs.org) with [heroUi](http://heroui.com) and tailwindcss.
 
 ![image](/public/screenshots/home.png)
